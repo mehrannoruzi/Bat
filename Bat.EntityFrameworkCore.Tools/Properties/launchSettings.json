@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Bat.EntityFrameworkCore.Tools": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0</Version>
+    <Authors>Mehran Norouzi</Authors>
+    <Company>Hillavas</Company>
+    <Description>This Package Contain Useful Library And Method For Easy Develop High Tech .Net Core Application.
+
+ForExample : Implementation Of MSM Queue, Rabbit MQueue,  ...</Description>
+    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <PackageIconUrl></PackageIconUrl>
+    <RepositoryType>Microsoft DevOps Server</RepositoryType>
+    <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
+
+
+
+Tel : 09301919109
+
+Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
+    <PackageTags>Queue MSMQ Rabbit RabbitMQ</PackageTags>
+    <PackageIcon>Bat.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Experimental.System.Messaging" Version="1.1.0" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
+  </ItemGroup>
+
+</Project>

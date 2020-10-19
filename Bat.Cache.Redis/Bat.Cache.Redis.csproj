@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <RepositoryType>Microsoft DevOps Server</RepositoryType>
+    <Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application.
+
+ForExample : Implementation Of StackExchange Library Of Redis, ...</Description>
+    <Authors>Mehran Norouzi</Authors>
+    <Company>Hillavas</Company>
+    <PackageIcon>Bat.png</PackageIcon>
+    <PackageIconUrl />
+    <PackageTags>Cache Redis StackExchange ExtensionMethods RedisConfiguration</PackageTags>
+    <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
+
+Tel : 09301919109
+Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StackExchange.Redis" Version="2.1.58" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
+  </ItemGroup>
+
+</Project>
