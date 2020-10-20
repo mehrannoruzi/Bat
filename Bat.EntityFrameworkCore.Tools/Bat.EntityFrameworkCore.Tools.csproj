@@ -29,6 +29,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="EFCore.BulkExtensions" Version="3.2.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.9" />
   </ItemGroup>
 
@@ -40,7 +41,6 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
     <ProjectReference Include="..\Bat.EntityFrameworkCore\Bat.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
