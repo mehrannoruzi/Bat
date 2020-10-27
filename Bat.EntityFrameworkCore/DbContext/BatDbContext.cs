@@ -103,8 +103,8 @@ namespace Bat.EntityFrameworkCore
                 this.BasePropertiesInitializer();
 
                 result.Result = base.SaveChanges();
-                result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
+                result.IsSuccessful = result.Result.ToResult();
+                result.Message = result.Result.ToMessageResult(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
@@ -182,8 +182,8 @@ namespace Bat.EntityFrameworkCore
                 this.BasePropertiesInitializer();
 
                 result.Result = await base.SaveChangesAsync(cancellationToken);
-                result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
+                result.IsSuccessful = result.Result.ToResult();
+                result.Message = result.Result.ToMessageResult(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
@@ -273,8 +273,8 @@ namespace Bat.EntityFrameworkCore
                 this.BasePropertiesInitializer();
 
                 result.Result = base.SaveChanges();
-                result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
+                result.IsSuccessful = result.Result.ToResult();
+                result.Message = result.Result.ToMessageResult(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
@@ -353,8 +353,8 @@ namespace Bat.EntityFrameworkCore
                 this.BasePropertiesInitializer();
 
                 result.Result = await base.SaveChangesAsync(cancellationToken);
-                result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
+                result.IsSuccessful = result.Result.ToResult();
+                result.Message = result.Result.ToMessageResult(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
