@@ -9,11 +9,11 @@ namespace Bat.Di
 {
     public static class DryIocContainerExtension
     {
-        public static void AddBatDryIocDynamicTransient(this IRegistrator container, Assembly assembly)
+        public static void AddBatDryIocDynamicTransient(this IRegistrator container, params Assembly[] assemblies)
         {
             var allAssembly = new List<Assembly>();
             var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.FullName.Contains(assembly.FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
+                .Where(x => x.FullName.Contains(assemblies.First().FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
                 .OrderBy(x => x.FullName).ToList();
 
             allAssemblyNames.ForEach(x => allAssembly.Add(Assembly.Load(x.FullName)));
@@ -36,11 +36,11 @@ namespace Bat.Di
             };
         }
 
-        public static void AddBatDryIocDynamicScoped(this IRegistrator container, Assembly assembly)
+        public static void AddBatDryIocDynamicScoped(this IRegistrator container, params Assembly[] assemblies)
         {
             var allAssembly = new List<Assembly>();
             var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.FullName.Contains(assembly.FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
+                .Where(x => x.FullName.Contains(assemblies.First().FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
                 .OrderBy(x => x.FullName).ToList();
 
             allAssemblyNames.ForEach(x => allAssembly.Add(Assembly.Load(x.FullName)));
@@ -63,11 +63,11 @@ namespace Bat.Di
             };
         }
 
-        public static void AddBatDryIocDynamicSingleton(this IRegistrator container, Assembly assembly)
+        public static void AddBatDryIocDynamicSingleton(this IRegistrator container, params Assembly[] assemblies)
         {
             var allAssembly = new List<Assembly>();
             var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(x => x.FullName.Contains(assembly.FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
+                .Where(x => x.FullName.Contains(assemblies.First().FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
                 .OrderBy(x => x.FullName).ToList();
 
             allAssemblyNames.ForEach(x => allAssembly.Add(Assembly.Load(x.FullName)));
