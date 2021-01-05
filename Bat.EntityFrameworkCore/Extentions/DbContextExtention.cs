@@ -12,6 +12,9 @@ namespace Bat.EntityFrameworkCore
 {
     public static class DbContextExtention
     {
+        public async static Task<bool> ExecuteCommandAsync<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
+           => await dbContext.Database.ExecuteSqlRawAsync(sql, parameters) >= 0;
+
         public static IQueryable<TEntity> ExecuteQuery<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
             => dbContext.Set<TEntity>().FromSqlRaw(sql, parameters);
 
