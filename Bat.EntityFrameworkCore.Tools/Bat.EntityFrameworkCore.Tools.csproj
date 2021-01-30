@@ -29,7 +29,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="EFCore.BulkExtensions" Version="3.2.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="3.1.11" />
   </ItemGroup>
 
   <ItemGroup>
