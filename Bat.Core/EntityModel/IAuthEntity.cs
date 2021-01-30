@@ -1,5 +1,5 @@
 ﻿namespace Bat.Core
 {
-    public interface IAuthEntity
+    public interface IAuthEntity : IBaseEntity
     { }
 }
