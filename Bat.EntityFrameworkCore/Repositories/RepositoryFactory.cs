@@ -14,7 +14,7 @@ namespace Bat.EntityFrameworkCore
         }
 
 
-        public IGenericRepo<T> GetRepository<T>() where T : class
+        public IGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity
             => _serviceProvider.GetService<IGenericRepo<T>>();
     }
 }
