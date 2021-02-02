@@ -2,6 +2,6 @@
 {
     public interface IRepositoryFactory
     {
-        IGenericRepo<T> GetRepository<T>() where T : class;
+        IGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity;
     }
 }
