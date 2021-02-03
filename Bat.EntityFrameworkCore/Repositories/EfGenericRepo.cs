@@ -112,6 +112,7 @@ namespace Bat.EntityFrameworkCore
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.Conditions != null) query = query.Where(model.Conditions);
             if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+            if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
             if (model.OrderBy != null) query = model.OrderBy(query);
             return await query.ToListAsync();
         }
@@ -127,11 +128,12 @@ namespace Bat.EntityFrameworkCore
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.Conditions != null) query = query.Where(model.Conditions);
             if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+            if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
             if (model.OrderBy != null) query = model.OrderBy(query);
             return await query.Select(model.Selector).ToListAsync();
         }
 
-        public async Task<PagingListDetails<TEntity>> GetPagingAsync(PagingQueryFilter<TEntity> model = null)
+        public async Task<PagingListDetails<TEntity>> GetPagingAsync(QueryFilter<TEntity> model = null)
         {
             if (model.IsNull()) return await _dbSet.ToPagingListDetailsAsync(new PagingParameter { PageNumber = 1, PageSize = 100 });
 
@@ -142,7 +144,7 @@ namespace Bat.EntityFrameworkCore
             return await query.ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 100 });
         }
 
-        public async Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(PagingQueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new()
+        public async Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new()
         {
             if (model.IsNull())
             {

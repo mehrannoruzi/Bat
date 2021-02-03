@@ -22,8 +22,8 @@ namespace Bat.Core
         Task<TResult> FirstOrDefaultAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
         Task<List<TEntity>> GetAsync(QueryFilter<TEntity> model = null);
         Task<List<TResult>> GetAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
-        Task<PagingListDetails<TEntity>> GetPagingAsync(PagingQueryFilter<TEntity> model = null);
-        Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(PagingQueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
+        Task<PagingListDetails<TEntity>> GetPagingAsync(QueryFilter<TEntity> model = null);
+        Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
 
         Task<List<TEntity>> ExecuteQueryListAsync(string sql, params object[] parameters);
     }
