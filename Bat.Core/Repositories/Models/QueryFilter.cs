@@ -12,6 +12,7 @@ namespace Bat.Core
         public CancellationToken Token { get; set; } = default;
         public Expression<Func<TEntity, bool>> Conditions { get; set; }
         public List<Expression<Func<TEntity, object>>> IncludeProperties { get; set; }
+        //public IIncludableQueryable<TEntity, object>> IncludeProperties { get; set; }
         public Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> OrderBy { get; set; }
     }
 }

@@ -18,9 +18,6 @@ namespace Bat.EntityFrameworkCore
         public static IQueryable<TEntity> ExecuteQuery<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
             => dbContext.Set<TEntity>().FromSqlRaw(sql, parameters);
 
-        public static IEnumerable<TEntity> ExecuteQueryList<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
-            => dbContext.Set<TEntity>().FromSqlRaw(sql, parameters).ToList();
-
         public async static Task<IEnumerable<TEntity>> ExecuteQueryListAsync<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
             => await dbContext.Set<TEntity>().FromSqlRaw(sql, parameters).ToListAsync();
 

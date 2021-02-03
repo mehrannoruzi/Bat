@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Bat.Core
 {
-    public interface IGenericRepo<TEntity> where TEntity : class, IBaseEntity
+    public interface IGenericRepo<TEntity> : ITransientInjection where TEntity : class, IBaseEntity
     {
         Task AddAsync(TEntity model, CancellationToken token = default);
         Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken token = default);
