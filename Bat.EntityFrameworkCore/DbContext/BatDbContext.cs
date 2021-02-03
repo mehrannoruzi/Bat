@@ -17,6 +17,7 @@ namespace Bat.EntityFrameworkCore
 
         protected BatDbContext(DbContextOptions<BatDbContext> options) : base(options) { }
 
+
         public virtual void ApplyPersianYK()
         {
             var changedEntitis = this.GetChangedEntity();
@@ -62,6 +63,7 @@ namespace Bat.EntityFrameworkCore
             }
         }
 
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             ApplyPersianYK();
@@ -71,86 +73,6 @@ namespace Bat.EntityFrameworkCore
 
             return await base.SaveChangesAsync(cancellationToken);
         }
-
-        public override async Task<int> SaveChangesAsync(bool AcceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
-        {
-            ApplyPersianYK();
-            ApplyEnglishNumber();
-
-            this.BasePropertiesInitializer();
-
-            return await base.SaveChangesAsync(AcceptAllChangesOnSuccess, cancellationToken);
-        }
-
-        public virtual SaveChangeResult BatSaveChanges()
-        {
-            var result = new SaveChangeResult();
-            try
-            {
-                ApplyPersianYK();
-                ApplyEnglishNumber();
-
-                this.BasePropertiesInitializer();
-
-                result.Result = base.SaveChanges();
-                result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
-                result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
-
-                return result;
-            }
-            catch (ValidationException validationException)
-            {
-                #region Validation Exception
-                result.IsSuccessful = false;
-                result.Exception = validationException;
-                result.ValidationErrors = this.ValidateContext();
-                result.Message = Strings.EntityValidationException;
-                result.ResultType = SaveChangeResultType.EntityValidationException;
-                return result;
-                #endregion
-            }
-            catch (DbUpdateConcurrencyException concurrencyException)
-            {
-                #region Concurrency Exception
-                result.IsSuccessful = false;
-                result.Exception = concurrencyException;
-                result.Message = Strings.UpdateConcurrencyException;
-                result.ResultType = SaveChangeResultType.UpdateConcurrencyException;
-                return result;
-                #endregion
-            }
-            catch (DbUpdateException updateException)
-            {
-                #region Update Exception
-                if ((updateException.InnerException.IsNotNull() && updateException.InnerException.Message.ToLower().Contains("cannot insert duplicate key")) ||
-                            (updateException.InnerException.InnerException.IsNotNull() && updateException.InnerException.InnerException.Message.ToLower().Contains("cannot insert duplicate key")))
-                {
-                    result.IsSuccessful = false;
-                    result.Exception = updateException;
-                    result.Message = Strings.DuplicateIndexKeyException;
-                    result.ResultType = SaveChangeResultType.DuplicateIndexKeyException;
-                    return result;
-                }
-
-                result.IsSuccessful = false;
-                result.Exception = updateException;
-                result.Message = Strings.UpdateException;
-                result.ResultType = SaveChangeResultType.UpdateException;
-                return result;
-                #endregion
-            }
-            catch (Exception exception)
-            {
-                #region Public Exception
-                if (exception.Message.ToLower().Contains("cannot insert duplicate key"))
-                {
-                    result.IsSuccessful = false;
-                    result.Exception = exception;
-                    result.Message = Strings.DuplicateIndexKeyException;
-                    result.ResultType = SaveChangeResultType.DuplicateIndexKeyException;
-                    return result;
-                };
 
         public virtual async Task<SaveChangeResult> BatSaveChangesAsync(CancellationToken cancellationToken = default)
         {
@@ -163,8 +85,8 @@ namespace Bat.EntityFrameworkCore
                 this.BasePropertiesInitializer();
 
                 result.Result = await base.SaveChangesAsync(cancellationToken);
-                result.IsSuccessful = result.Result.ToResult();
-                result.Message = result.Result.ToMessageResult(Strings.Success, Strings.UnknownException);
+                result.IsSuccessful = result.Result.ToSaveChangeResult();
+                result.Message = result.Result.ToSaveChangeResultMessage(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
@@ -179,86 +101,6 @@ namespace Bat.EntityFrameworkCore
                 result.ResultType = SaveChangeResultType.EntityValidationException;
                 return result;
                 #endregion
-            }
-            catch (DbUpdateConcurrencyException concurrencyException)
-            {
-                #region Concurrency Exception
-                result.IsSuccessful = false;
-                result.Exception = concurrencyException;
-                result.Message = Strings.UpdateConcurrencyException;
-                result.ResultType = SaveChangeResultType.UpdateConcurrencyException;
-                return result;
-                #endregion
-            }
-            catch (DbUpdateException updateException)
-            {
-                #region Update Exception
-                if ((updateException.InnerException.IsNotNull() && updateException.InnerException.Message.ToLower().Contains("cannot insert duplicate key")) ||
-                            (updateException.InnerException.InnerException.IsNotNull() && updateException.InnerException.InnerException.Message.ToLower().Contains("cannot insert duplicate key")))
-                {
-                    result.IsSuccessful = false;
-                    result.Exception = updateException;
-                    result.Message = Strings.DuplicateIndexKeyException;
-                    result.ResultType = SaveChangeResultType.DuplicateIndexKeyException;
-                    return result;
-                }
-
-                result.IsSuccessful = false;
-                result.Exception = updateException;
-                result.Message = Strings.UpdateException;
-                result.ResultType = SaveChangeResultType.UpdateException;
-                return result;
-                #endregion
-            }
-            catch (Exception exception)
-            {
-                #region Public Exception
-                if (exception.Message.ToLower().Contains("cannot insert duplicate key"))
-                {
-                    result.IsSuccessful = false;
-                    result.Exception = exception;
-                    result.Message = Strings.DuplicateIndexKeyException;
-                    result.ResultType = SaveChangeResultType.DuplicateIndexKeyException;
-                    return result;
-                };
-
-                result.IsSuccessful = false;
-                result.Exception = exception;
-                result.Message = Strings.UnknownException;
-                result.ResultType = SaveChangeResultType.UnknownException;
-                return result;
-                #endregion
-            }
-        }
-
-        public virtual SaveChangeResult BatSaveChangesWithValidation()
-        {
-            var result = new SaveChangeResult();
-            try
-            {
-                var validationError = this.ValidateContext();
-                if (validationError.Count() > 0)
-                {
-                    #region Validation Exception
-                    result.IsSuccessful = false;
-                    result.ValidationErrors = validationError;
-                    result.Exception = new ValidationException();
-                    result.ResultType = SaveChangeResultType.EntityValidationException;
-                    return result;
-                    #endregion
-                }
-
-                ApplyPersianYK();
-                ApplyEnglishNumber();
-
-                this.BasePropertiesInitializer();
-
-                result.Result = base.SaveChanges();
-                result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
-                result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
-
-                return result;
             }
             catch (DbUpdateConcurrencyException concurrencyException)
             {
@@ -334,8 +176,8 @@ namespace Bat.EntityFrameworkCore
                 this.BasePropertiesInitializer();
 
                 result.Result = await base.SaveChangesAsync(cancellationToken);
-                result.IsSuccessful = result.Result.ToResult();
-                result.Message = result.Result.ToMessageResult(Strings.Success, Strings.UnknownException);
+                result.IsSuccessful = result.Result.ToSaveChangeResult();
+                result.Message = result.Result.ToSaveChangeResultMessage(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
