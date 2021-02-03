@@ -57,10 +57,10 @@ namespace Bat.EntityFrameworkCore
         public static IQueryable<TEntity> ExecuteQuery<TEntity>(this DbSet<TEntity> dbSet, string sql, params object[] parameters) where TEntity : class
             => dbSet.FromSqlRaw(sql, parameters);
 
-        public static IEnumerable<TEntity> ExecuteQueryList<TEntity>(this DbSet<TEntity> dbSet, string sql, params object[] parameters) where TEntity : class
+        public static List<TEntity> ExecuteQueryList<TEntity>(this DbSet<TEntity> dbSet, string sql, params object[] parameters) where TEntity : class
             => dbSet.FromSqlRaw(sql, parameters).ToList();
 
-        public async static Task<IEnumerable<TEntity>> ExecuteQueryListAsync<TEntity>(this DbSet<TEntity> dbSet, string sql, params object[] parameters) where TEntity : class
+        public async static Task<List<TEntity>> ExecuteQueryListAsync<TEntity>(this DbSet<TEntity> dbSet, string sql, params object[] parameters) where TEntity : class
             => await dbSet.FromSqlRaw(sql, parameters).ToListAsync();
     }
 }
