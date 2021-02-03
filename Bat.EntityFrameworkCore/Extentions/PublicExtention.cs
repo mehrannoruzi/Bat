@@ -5,21 +5,21 @@ namespace Bat.EntityFrameworkCore
 {
     public static class PublicExtention
     {
-        public static bool ToSaveChangeResult(this int value)
+        public static bool ToResult(this int value)
         {
             if (value >= 0) return true;
 
             return false;
         }
 
-        public static string ToSaveChangeMessageResult(this int value, string successMessage, string errorMessage)
+        public static string ToMessageResult(this int value, string successMessage, string errorMessage)
         {
             if (value < 0) return errorMessage;
 
             return successMessage;
         }
 
-        public static string ToSaveChangeMessageResult(this bool value, string successMessage, string errorMessage)
+        public static string ToMessageResult(this bool value, string successMessage, string errorMessage)
         {
             if (value) return successMessage;
 
