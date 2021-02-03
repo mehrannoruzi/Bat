@@ -17,6 +17,7 @@ namespace Bat.EntityFrameworkCore
 
         protected BatDbContext(DbContextOptions<BatDbContext> options) : base(options) { }
 
+
         public virtual void ApplyPersianYK()
         {
             var changedEntitis = this.GetChangedEntity();
@@ -62,6 +63,7 @@ namespace Bat.EntityFrameworkCore
             }
         }
 
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             ApplyPersianYK();
@@ -84,7 +86,7 @@ namespace Bat.EntityFrameworkCore
 
                 result.Result = await base.SaveChangesAsync(cancellationToken);
                 result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
+                result.Message = result.Result.ToSaveChangeResultMessage(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
@@ -175,7 +177,7 @@ namespace Bat.EntityFrameworkCore
 
                 result.Result = await base.SaveChangesAsync(cancellationToken);
                 result.IsSuccessful = result.Result.ToSaveChangeResult();
-                result.Message = result.Result.ToSaveChangeMessageResult(Strings.Success, Strings.UnknownException);
+                result.Message = result.Result.ToSaveChangeResultMessage(Strings.Success, Strings.UnknownException);
                 result.ResultType = result.IsSuccessful ? SaveChangeResultType.Success : SaveChangeResultType.UnknownException;
 
                 return result;
