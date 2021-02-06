@@ -2,7 +2,7 @@
 
 namespace Bat.Core
 {
-    public static class UserMenuExtension
+    public static class MenuExtension
     {
         public static IEnumerable<MenuModel> GetAllMenu(this IEnumerable<MenuModel> userMenus)
         {
