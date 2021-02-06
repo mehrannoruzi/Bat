@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using Bat.Core;
+using System.Threading;
 using EFCore.BulkExtensions;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bat.EntityFrameworkCore.Tools
 {
-    public class EfBulkGenericRepo<TEntity> : IBulkGenericRepo<TEntity> where TEntity : class
+    public class EfBulkGenericRepo<TEntity> : IBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
     {
         public DbContext _context;
 
