@@ -23,16 +23,23 @@ namespace Bat.Di
 
             foreach (var type in types)
             {
-                var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
-                if (type.IsGenericType)
-                    services.AddTransient(typeInterface.GetGenericTypeDefinition(), type.GetGenericTypeDefinition());
-                else
+                try
                 {
-                    if (typeInterface != null)
-                        services.AddTransient(typeInterface, type);
+                    var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (type.IsGenericType)
+                    {
+                        if (typeInterface == null) continue;
+                        services.AddTransient(typeInterface.GetGenericTypeDefinition(), type.GetGenericTypeDefinition());
+                    }
                     else
-                        services.AddTransient(type);
+                    {
+                        if (typeInterface != null)
+                            services.AddTransient(typeInterface, type);
+                        else
+                            services.AddTransient(type);
+                    }
                 }
+                catch { }
             };
 
             return services;
@@ -52,16 +59,23 @@ namespace Bat.Di
 
             foreach (var type in types)
             {
-                var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
-                if (type.IsGenericType)
-                    services.AddScoped(typeInterface.GetGenericTypeDefinition(), type.GetGenericTypeDefinition());
-                else
+                try
                 {
-                    if (typeInterface != null)
-                        services.AddScoped(typeInterface, type);
+                    var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (type.IsGenericType)
+                    {
+                        if (typeInterface == null) continue;
+                        services.AddScoped(typeInterface.GetGenericTypeDefinition(), type.GetGenericTypeDefinition());
+                    }
                     else
-                        services.AddScoped(type);
+                    {
+                        if (typeInterface != null)
+                            services.AddScoped(typeInterface, type);
+                        else
+                            services.AddScoped(type);
+                    }
                 }
+                catch { }
             };
 
             return services;
@@ -81,16 +95,23 @@ namespace Bat.Di
 
             foreach (var type in types)
             {
-                var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
-                if (type.IsGenericType)
-                    services.AddSingleton(typeInterface.GetGenericTypeDefinition(), type.GetGenericTypeDefinition());
-                else
+                try
                 {
-                    if (typeInterface != null)
-                        services.AddSingleton(typeInterface, type);
+                    var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (type.IsGenericType)
+                    {
+                        if (typeInterface == null) continue;
+                        services.AddSingleton(typeInterface.GetGenericTypeDefinition(), type.GetGenericTypeDefinition());
+                    }
                     else
-                        services.AddSingleton(type);
+                    {
+                        if (typeInterface != null)
+                            services.AddSingleton(typeInterface, type);
+                        else
+                            services.AddSingleton(type);
+                    }
                 }
+                catch { }
             };
 
             return services;

@@ -76,7 +76,7 @@ namespace Bat.Core
         /// <summary>
         /// send 1 email to many receiver from 1 sender
         /// replace *** with EmailMessage.htmlTemplate
-        /// replace ### with EmailMessage.AtachmentsLink
+        /// replace ### with EmailMessage.AttachmentsLink
         /// </summary>
         /// <param name="from">sender address</param>
         /// <param name="to">receiver address</param>
@@ -107,10 +107,10 @@ namespace Bat.Core
                     try
                     {
                         var body = string.IsNullOrEmpty(email.HtmlTemplate) ? email.Body : email.HtmlTemplate.Replace("***", email.Body);
-                        if (email.AtachmentsLink != null && email.AtachmentsLink.Any())
+                        if (email.AttachmentsLink != null && email.AttachmentsLink.Any())
                         {
                             var links = string.Empty;
-                            foreach (var item in email.AtachmentsLink)
+                            foreach (var item in email.AttachmentsLink)
                             {
                                 links = item + "</br>";
                             }
@@ -156,7 +156,7 @@ namespace Bat.Core
         /// <summary>
         /// send 1 email to many receiver from many sender
         /// replace *** with EmailMessage.htmlTemplate
-        /// replace ### with EmailMessage.AtachmentsLink
+        /// replace ### with EmailMessage.AttachmentsLink
         /// </summary>
         /// <param name="from">sender address</param>
         /// <param name="to">receiver address</param>
@@ -199,10 +199,10 @@ namespace Bat.Core
                     try
                     {
                         var body = string.IsNullOrEmpty(email.HtmlTemplate) ? email.Body : email.HtmlTemplate.Replace("***", email.Body);
-                        if (email.AtachmentsLink != null && email.AtachmentsLink.Any())
+                        if (email.AttachmentsLink != null && email.AttachmentsLink.Any())
                         {
                             var links = string.Empty;
-                            foreach (var item in email.AtachmentsLink)
+                            foreach (var item in email.AttachmentsLink)
                             {
                                 links = item + "</br>";
                             }
@@ -244,7 +244,7 @@ namespace Bat.Core
         /// <summary>
         /// send many email to many receiver from many sender
         /// replace *** with EmailMessage.htmlTemplate
-        /// replace ### with EmailMessage.AtachmentsLink
+        /// replace ### with EmailMessage.AttachmentsLink
         /// </summary>
         /// <param name="from">sender address</param>
         /// <param name="to">receiver address</param>
@@ -299,10 +299,10 @@ namespace Bat.Core
                     try
                     {
                         var body = string.IsNullOrEmpty(email[i].HtmlTemplate) ? email[i].Body : email[i].HtmlTemplate.Replace("***", email[i].Body);
-                        if (email[i].AtachmentsLink != null && email[i].AtachmentsLink.Any())
+                        if (email[i].AttachmentsLink != null && email[i].AttachmentsLink.Any())
                         {
                             var links = string.Empty;
-                            foreach (var item in email[i].AtachmentsLink)
+                            foreach (var item in email[i].AttachmentsLink)
                             {
                                 links = item + "</br>";
                             }

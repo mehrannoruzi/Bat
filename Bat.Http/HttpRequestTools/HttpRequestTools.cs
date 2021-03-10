@@ -25,29 +25,29 @@ namespace Bat.Http
 
         public static async Task<T> GetAsync<T>(string url, Encoding resultEncoding = null)
         {
-            using (var client = new WebClient())
+            string result = string.Empty;
+            try
             {
-                string result = string.Empty;
-                try
+                using (var client = new WebClient())
                 {
                     client.Encoding = resultEncoding ?? Encoding.UTF8;
                     result = await client.DownloadStringTaskAsync(url);
                     return result.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(result, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(result, e);
             }
         }
 
         public static async Task<T> GetAsync<T>(string url, string mediaType = "application/json") where T : class
         {
-            using (var client = new HttpClient())
+            try
             {
-                HttpResponseMessage response = new HttpResponseMessage();
-                try
+                using (var client = new HttpClient())
                 {
+                    HttpResponseMessage response = new HttpResponseMessage();
                     client.BaseAddress = new Uri(url);
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(mediaType));
@@ -57,18 +57,19 @@ namespace Bat.Http
                     var result = await response.Content.ReadAsStringAsync();
                     return result.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(response.Content.ToString(), e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
         public static async Task<T> GetAsync<T>(string url, object parameter, Type objectType, Encoding resultEncoding = null)
         {
             var param = string.Empty;
-            foreach (var item in parameter.GetClassField(objectType))
-                param += $"{item.Name}={item.Value}&";
+            if (parameter.IsNotNull())
+                foreach (var item in parameter.GetClassField(objectType))
+                    param += $"{item.Name}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             using (var client = new WebClient())
@@ -82,8 +83,9 @@ namespace Bat.Http
         public static async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameter, Encoding resultEncoding = null)
         {
             var param = string.Empty;
-            foreach (var item in parameter)
-                param += $"{item.Key}={item.Value}&";
+            if (parameter.IsNotNull())
+                foreach (var item in parameter)
+                    param += $"{item.Key}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             using (var client = new WebClient())
@@ -97,14 +99,44 @@ namespace Bat.Http
         public static async Task<string> GetAsync(string url, Dictionary<string, string> parameter, Encoding resultEncoding = null)
         {
             var param = string.Empty;
-            foreach (var item in parameter)
-                param += $"{item.Key}={item.Value}&";
+            if (parameter.IsNotNull())
+                foreach (var item in parameter)
+                    param += $"{item.Key}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             using (var client = new WebClient())
             {
                 client.Encoding = resultEncoding ?? Encoding.UTF8;
                 return await client.DownloadStringTaskAsync(completeUrl);
+            }
+        }
+
+        public static async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameter, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
+        {
+            string responseBody = string.Empty;
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var param = string.Empty;
+                    if (parameter.IsNotNull())
+                        foreach (var item in parameter)
+                            param += $"{item.Key}={item.Value}&";
+                    var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
+
+                    var request = new HttpRequestMessage(HttpMethod.Get, new Uri(completeUrl));
+                    if (header.IsNotNull())
+                        foreach (var item in header)
+                            request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
+                    responseBody = await response.Content.ReadAsStringAsync();
+                    return responseBody.DeSerializeJson<T>();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
@@ -119,8 +151,9 @@ namespace Bat.Http
         public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, Dictionary<string, string> parameter)
         {
             var param = string.Empty;
-            foreach (var item in parameter)
-                param += $"{item.Key}={item.Value}&";
+            if (parameter.IsNotNull())
+                foreach (var item in parameter)
+                    param += $"{item.Key}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             var stringResponse = await httpClient.GetAsync(completeUrl);
@@ -131,8 +164,9 @@ namespace Bat.Http
         public static async Task<string> GetAsync(HttpClient httpClient, string url, Dictionary<string, string> parameter)
         {
             var param = string.Empty;
-            foreach (var item in parameter)
-                param += $"{item.Key}={item.Value}&";
+            if (parameter.IsNotNull())
+                foreach (var item in parameter)
+                    param += $"{item.Key}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             var stringResponse = await httpClient.GetAsync(completeUrl);
@@ -142,8 +176,9 @@ namespace Bat.Http
         public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, object parameter, Type objectType)
         {
             var param = string.Empty;
-            foreach (var item in parameter.GetClassField(objectType))
-                param += $"{item.Name}={item.Value}&";
+            if (parameter.IsNotNull())
+                foreach (var item in parameter.GetClassField(objectType))
+                    param += $"{item.Name}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             var stringResponse = await httpClient.GetAsync(completeUrl);
@@ -156,139 +191,149 @@ namespace Bat.Http
 
         public static async Task<T> PostAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
                     request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
-                    var response = httpClient.SendAsync(request).Result;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> PostAsync(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
                     request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
-                    var response = httpClient.SendAsync(request).Result;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
         public static async Task<T> PostAsync<T>(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
                     request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = httpClient.SendAsync(request).Result;
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> PostAsync(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
                     request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = httpClient.SendAsync(request).Result;
+
+                    var response = await httpClient.SendAsync(request);
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
         public static async Task<T> PostFormAsync<T>(string url, Dictionary<string, string> formBody, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
                     var formData = new MultipartFormDataContent();
                     if (formBody.IsNotNull())
                         foreach (var item in formBody)
                             formData.Add(new StringContent(item.Value, resultEncoding ?? Encoding.UTF8), item.Key);
+                    request.Content = formData;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = await httpClient.PostAsync(url, formData);
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> PostFormAsync(string url, Dictionary<string, string> formBody, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
                     var formData = new MultipartFormDataContent();
                     if (formBody.IsNotNull())
                         foreach (var item in formBody)
                             formData.Add(new StringContent(item.Value, resultEncoding ?? Encoding.UTF8), item.Key);
+                    request.Content = formData;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = await httpClient.PostAsync(url, formData);
-                    return await response.Content.ReadAsStringAsync();
+
+                    var response = await httpClient.SendAsync(request);
+                    responseBody = await response.Content.ReadAsStringAsync();
+                    return responseBody;
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
@@ -303,7 +348,8 @@ namespace Bat.Http
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
-                var response = httpClient.SendAsync(request).Result;
+
+                var response = await httpClient.SendAsync(request);
                 responseBody = await response.Content.ReadAsStringAsync();
                 return responseBody.DeSerializeJson<T>();
             }
@@ -322,7 +368,8 @@ namespace Bat.Http
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
-                var response = httpClient.SendAsync(request).Result;
+
+                var response = await httpClient.SendAsync(request);
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception e)
@@ -336,89 +383,93 @@ namespace Bat.Http
 
         public static async Task<T> PutAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
                     request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
-                    var response = httpClient.SendAsync(request).Result;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> PutAsync(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
                     request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
-                    var response = httpClient.SendAsync(request).Result;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
         public static async Task<T> PutAsync<T>(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
                     request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = httpClient.SendAsync(request).Result;
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> PutAsync(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
                     request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = httpClient.SendAsync(request).Result;
+
+                    var response = await httpClient.SendAsync(request);
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
@@ -433,7 +484,8 @@ namespace Bat.Http
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
-                var response = httpClient.SendAsync(request).Result;
+
+                var response = await httpClient.SendAsync(request);
                 responseBody = await response.Content.ReadAsStringAsync();
                 return responseBody.DeSerializeJson<T>();
             }
@@ -452,7 +504,8 @@ namespace Bat.Http
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
-                var response = httpClient.SendAsync(request).Result;
+
+                var response = await httpClient.SendAsync(request);
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception e)
@@ -467,89 +520,93 @@ namespace Bat.Http
 
         public static async Task<T> DeleteAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
                     request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
-                    var response = httpClient.SendAsync(request).Result;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> DeleteAsync(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
                     request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
-                    var response = httpClient.SendAsync(request).Result;
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
         public static async Task<T> DeleteAsync<T>(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            using (var httpClient = new HttpClient())
+            string responseBody = string.Empty;
+            try
             {
-                string responseBody = string.Empty;
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
                     request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = httpClient.SendAsync(request).Result;
+
+                    var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
                 }
-                catch (Exception e)
-                {
-                    throw new Exception(responseBody, e);
-                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
         public static async Task<string> DeleteAsync(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
-            using (var httpClient = new HttpClient())
+            try
             {
-                try
+                using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
                     request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
-                    var response = httpClient.SendAsync(request).Result;
+
+                    var response = await httpClient.SendAsync(request);
                     return await response.Content.ReadAsStringAsync();
                 }
-                catch (Exception e)
-                {
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
@@ -564,7 +621,8 @@ namespace Bat.Http
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
-                var response = httpClient.SendAsync(request).Result;
+
+                var response = await httpClient.SendAsync(request);
                 responseBody = await response.Content.ReadAsStringAsync();
                 return responseBody.DeSerializeJson<T>();
             }
@@ -583,7 +641,8 @@ namespace Bat.Http
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
-                var response = httpClient.SendAsync(request).Result;
+
+                var response = await httpClient.SendAsync(request);
                 return await response.Content.ReadAsStringAsync();
             }
             catch (Exception e)

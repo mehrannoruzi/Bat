@@ -22,7 +22,7 @@ namespace Bat.EntityFrameworkCore {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Bat.EntityFrameworkCore {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Bat.EntityFrameworkCore.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace Bat.EntityFrameworkCore {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,54 +61,54 @@ namespace Bat.EntityFrameworkCore {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ذخیره اطلاعات به دلیل کلید تکراری ایندکس انجام نشد.
+        ///   Looks up a localized string similar to ثبت اطلاعات به دلیل کلید تکراری ایندکس انجام نشد..
         /// </summary>
-        internal static string DuplicateIndexKeyException {
+        public static string DuplicateIndexKeyException {
             get {
                 return ResourceManager.GetString("DuplicateIndexKeyException", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to انجام عملیات به دلیل معتبر نبودن اطلاعات ارسالی انجام نشد.
+        ///   Looks up a localized string similar to ثبت اطلاعات به دلیل معتبر نبودن اطلاعات ارسالی انجام نشد..
         /// </summary>
-        internal static string EntityValidationException {
+        public static string EntityValidationException {
             get {
                 return ResourceManager.GetString("EntityValidationException", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to انجام عملیات با موفقیت انجام شد.
+        ///   Looks up a localized string similar to ثبت اطلاعات با موفقیت انجام شد..
         /// </summary>
-        internal static string Success {
+        public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to انجام عملیات به دلیل نا مشخصی انجام نشد.
+        ///   Looks up a localized string similar to ثبت اطلاعات به دلیل نا مشخصی انجام نشد..
         /// </summary>
-        internal static string UnknownException {
+        public static string UnknownException {
             get {
                 return ResourceManager.GetString("UnknownException", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ویرایش اطلاعات به دلیل همزمانی انجام نشد.
+        ///   Looks up a localized string similar to ثبت اطلاعات به دلیل خطای همزمانی انجام نشد..
         /// </summary>
-        internal static string UpdateConcurrencyException {
+        public static string UpdateConcurrencyException {
             get {
                 return ResourceManager.GetString("UpdateConcurrencyException", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ویرایش اطلاعات انجام نشد.
+        ///   Looks up a localized string similar to ثبت اطلاعات انجام نشد..
         /// </summary>
-        internal static string UpdateException {
+        public static string UpdateException {
             get {
                 return ResourceManager.GetString("UpdateException", resourceCulture);
             }

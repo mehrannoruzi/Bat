@@ -1,10 +1,11 @@
 ﻿using System;
+using Bat.Core;
 using StackExchange.Redis;
 using System.Threading.Tasks;
 
 namespace Bat.Cache.Redis
 {
-    public class RedisCacheProvider : IRedisCacheProvider
+    public class RedisCacheProvider : IDistributedMemoryCacheProvider
     {
         public IDatabase _redisDb;
         public ConnectionMultiplexer _redisClient;

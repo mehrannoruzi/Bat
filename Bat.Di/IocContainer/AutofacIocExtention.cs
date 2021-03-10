@@ -23,16 +23,23 @@ namespace Bat.Di
 
             foreach (var type in types)
             {
-                var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
-                if (type.IsGenericType)
-                    container.RegisterGeneric(type).As(typeInterface).InstancePerDependency();
-                else
+                try
                 {
-                    if (typeInterface != null)
-                        container.RegisterType(type).As(typeInterface).InstancePerDependency();
+                    var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (type.IsGenericType)
+                    {
+                        if (typeInterface == null) continue;
+                        container.RegisterGeneric(type).As(typeInterface).InstancePerDependency();
+                    }
                     else
-                        container.RegisterType(type).InstancePerDependency();
+                    {
+                        if (typeInterface != null)
+                            container.RegisterType(type).As(typeInterface).InstancePerDependency();
+                        else
+                            container.RegisterType(type).InstancePerDependency();
+                    }
                 }
+                catch { }
             };
 
             return container;
@@ -52,16 +59,23 @@ namespace Bat.Di
 
             foreach (var type in types)
             {
-                var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
-                if (type.IsGenericType)
-                    container.RegisterGeneric(type).As(typeInterface).InstancePerLifetimeScope();
-                else
+                try
                 {
-                    if (typeInterface != null)
-                        container.RegisterType(type).As(typeInterface).InstancePerLifetimeScope();
+                    var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (type.IsGenericType)
+                    {
+                        if (typeInterface == null) continue;
+                        container.RegisterGeneric(type).As(typeInterface).InstancePerLifetimeScope();
+                    }
                     else
-                        container.RegisterType(type).InstancePerLifetimeScope();
+                    {
+                        if (typeInterface != null)
+                            container.RegisterType(type).As(typeInterface).InstancePerLifetimeScope();
+                        else
+                            container.RegisterType(type).InstancePerLifetimeScope();
+                    }
                 }
+                catch { }
             };
 
             return container;
@@ -81,16 +95,23 @@ namespace Bat.Di
 
             foreach (var type in types)
             {
-                var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
-                if (type.IsGenericType)
-                    container.RegisterGeneric(type).As(typeInterface).SingleInstance();
-                else
+                try
                 {
-                    if (typeInterface != null)
-                        container.RegisterType(type).As(typeInterface).SingleInstance();
+                    var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (type.IsGenericType)
+                    {
+                        if (typeInterface == null) continue;
+                        container.RegisterGeneric(type).As(typeInterface).SingleInstance();
+                    }
                     else
-                        container.RegisterType(type).SingleInstance();
+                    {
+                        if (typeInterface != null)
+                            container.RegisterType(type).As(typeInterface).SingleInstance();
+                        else
+                            container.RegisterType(type).SingleInstance();
+                    }
                 }
+                catch { }
             };
 
             return container;

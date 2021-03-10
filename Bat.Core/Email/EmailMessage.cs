@@ -8,7 +8,7 @@ namespace Bat.Core
         public string Subject { get; set; }
         public string Body { get; set; }
         public string HtmlTemplate { get; set; }
-        public List<Guid> AtachmentsId { get; set; }
-        public List<string> AtachmentsLink { get; set; }
+        public List<Guid> AttachmentsId { get; set; }
+        public List<string> AttachmentsLink { get; set; }
     }
 }

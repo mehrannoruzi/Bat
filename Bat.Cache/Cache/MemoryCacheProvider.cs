@@ -1,4 +1,5 @@
 ﻿using System;
+using Bat.Core;
 using System.Runtime.Caching;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace Bat.Cache
 
         public object AddOrGetExisting(string key, object value, CacheItemPolicy cachePolicy) => _cache.AddOrGetExisting(key, value, cachePolicy);
 
-        public bool Remove(string key) { var cacheItem =_cache.Remove(key); return cacheItem != null; }
+        public bool Remove(string key) { var cacheItem = _cache.Remove(key); return cacheItem != null; }
 
         public object Get(string key) => _cache.Get(key);
 
