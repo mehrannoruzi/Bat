@@ -131,6 +131,31 @@ namespace Bat.Core
             return true;
         }
 
+        public static bool IsBankCardNumber(this string bankCardNumber)
+        {
+            if (string.IsNullOrWhiteSpace(bankCardNumber)) return false;
+            if (bankCardNumber.Length != 19) return false;
 
+            var regex = new Regex(RegexPattern.BankCardNumber);
+            if (!regex.Match(bankCardNumber).Success) return false;
+
+            return true;
+        }
+        
+        public static bool IsBankAccountNumber(this string accountNumber)
+        {
+            if (string.IsNullOrWhiteSpace(accountNumber)) return false;
+            if (accountNumber.Length <= 6) return false;
+
+            return true;
+        }
+
+        public static bool IsShaba(this string shaba)
+        {
+            if (string.IsNullOrWhiteSpace(shaba)) return false;
+            if (shaba.Length != 24) return false;
+
+            return true;
+        }
     }
 }
