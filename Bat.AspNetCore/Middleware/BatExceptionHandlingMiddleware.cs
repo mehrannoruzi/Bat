@@ -33,7 +33,7 @@ namespace Bat.AspNetCore
 
         private async Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            _logger.LogError(ex, $"Exception: {ex.Message}", $"Url: {context.Request.Path}");
+            _logger.LogError(ex, $"Url: {context.Request.Path}, QueryString: {context.Request.QueryString.Value}");
 
             byte[] response;
             if (ex is DomainException)

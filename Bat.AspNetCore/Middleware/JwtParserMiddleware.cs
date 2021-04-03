@@ -3,7 +3,6 @@ using Bat.Core;
 using System.Net;
 using System.Text;
 using System.Linq;
-using Bat.AspNetCore;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
@@ -53,7 +52,7 @@ namespace Bat.AspNetCore
                 {
                     if (context.User.Claims.Any())
                     {
-                        context.Response.StatusCode = 401;
+                        context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         context.Response.ContentType = "application/Json";
                         var bytes = Encoding.UTF8.GetBytes(new Response<object> { IsSuccessful = false, Message = "UnAuthorized Access To Api !. Token Not Sent.", ResultCode = 401 }.SerializeToJson());
                         await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
