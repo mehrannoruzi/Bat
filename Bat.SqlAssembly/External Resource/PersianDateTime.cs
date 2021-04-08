@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Globalization;
 
 namespace Bat.Sql
@@ -21,10 +22,36 @@ namespace Bat.Sql
         private static TimeSpan DaylightSavingTime = TimeSpan.FromHours(1);
         private static TimeSpan OffsetFromUtc = new TimeSpan(3, 30, 0);
 
+        public static TimeZoneInfo GetPersianTimeZoneInfo()
+        {
+            try
+            {
+                return TimeZoneInfo.FindSystemTimeZoneById("Iran Standard Time");
+            }
+            catch
+            {
+                try
+                {
+                    return TimeZoneInfo.FindSystemTimeZoneById("Asia/Tehran");
+                }
+                catch
+                {
+                    var persianTimeZone = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x =>
+                        x.StandardName.Contains("Iran") ||
+                        x.StandardName.Contains("Tehran") ||
+                        x.StandardName.Contains("Ir") ||
+                        x.StandardName.Contains("Persian"));
+
+                    if (persianTimeZone != null) return persianTimeZone;
+                    else return TimeZoneInfo.Local;
+                }
+            }
+        }
+
         /// <summary>
         /// System.TimeZoneInfo œ—?«›   «?„ “Ê‰ «?—«‰ Ê ﬁ—«— œ«œ‰ ¬‰ œ— ¬»Ãò 
         /// </summary>
-        public static TimeZoneInfo PersianTimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Iran Standard Time");
+        public static TimeZoneInfo PersianTimeZoneInfo = GetPersianTimeZoneInfo();
 
         /// <summary>
         /// ò„ ò—œ‰ 2 ⁄œœ  «—?Œ ‘„”? «“ Â„œ?ê—

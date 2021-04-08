@@ -46,10 +46,7 @@ namespace Bat.Core
             return string.Format("{0}", seconds);
         }
 
-        public static string ToTimeFormat(int minutes, TimeFormat format = TimeFormat.Standard)
-        {
-            return ToTimeFormat(minutes * 60, format);
-        }
+        public static string ToTimeFormat(int minutes, TimeFormat format = TimeFormat.Standard) =>ToTimeFormat(minutes * 60, format);
 
         public static int ToInteger(this TimeSpan time) => int.Parse(time.Hours.ToString() + time.Minutes.ToString().PadLeft(2, '0') + time.Seconds.ToString().PadLeft(2, '0'));
 
@@ -60,4 +57,3 @@ namespace Bat.Core
         public static string ToHHMMSS(this TimeSpan time) => time.ToString("hh\\:mm\\:ss");
     }
 }
-
