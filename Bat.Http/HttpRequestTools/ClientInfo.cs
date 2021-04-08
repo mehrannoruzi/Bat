@@ -46,6 +46,7 @@ namespace Bat.Http
             else if (userAgent.Contains("Windows NT 6.2")) os = "Windows 8";
             else if (userAgent.Contains("Windows NT 6.3")) os = "Windows 8.1";
             else if (userAgent.Contains("Windows NT 10")) os = "Windows 10";
+            else if (userAgent.Contains("Postman")) { os = "Postman"; version = GetRequestOsVersion(userAgent, os); }
             else os = "Unknown";
         }
 
@@ -117,6 +118,11 @@ namespace Bat.Http
             else if (result.Contains("Safari"))
             {
                 browser = "Safari";
+                version = GetRequestBrowserVersion(userAgent, browser);
+            }
+            else if (result.Contains("Postman"))
+            {
+                browser = "Postman";
                 version = GetRequestBrowserVersion(userAgent, browser);
             }
         }
