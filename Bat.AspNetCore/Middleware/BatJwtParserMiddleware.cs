@@ -10,13 +10,13 @@ using Microsoft.Extensions.Options;
 
 namespace Bat.AspNetCore
 {
-    public class JwtParserMiddleware
+    public class BatJwtParserMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly IJwtService _jwtService;
         private readonly JwtSettings _jwtSettings;
 
-        public JwtParserMiddleware(RequestDelegate next, IJwtService jwtService,
+        public BatJwtParserMiddleware(RequestDelegate next, IJwtService jwtService,
             IOptions<JwtSettings> jwtSettings)
         {
             _next = next;
