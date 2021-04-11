@@ -19,6 +19,10 @@ namespace Bat.AspNetCore
                 var body = Encoding.UTF8.GetString(buffer);
                 return body;
             }
+            catch
+            {
+                return string.Empty;
+            }
             finally
             {
                 request.Body.Position = 0;
