@@ -19,11 +19,11 @@ namespace Bat.Core
         Task<int> CountAsync(QueryFilter<TEntity> model = null);
         Task<long> LongCountAsync(QueryFilter<TEntity> model = null);
         Task<TEntity> FirstOrDefaultAsync(QueryFilter<TEntity> model = null);
-        Task<TResult> FirstOrDefaultAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
+        Task<TResult> FirstOrDefaultAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model);
         Task<List<TEntity>> GetAsync(QueryFilter<TEntity> model = null);
-        Task<List<TResult>> GetAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
+        Task<List<TResult>> GetAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model);
         Task<PagingListDetails<TEntity>> GetPagingAsync(QueryFilter<TEntity> model = null);
-        Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new();
+        Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model);
 
         Task<List<TEntity>> ExecuteQueryListAsync(string sql, params object[] parameters);
     }

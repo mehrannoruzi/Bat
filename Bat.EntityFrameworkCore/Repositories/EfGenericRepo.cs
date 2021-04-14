@@ -90,13 +90,9 @@ namespace Bat.EntityFrameworkCore
             return await query.FirstOrDefaultAsync(model.Token);
         }
 
-        public async Task<TResult> FirstOrDefaultAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new()
+        public async Task<TResult> FirstOrDefaultAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model)
         {
-            if (model.IsNull())
-            {
-                Expression<Func<TEntity, TResult>> selector = x => new TResult();
-                return _dbSet.Select(selector).FirstOrDefault();
-            }
+            if (model.Selector.IsNull()) throw new Exception(Strings.SelectorNotAssigned);
 
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
@@ -117,13 +113,9 @@ namespace Bat.EntityFrameworkCore
             return await query.ToListAsync();
         }
 
-        public async Task<List<TResult>> GetAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new()
+        public async Task<List<TResult>> GetAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model)
         {
-            if (model.IsNull())
-            {
-                Expression<Func<TEntity, TResult>> selector = x => new TResult();
-                return await _dbSet.Select(selector).ToListAsync();
-            }
+            if (model.Selector.IsNull()) throw new Exception(Strings.SelectorNotAssigned);
 
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.Conditions != null) query = query.Where(model.Conditions);
@@ -144,13 +136,9 @@ namespace Bat.EntityFrameworkCore
             return await query.ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 100 });
         }
 
-        public async Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model = null) where TResult : class, new()
+        public async Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model)
         {
-            if (model.IsNull())
-            {
-                Expression<Func<TEntity, TResult>> selector = x => new TResult();
-                return await _dbSet.Select(selector).ToPagingListDetailsAsync(new PagingParameter { PageNumber = 1, PageSize = 100 });
-            }
+            if (model.Selector.IsNull()) throw new Exception(Strings.SelectorNotAssigned);
 
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.Conditions != null) query = query.Where(model.Conditions);

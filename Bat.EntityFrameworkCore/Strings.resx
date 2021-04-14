@@ -123,6 +123,9 @@
   <data name="EntityValidationException" xml:space="preserve">
     <value>ثبت اطلاعات به دلیل معتبر نبودن اطلاعات ارسالی انجام نشد.</value>
   </data>
+  <data name="SelectorNotAssigned" xml:space="preserve">
+    <value>Selector Property Of QueryFilterWithSelector Not Assigned !</value>
+  </data>
   <data name="Success" xml:space="preserve">
     <value>ثبت اطلاعات با موفقیت انجام شد.</value>
   </data>

@@ -79,6 +79,15 @@ namespace Bat.EntityFrameworkCore {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Selector Property Of QueryFilterWithSelector Not Assigned !.
+        /// </summary>
+        public static string SelectorNotAssigned {
+            get {
+                return ResourceManager.GetString("SelectorNotAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ثبت اطلاعات با موفقیت انجام شد..
         /// </summary>
         public static string Success {
