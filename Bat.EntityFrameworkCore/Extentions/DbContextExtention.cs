@@ -12,13 +12,19 @@ namespace Bat.EntityFrameworkCore
 {
     public static class DbContextExtention
     {
+        public async static Task<List<TResult>> ExecuteProcedure<TResult>(this DbContext dbContext, string sqlQuery, params object[] parameters) where TResult : class
+        {
+            using var procedureContext = new BatProcedureDbContext<TResult>(dbContext.Database.GetConnectionString());
+            return await procedureContext.ResultSet.FromSqlRaw(sqlQuery, parameters).ToListAsync();
+        }
+
         public async static Task<bool> ExecuteCommandAsync<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
            => await dbContext.Database.ExecuteSqlRawAsync(sql, parameters) >= 0;
 
         public static IQueryable<TEntity> ExecuteQuery<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
             => dbContext.Set<TEntity>().FromSqlRaw(sql, parameters);
 
-        public async static Task<IEnumerable<TEntity>> ExecuteQueryListAsync<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
+        public async static Task<List<TEntity>> ExecuteQueryListAsync<TEntity>(this DbContext dbContext, string sql, params object[] parameters) where TEntity : class
             => await dbContext.Set<TEntity>().FromSqlRaw(sql, parameters).ToListAsync();
 
 
@@ -36,9 +42,6 @@ namespace Bat.EntityFrameworkCore
 
         public static IEnumerable<EntityEntry> GetDeletedEntity(this DbContext dbContext)
             => dbContext.GetChangedEntity(EntityState.Deleted);
-
-        public static string ToString(this DbContext dbContext)
-            => dbContext.ToString();
 
         public static IEnumerable<EntityEntry> GetChangedEntity(this DbContext dbContext, EntityState? entityState = null)
         {
@@ -170,7 +173,10 @@ namespace Bat.EntityFrameworkCore
 
 
 
+        public static string GetConnectionString(this DbContext dbContext)
+            => dbContext.Database.GetConnectionString();
+
         public static SqlConnection GetSqlConnection(this DbContext dbContext)
-            => new SqlConnection(dbContext.Database.GetDbConnection().ConnectionString);
+            => new SqlConnection(dbContext.Database.GetConnectionString());
     }
 }

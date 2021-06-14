@@ -2,17 +2,19 @@
 using Bat.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Bat.EntityFrameworkCore
 {
-    public interface IBatUnitOfWork : IDisposable
+    public interface IBatUnitOfWork : IRepositoryFactory, IDisposable
     {
-        public ChangeTracker ChangeTracker { get; }
         public DatabaseFacade Database { get; }
+        public ChangeTracker ChangeTracker { get; }
 
-        public IGenericRepo<TEntity> GetRepository<TEntity>() where TEntity : class, IBaseEntity;
+        //public IGenericRepo<TEntity> GetRepository<TEntity>() where TEntity : class, IBaseEntity;
+        //Task<List<TResult>> ExecuteProcedure<TResult>(string sqlQuery, params object[] parameters) where TResult : class;
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<SaveChangeResult> BatSaveChangesAsync(CancellationToken cancellationToken = default);
