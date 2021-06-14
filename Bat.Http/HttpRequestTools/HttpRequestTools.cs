@@ -4,6 +4,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Net.Http;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.Http;
@@ -23,14 +24,14 @@ namespace Bat.Http
 
 
 
-        public static async Task<T> GetAsync<T>(string url, Encoding resultEncoding = null)
+        public static async Task<T> GetAsync<T>(string url)
         {
             string result = string.Empty;
             try
             {
                 using (var client = new WebClient())
                 {
-                    client.Encoding = resultEncoding ?? Encoding.UTF8;
+                    client.Encoding = Encoding.UTF8;
                     result = await client.DownloadStringTaskAsync(url);
                     return result.DeSerializeJson<T>();
                 }
@@ -64,54 +65,69 @@ namespace Bat.Http
             }
         }
 
-        public static async Task<T> GetAsync<T>(string url, object parameter, Type objectType, Encoding resultEncoding = null)
+        public static async Task<T> GetAsync<T>(string url, object parameter, Type objectType)
         {
             var param = string.Empty;
             if (parameter.IsNotNull())
-                foreach (var item in parameter.GetClassField(objectType))
+                foreach (var item in parameter.GetClassFields(objectType))
                     param += $"{item.Name}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             using (var client = new WebClient())
             {
-                client.Encoding = resultEncoding ?? Encoding.UTF8;
+                client.Encoding = Encoding.UTF8;
                 var response = await client.DownloadStringTaskAsync(completeUrl);
                 return response.DeSerializeJson<T>();
             }
         }
 
-        public static async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameter, Encoding resultEncoding = null)
+        public static async Task<string> GetAsync(string url, object parameter, Type objectType)
         {
             var param = string.Empty;
             if (parameter.IsNotNull())
-                foreach (var item in parameter)
-                    param += $"{item.Key}={item.Value}&";
+                foreach (var item in parameter.GetClassFields(objectType))
+                    param += $"{item.Name}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
             using (var client = new WebClient())
             {
-                client.Encoding = resultEncoding ?? Encoding.UTF8;
-                var response = await client.DownloadStringTaskAsync(completeUrl);
-                return response.DeSerializeJson<T>();
-            }
-        }
-
-        public static async Task<string> GetAsync(string url, Dictionary<string, string> parameter, Encoding resultEncoding = null)
-        {
-            var param = string.Empty;
-            if (parameter.IsNotNull())
-                foreach (var item in parameter)
-                    param += $"{item.Key}={item.Value}&";
-            var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
-
-            using (var client = new WebClient())
-            {
-                client.Encoding = resultEncoding ?? Encoding.UTF8;
+                client.Encoding = Encoding.UTF8;
                 return await client.DownloadStringTaskAsync(completeUrl);
             }
         }
 
-        public static async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameter, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
+        public static async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameter)
+        {
+            var param = string.Empty;
+            if (parameter.IsNotNull())
+                foreach (var item in parameter)
+                    param += $"{item.Key}={item.Value}&";
+            var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
+
+            using (var client = new WebClient())
+            {
+                client.Encoding = Encoding.UTF8;
+                var response = await client.DownloadStringTaskAsync(completeUrl);
+                return response.DeSerializeJson<T>();
+            }
+        }
+
+        public static async Task<string> GetAsync(string url, Dictionary<string, string> parameter)
+        {
+            var param = string.Empty;
+            if (parameter.IsNotNull())
+                foreach (var item in parameter)
+                    param += $"{item.Key}={item.Value}&";
+            var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
+
+            using (var client = new WebClient())
+            {
+                client.Encoding = Encoding.UTF8;
+                return await client.DownloadStringTaskAsync(completeUrl);
+            }
+        }
+
+        public static async Task<T> GetAsync<T>(string url, Dictionary<string, string> parameter, Dictionary<string, string> header) where T : class
         {
             string responseBody = string.Empty;
             try
@@ -125,7 +141,6 @@ namespace Bat.Http
                     var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
                     var request = new HttpRequestMessage(HttpMethod.Get, new Uri(completeUrl));
-                    if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
 
@@ -177,7 +192,7 @@ namespace Bat.Http
         {
             var param = string.Empty;
             if (parameter.IsNotNull())
-                foreach (var item in parameter.GetClassField(objectType))
+                foreach (var item in parameter.GetClassFields(objectType))
                     param += $"{item.Name}={item.Value}&";
             var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
@@ -197,7 +212,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -220,7 +235,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -389,7 +404,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -412,7 +427,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -526,7 +541,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -549,7 +564,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
