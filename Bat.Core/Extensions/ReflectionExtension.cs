@@ -109,7 +109,7 @@ namespace Bat.Core
             return genericType.ToString();
         }
 
-        public static IEnumerable<PropertyInfo> GetClassField<T>(this T classType) where T : class
+        public static IEnumerable<PropertyInfo> GetClassFields<T>(this T classType) where T : class
         {
             return typeof(T).GetProperties().Select(x => new PropertyInfo
             {
@@ -126,7 +126,7 @@ namespace Bat.Core
             });
         }
 
-        public static IEnumerable<PropertyInfo> GetClassField(this object classType, Type type) //where T : class
+        public static IEnumerable<PropertyInfo> GetClassFields(this object classType, Type type) //where T : class
         {
             return type.GetProperties().Select(x => new PropertyInfo
             {

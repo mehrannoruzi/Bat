@@ -2,7 +2,19 @@
 {
     public class PagingParameter
     {
-        public int PageNumber { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
+        public PagingParameter()
+        {
+            PageNumber = 1;
+            PageSize = 10;
+        }
+
+        public PagingParameter(int pageNumber, int pageSize)
+        {
+            PageNumber = pageNumber;
+            PageSize = pageSize;
+        }
+
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
     }
 }

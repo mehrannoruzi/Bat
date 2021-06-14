@@ -98,7 +98,7 @@ namespace Bat.Core
             return true;
         }
 
-        public static bool LatinDateTime(this string dateTime)
+        public static bool IsDateTime(this string dateTime)
         {
             if (string.IsNullOrWhiteSpace(dateTime)) return false;
 
@@ -150,7 +150,7 @@ namespace Bat.Core
             return true;
         }
 
-        public static bool IsShaba(this string shaba)
+        public static bool IsBankShaba(this string shaba)
         {
             if (string.IsNullOrWhiteSpace(shaba)) return false;
             if (shaba.Length != 24) return false;

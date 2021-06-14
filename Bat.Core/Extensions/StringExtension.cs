@@ -58,11 +58,7 @@ namespace Bat.Core
             return validNumber.ToString();
         }
 
-
-
-        public static string Fill(this string input, params string[] values) => string.Format(input, values);
-
-        public static string CustomMask(this string input, MaskOption option)
+        public static string ToCustomMask(this string input, MaskOption option)
         {
             if (string.IsNullOrEmpty(input) || input.Length < option.MaskLength || option.MaskLength <= 0) return input;
             if (option.MaxMaskLength == 0)
@@ -101,14 +97,7 @@ namespace Bat.Core
             return input;
         }
 
-        /// <summary>
-        /// Substring value from 0 character to lenght parameter
-        /// </summary>
-        /// <param name="value">string value</param>
-        /// <param name="lenght">cut string lenght</param>
-        /// <param name="appendString">append string to end of substring value</param>
-        /// <returns>cuted string</returns>
-        public static string CustomSubstring(this string value, int lenght, string defaultValue = "", string appendString = "...")
+        public static string ToCustomSubstring(this string value, int lenght, string defaultValue = "", string appendString = "...")
         {
             if (string.IsNullOrEmpty(value)) return defaultValue;
             if (lenght >= value.Length) return value;
@@ -117,6 +106,8 @@ namespace Bat.Core
         }
 
 
+
+        public static string Fill(this string input, params string[] values) => string.Format(input, values);
 
         public static List<T> SplitCsv<T>(this string text, char seperator)
         {

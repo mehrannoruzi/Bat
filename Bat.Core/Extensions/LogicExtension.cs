@@ -33,5 +33,15 @@ namespace Bat.Core
         {
             foreach (var item in items) action(item);
         }
+
+        public async static void ForEach<T>(this IAsyncEnumerable<T> items, Action<T> action)
+        {
+            await foreach (var item in items) action(item);
+        }
+
+        public static void ForEach<T>(this List<T> items, Action<T> action)
+        {
+            foreach (var item in items) action(item);
+        }
     }
 }

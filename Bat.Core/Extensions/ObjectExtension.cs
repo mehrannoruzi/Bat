@@ -84,7 +84,7 @@ namespace Bat.Core
 
 
         public static void SetProperty<TEntity, TItem>(this TEntity objec, string name, TItem value)
-        => typeof(TEntity).GetProperty(name).SetValue(objec, value, null);
+            => typeof(TEntity).GetProperty(name).SetValue(objec, value, null);
 
         public static TItem GetProperty<TEntity, TItem>(this TEntity objec, string name) where TEntity : class
         {
@@ -100,7 +100,7 @@ namespace Bat.Core
         }
 
         public static object GetProperty(this object objec, string name)
-        => objec == null ? objec.GetType().GetProperty(name).GetValue(objec, null) : null;
+            => objec == null ? objec.GetType().GetProperty(name).GetValue(objec, null) : null;
 
     }
 }
