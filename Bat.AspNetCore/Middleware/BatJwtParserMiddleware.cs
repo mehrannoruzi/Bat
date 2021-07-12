@@ -4,7 +4,6 @@ using System.Net;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -63,8 +62,6 @@ namespace Bat.AspNetCore
             }
             catch (Exception e)
             {
-                FileLoger.Error(e);
-
                 byte[] response;
                 if (e.Message.Contains("Lifetime validation failed"))
                 {
@@ -80,13 +77,14 @@ namespace Bat.AspNetCore
                 }
                 else
                 {
+                    FileLoger.Error(e);
+
                     #region Another Exception
                     response = Encoding.UTF8.GetBytes(new Response<object>
                     {
                         ResultCode = 1002,
                         IsSuccessful = false,
-                        Message = "کاربر گرامی، توکن اعتبارسنجی شما منقضی شده است. لطفا مجدد وارد سامانه شوید." +
-                        Environment.NewLine + e.Message
+                        Message = "کاربر گرامی، عملیات موردنظر با خطا رو به رو شده است. لطفا مجدد تلاش کنید."
                     }.SerializeToJson());
                     #endregion
                 }
