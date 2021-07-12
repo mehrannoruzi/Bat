@@ -26,6 +26,7 @@ namespace Bat.Di
                 try
                 {
                     var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (typeInterface == null) typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains("GenericRepo"));
                     if (type.IsGenericType)
                     {
                         if (typeInterface == null) continue;
@@ -40,7 +41,7 @@ namespace Bat.Di
                     }
                 }
                 catch { }
-            };
+            }
         }
 
         public static void AddBatDryIocDynamicScoped(this IRegistrator container, params Assembly[] assemblies)
@@ -60,6 +61,7 @@ namespace Bat.Di
                 try
                 {
                     var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (typeInterface == null) typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains("GenericRepo"));
                     if (type.IsGenericType)
                     {
                         if (typeInterface == null) continue;
@@ -74,7 +76,7 @@ namespace Bat.Di
                     }
                 }
                 catch { }
-            };
+            }
         }
 
         public static void AddBatDryIocDynamicSingleton(this IRegistrator container, params Assembly[] assemblies)
@@ -94,6 +96,7 @@ namespace Bat.Di
                 try
                 {
                     var typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains(type.Name));
+                    if (typeInterface == null) typeInterface = type.GetTypeInfo().ImplementedInterfaces.FirstOrDefault(x => x.Name.Contains("GenericRepo"));
                     if (type.IsGenericType)
                     {
                         if (typeInterface == null) continue;
@@ -108,7 +111,7 @@ namespace Bat.Di
                     }
                 }
                 catch { }
-            };
+            }
         }
     }
 }
