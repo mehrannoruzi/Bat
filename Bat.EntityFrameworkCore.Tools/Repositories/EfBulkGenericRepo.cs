@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bat.EntityFrameworkCore.Tools
 {
-    public class EfBulkGenericRepo<TEntity> : IBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
+    public class EfBulkGenericRepo<TEntity> : IEfBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
     {
         public DbContext _context;
 
