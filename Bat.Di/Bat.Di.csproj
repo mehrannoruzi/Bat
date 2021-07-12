@@ -9,6 +9,21 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <Copyright>© All rights reserved.</Copyright>
+    <Authors>Mehran Norouzi</Authors>
+    <Company>Mehran Norouzi</Company>
+    <Product>Bat.Di</Product>
+    <Description>This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Mvc Application.
+
+ForExample : ExtensionMethods For Dynamically Register Service And Componnent Base On Inherit From ITransientInjection, IScopedInjection Or ISingletonInjection</Description>
+    <PackageIcon>Bat.png</PackageIcon>
+    <PackageIconUrl />
+    <RepositoryType>Microsoft DevOps Server</RepositoryType>
+    <PackageTags>Ioc Di Dependency DependencyInjection AutofacExtension ExtentionMethod Autofac DryIoc</PackageTags>
+    <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
+
+Tel : 09301919109
+Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +33,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

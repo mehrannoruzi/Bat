@@ -10,11 +10,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Authors>Mehran Norouzi</Authors>
-    <Company>Hillavas</Company>
+    <Company>Mehran Norouzi</Company>
     <Description>This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Application.
 
 ForExample : Implementation Of HttpRequestTools, ClientInfo, ExtentionMethod, ...</Description>
-    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <Copyright>© All rights reserved.</Copyright>
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
     <PackageTags>Asp Asp.NetCore ExtentionMethod HttpRequestTools ClientInfo</PackageTags>
     <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :

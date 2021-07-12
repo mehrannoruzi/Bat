@@ -12,11 +12,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.0</Version>
     <Authors>Mehran Norouzi</Authors>
-    <Company>Hillavas</Company>
+    <Company>Mehran Norouzi</Company>
     <Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application With EntityFrameworkCore.
 
 ForExample : Implementation Of Custom Entity Validation, Extension Method, Annotation, StoredProcedure ...</Description>
-    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <Copyright>© All rights reserved.</Copyright>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
     <PackageTags>EntityValidation ExtensionMethod Annotation StoredProcedure ModelBuilder</PackageTags>
@@ -28,9 +28,9 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFCore.BulkExtensions" Version="5.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.5" />
+    <PackageReference Include="EFCore.BulkExtensions" Version="5.2.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
   </ItemGroup>
 
   <ItemGroup>

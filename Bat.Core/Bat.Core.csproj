@@ -11,24 +11,19 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <Version>0.1.0</Version>
     <Authors>Mehran Norouzi</Authors>
-    <Company>Hillavas</Company>
+    <Company>Mehran Norouzi</Company>
     <Product>Bat.Core</Product>
     <Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application.
 
-
-
 ForExample : Implementation Of Convertor, FileOperation, FileLoger, Encryption, Hash, Validation,  ...</Description>
-    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <Copyright>© All rights reserved.</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
     <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
-
-
 Tel : 09301919109
-
 Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
     <PackageTags>FileOperation Convertor FileLoger Encryption Hash Validation Attributes ExtensionMethods</PackageTags>
     <PackageIcon>Bat.png</PackageIcon>

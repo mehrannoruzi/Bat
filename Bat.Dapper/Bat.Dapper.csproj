@@ -11,13 +11,13 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Mehran Norouzi</Authors>
-    <Company>Hillavas</Company>
+    <Company></Company>
     <Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application.
 
 
 
 ForExample : Implementation Of DapperExtensionMethods, ExecuteSp, ExecuteQuery, ExecuteQueryCommand  ...</Description>
-    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <Copyright>© All rights reserved.</Copyright>
     <PackageIcon>Bat.png</PackageIcon>
     <PackageIconUrl />
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
@@ -32,7 +32,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
+    <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
   </ItemGroup>

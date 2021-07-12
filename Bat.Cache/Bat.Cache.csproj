@@ -12,22 +12,20 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.0</Version>
     <Authors>Mehran Norouzi</Authors>
-    <Company>Hillavas</Company>
+    <Company>Mehran Norouzi</Company>
     <Description>This Package Contain Useful Library And Extention Method For Easy Develop High Tech .Net Core Application.
 
 ForExample : Implementation Of Runtime Caching, MemoryCache, ExtensionMethods,  ...</Description>
-    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <Copyright>© All rights reserved.</Copyright>
     <PackageIconUrl></PackageIconUrl>
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
     <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
-
-
 Tel : 09301919109
-
 Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
     <PackageIcon>Bat.png</PackageIcon>
     <PackageTags>Cache RuntimeCache MemoryCache</PackageTags>
+    <PackageLicenseExpression></PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,11 +11,11 @@
     <TargetFramework>net5.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Mehran Norouzi</Authors>
-    <Company>Hillavas</Company>
+    <Company>Mehran Norouzi</Company>
     <Description>This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Mvc Application.
 
 ForExample : Implementation Of Authentication, Authorization, TagHelpers, CustomAttribute, ResponseCache, ExtensionMethod, ...</Description>
-    <Copyright>© Hillavas Corporation. All rights reserved.</Copyright>
+    <Copyright>© All rights reserved.</Copyright>
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
     <PackageTags>Asp Asp.Net Asp.NetCore Mvc Attribute Authorization Authentication ResponseCache TagHelpers ExtentionMethod</PackageTags>
     <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
@@ -27,10 +27,10 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.5" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.7" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
   </ItemGroup>
 
   <ItemGroup>
