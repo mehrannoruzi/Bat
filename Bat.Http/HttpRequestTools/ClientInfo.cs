@@ -90,15 +90,25 @@ namespace Bat.Http
                 browser = "Edge";
                 version = GetRequestBrowserVersion(userAgent, browser);
             }
-            else if (result.Contains("OPR"))
+            else if (result.Contains("Chrome"))
             {
-                browser = "Opera";
-                version = GetRequestBrowserVersion(userAgent, "OPR");
+                browser = "Chrome";
+                version = GetRequestBrowserVersion(userAgent, browser);
             }
             else if (result.Contains("Firefox"))
             {
                 browser = "Firefox";
                 version = GetRequestBrowserVersion(userAgent, browser);
+            }
+            else if (result.Contains("Safari"))
+            {
+                browser = "Safari";
+                version = GetRequestBrowserVersion(userAgent, browser);
+            }
+            else if (result.Contains("OPR"))
+            {
+                browser = "Opera";
+                version = GetRequestBrowserVersion(userAgent, "OPR");
             }
             else if (result.Contains("UCBrowser"))
             {
@@ -108,16 +118,6 @@ namespace Bat.Http
             else if (result.Contains("SamsungBrowser"))
             {
                 browser = "SamsungBrowser";
-                version = GetRequestBrowserVersion(userAgent, browser);
-            }
-            else if (result.Contains("Chrome"))
-            {
-                browser = "Chrome";
-                version = GetRequestBrowserVersion(userAgent, browser);
-            }
-            else if (result.Contains("Safari"))
-            {
-                browser = "Safari";
                 version = GetRequestBrowserVersion(userAgent, browser);
             }
             else if (result.Contains("Postman"))
@@ -179,14 +179,14 @@ namespace Bat.Http
                 case "Windows 8.1":
                 case "Windows 10":
                 case "Windows Phone":
-                    manufacture = "Microsoft";
+                    manufacture = $"Microsoft {os}";
                     break;
                 case "IOS":
                 case "Mac OS":
-                    manufacture = "Apple";
+                    manufacture = $"Apple {os}";
                     break;
                 case "Black Berry":
-                    manufacture = "Black Berry";
+                    manufacture = os;
                     break;
 
                 default:
@@ -225,5 +225,32 @@ namespace Bat.Http
                 return null;
             }
         }
+
+        public static DeviceLog GetDeviceLog(HttpContext httpContext)
+        {
+            try
+            {
+                var requestDetails = GetRequestDetails(httpContext);
+                var ip = GetIP(httpContext);
+                var isMobile = requestDetails == null ? false : requestDetails.IsMobile;
+                var os = $"{requestDetails?.OsName} {requestDetails?.OsVersion}";
+                var device = $"{requestDetails?.Manufacture} {requestDetails?.Model}";
+                var application = $"{requestDetails?.BrowserName} {requestDetails?.BrowserVersion}";
+
+                return new DeviceLog
+                {
+                    IsMobile = isMobile,
+                    IP = ip,
+                    Os = os.Length > 25 ? os.Substring(0, 25) : os,
+                    Device = device.Length > 50 ? device.Substring(0, 50) : device,
+                    Application = application.Length > 50 ? application.Substring(0, 50) : application
+                };
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
     }
 }
