@@ -7,11 +7,6 @@ namespace Bat.Sql
 {
     public partial class HexConvertor
     {
-        /// <summary>
-        /// Convert string to hex 
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
         [SqlFunction]
         public static SqlString ConvertStringToHex(string text)
         {
@@ -22,11 +17,6 @@ namespace Bat.Sql
             return hexString.Replace("-", "").ToLower();
         }
 
-        /// <summary>
-        /// Convert hex string to orginal string 
-        /// </summary>
-        /// <param name="hexText"></param>
-        /// <returns></returns>
         [SqlFunction]
         public static SqlString ConvertHexToString(string hexText)
         {

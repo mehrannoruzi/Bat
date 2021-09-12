@@ -93,10 +93,5 @@ namespace Bat.Sql
             return input;
         }
 
-        //[SqlFunction]
-        //public static SqlString FormatString(string input, params string[] values)
-        //{
-        //    return string.Format(input, values);
-        //}
     }
 }
