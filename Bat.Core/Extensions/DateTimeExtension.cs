@@ -12,6 +12,10 @@ namespace Bat.Core
 
         public static string ToPersianDate(this DateTime date) => PersianDateTime.Parse(date).ToString(PersianDateTimeFormat.Date);
 
+        public static string ToTime(this DateTime date) => date.ToString("HH:mm");
+
+        public static string ToFullTime(this DateTime date) => date.ToString("HH:mm:ss");
+
         public static bool IsFuture(this DateTime date) => date.IsFuture(DateTime.Now);
 
         public static bool IsFuture(this DateTime date, DateTime from) => date.Date > from.Date;
