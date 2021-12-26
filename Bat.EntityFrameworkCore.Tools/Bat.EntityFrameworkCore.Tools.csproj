@@ -29,12 +29,12 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 
   <ItemGroup>
     <PackageReference Include="EFCore.BulkExtensions" Version="5.2.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="5.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.13" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+    <None Include="C:\Users\Mehran Norouzi\Downloads\Bat.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

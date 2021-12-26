@@ -55,58 +55,60 @@ namespace Bat.AspNetCore
 
         public static async Task<string> SaveFile(FileSaveModel model)
         {
-            if (model.FormFile == null) return null;
-            var pDate = PersianDateTime.Now;
+            await Task.CompletedTask;
+            throw new NotImplementedException();
+            //if (model.FormFile == null) return null;
+            //var pDate = PersianDateTime.Now;
 
-            #region Create Directory
-            model.Root = string.Join("/", model.Root, pDate.Year, pDate.Month);
-            if (model.IncludeDayInPath) model.Root = model.Root + "/" + pDate.Day;
-            model.Root = model.Root + (model.Id == null ? string.Empty : ("/" + model.Id.ToString()));
-            var dir = Path.Combine(Directory.GetCurrentDirectory(), model.UrlPrefix ?? "", "wwwroot", model.Root.Replace("/", "\\"));
-            #endregion
+            //#region Create Directory
+            //model.Root = string.Join("/", model.Root, pDate.Year, pDate.Month);
+            //if (model.IncludeDayInPath) model.Root = model.Root + "/" + pDate.Day;
+            //model.Root = model.Root + (model.Id == null ? string.Empty : ("/" + model.Id.ToString()));
+            //var dir = Path.Combine(Directory.GetCurrentDirectory(), model.UrlPrefix ?? "", "wwwroot", model.Root.Replace("/", "\\"));
+            //#endregion
 
-            #region Create File Name
-            model.FileNamePrefix = model.FileNamePrefix != null ? model.FileNamePrefix + "_" : string.Empty;
-            var trustedFileName = WebUtility.HtmlEncode(model.FormFile.FileName);
-            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(trustedFileName);
-            var fileName = model.FileNamePrefix + fileNameWithoutExtension + pDate.Ticks.ToString() + Path.GetExtension(trustedFileName);
-            #endregion
+            //#region Create File Name
+            //model.FileNamePrefix = model.FileNamePrefix != null ? model.FileNamePrefix + "_" : string.Empty;
+            //var trustedFileName = WebUtility.HtmlEncode(model.FormFile.FileName);
+            //var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(trustedFileName);
+            //var fileName = model.FileNamePrefix + fileNameWithoutExtension + pDate.Ticks.ToString() + Path.GetExtension(trustedFileName);
+            //#endregion
 
-            var rep = "~/" + model.Root + "/" + fileName;
-            if (!FileOperation.CreateDirectory(dir)) return null;
-            using (var stream = File.Create(Path.Combine(dir, fileName)))
-            {
-                await model.FormFile.CopyToAsync(stream);
-            }
+            //var rep = "~/" + model.Root + "/" + fileName;
+            //if (!FileOperation.CreateDirectory(dir)) return null;
+            //using (var stream = File.Create(Path.Combine(dir, fileName)))
+            //{
+            //    await model.FormFile.CopyToAsync(stream);
+            //}
 
-            if (!model.SaveInMultipleSize) return rep;
-            using (var stream = new MemoryStream())
-            {
-                await model.FormFile.CopyToAsync(stream);
-                using (var img = Image.FromStream(stream))
-                {
-                    var aspectRatio = img.Size.Height / (float)img.Size.Width;
-                    var sourceWidth = img.Size.Width;
-                    foreach (var size in Enum.GetNames(typeof(ImageSize)))
-                    {
-                        var x = (int)(Enum.Parse(typeof(ImageSize), size));
-                        int newWidth = ((int)(Enum.Parse(typeof(ImageSize), size)) * sourceWidth) / 100;
-                        int newHeight = Convert.ToInt32(aspectRatio * newWidth);
-                        Bitmap bitmap = new Bitmap(newWidth, newHeight);
-                        Graphics graph = Graphics.FromImage(bitmap);
-                        graph.CompositingQuality = CompositingQuality.HighQuality;
-                        graph.SmoothingMode = SmoothingMode.HighQuality;
-                        graph.InterpolationMode = model.InterpolationMode;
-                        var imageRectangle = new Rectangle(0, 0, newWidth, newHeight);
-                        graph.DrawImage(img, imageRectangle);
-                        bitmap.Save(Path.Combine(dir, size.ToLower() + "-" + fileName));
-                        graph.Dispose();
-                        bitmap.Dispose();
-                    }
-                    img.Dispose();
-                }
-            }
-            return rep;
+            //if (!model.SaveInMultipleSize) return rep;
+            //using (var stream = new MemoryStream())
+            //{
+            //    await model.FormFile.CopyToAsync(stream);
+            //    using (var img = Image.FromStream(stream))
+            //    {
+            //        var aspectRatio = img.Size.Height / (float)img.Size.Width;
+            //        var sourceWidth = img.Size.Width;
+            //        foreach (var size in Enum.GetNames(typeof(ImageSize)))
+            //        {
+            //            var x = (int)(Enum.Parse(typeof(ImageSize), size));
+            //            int newWidth = ((int)(Enum.Parse(typeof(ImageSize), size)) * sourceWidth) / 100;
+            //            int newHeight = Convert.ToInt32(aspectRatio * newWidth);
+            //            Bitmap bitmap = new Bitmap(newWidth, newHeight);
+            //            Graphics graph = Graphics.FromImage(bitmap);
+            //            graph.CompositingQuality = CompositingQuality.HighQuality;
+            //            graph.SmoothingMode = SmoothingMode.HighQuality;
+            //            graph.InterpolationMode = model.InterpolationMode;
+            //            var imageRectangle = new Rectangle(0, 0, newWidth, newHeight);
+            //            graph.DrawImage(img, imageRectangle);
+            //            bitmap.Save(Path.Combine(dir, size.ToLower() + "-" + fileName));
+            //            graph.Dispose();
+            //            bitmap.Dispose();
+            //        }
+            //        img.Dispose();
+            //    }
+            //}
+            //return rep;
         }
 
         public static async Task<string> SaveLargeFile(LargeFileSaveModel model)
@@ -148,7 +150,7 @@ namespace Bat.AspNetCore
                             await section.Body.CopyToAsync(memoryStream);
                             streamedFileContent = memoryStream.ToArray();
                         }
-                 
+
                         using (var targetStream = File.Create(Path.Combine(dir, fileName)))
                         {
                             await targetStream.WriteAsync(streamedFileContent);

@@ -1,5 +1,4 @@
-﻿using System.Drawing.Drawing2D;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace Bat.AspNetCore
 {
@@ -13,7 +12,7 @@ namespace Bat.AspNetCore
 
         public string FileNamePrefix { get; set; }
 
-        public InterpolationMode InterpolationMode { get; set; } = InterpolationMode.NearestNeighbor; //defalut is low
+        //public InterpolationMode InterpolationMode { get; set; } = InterpolationMode.NearestNeighbor; //defalut is low
 
         public HttpRequest Request { set; get; }
 
