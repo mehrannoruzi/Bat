@@ -39,37 +39,37 @@ namespace Bat.AspNetCore
             byte[] response;
             if (ex is DomainException)
             {
-                response = Encoding.UTF8.GetBytes(new Response<object>
+                response = Encoding.UTF8.GetBytes(new
                 {
-                    ResultCode = (int)HttpStatusCode.BadRequest,
-                    IsSuccessful = false,
-                    Message = "اطلاعات وارد شده صحیح نمی باشد، لطفا مجددا تلاش نمایید."
+                    resultCode = (int)HttpStatusCode.BadRequest,
+                    isSuccessful = false,
+                    message = "اطلاعات وارد شده صحیح نمی باشد، لطفا مجددا تلاش نمایید."
                 }.SerializeToJson());
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             else if (ex is ServiceException)
             {
-                response = Encoding.UTF8.GetBytes(new Response<object>
+                response = Encoding.UTF8.GetBytes(new
                 {
-                    ResultCode = (int)HttpStatusCode.BadRequest,
-                    IsSuccessful = false,
-                    Message = "عملیات مورد نظر با خطا رو به رو شده است، لطفا مجددا تلاش نمایید."
+                    resultCode = (int)HttpStatusCode.BadRequest,
+                    isSuccessful = false,
+                    message = "عملیات مورد نظر با خطا رو به رو شده است، لطفا مجددا تلاش نمایید."
                 }.SerializeToJson());
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
             else
             {
-                response = Encoding.UTF8.GetBytes(new Response<object>
+                response = Encoding.UTF8.GetBytes(new
                 {
-                    ResultCode = (int)HttpStatusCode.InternalServerError,
-                    IsSuccessful = false,
-                    Message = "عملیات مورد نظر با خطا رو به رو شده است، لطفا مجددا تلاش نمایید."
+                    resultCode = (int)HttpStatusCode.InternalServerError,
+                    isSuccessful = false,
+                    message = "عملیات مورد نظر با خطا رو به رو شده است، لطفا مجددا تلاش نمایید."
                 }.SerializeToJson());
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
 
             context.Response.ContentType = "application/Json";
-            await context.Response.Body.WriteAsync(response, 0, response.Length);
+            await context.Response.Body.WriteAsync(response);
         }
     }
 }

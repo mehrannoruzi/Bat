@@ -32,16 +32,16 @@ namespace Bat.AspNetCore
                 {
                     if (_jwtService.IsNull())
                     {
-                        var response = Encoding.UTF8.GetBytes(new Response<object>
+                        var response = Encoding.UTF8.GetBytes(new
                         {
-                            ResultCode = 1001,
-                            IsSuccessful = false,
-                            Message = "Jwt Service Not Configure !"
+                            resultCode = 1001,
+                            isSuccessful = false,
+                            message = "Jwt Service Not Configure !"
                         }.SerializeToJson());
 
                         context.Response.ContentType = "application/Json";
                         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        await context.Response.Body.WriteAsync(response, 0, response.Length);
+                        await context.Response.Body.WriteAsync(response);
                     }
 
                     var userClaims = _jwtService.GetClaimsPrincipal(token, _jwtSettings);
@@ -53,8 +53,8 @@ namespace Bat.AspNetCore
                     {
                         context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
                         context.Response.ContentType = "application/Json";
-                        var bytes = Encoding.UTF8.GetBytes(new Response<object> { IsSuccessful = false, Message = "UnAuthorized Access To Api !. Token Not Sent.", ResultCode = 401 }.SerializeToJson());
-                        await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+                        var bytes = Encoding.UTF8.GetBytes(new { isSuccessful = false, message = "UnAuthorized Access To Api !. Token Not Sent.", resultCode = 401 }.SerializeToJson());
+                        await context.Response.Body.WriteAsync(bytes);
                     }
                 }
 
@@ -67,11 +67,11 @@ namespace Bat.AspNetCore
                 {
                     #region Expired Token
                     //var validationTime = _jwtService.GetTokenExpireTime(token, _jwtSettings);
-                    response = Encoding.UTF8.GetBytes(new Response<object>
+                    response = Encoding.UTF8.GetBytes(new
                     {
-                        ResultCode = 1001,
-                        IsSuccessful = false,
-                        Message = "کاربر گرامی، توکن اعتبارسنجی شما منقضی شده است. لطفا مجدد وارد سامانه شوید."
+                        resultCode = 1001,
+                        isSuccessful = false,
+                        message = "کاربر گرامی، توکن اعتبارسنجی شما منقضی شده است. لطفا مجدد وارد سامانه شوید."
                     }.SerializeToJson());
                     #endregion
                 }
@@ -80,18 +80,18 @@ namespace Bat.AspNetCore
                     FileLoger.Error(e);
 
                     #region Another Exception
-                    response = Encoding.UTF8.GetBytes(new Response<object>
+                    response = Encoding.UTF8.GetBytes(new
                     {
-                        ResultCode = 1002,
-                        IsSuccessful = false,
-                        Message = "کاربر گرامی، عملیات موردنظر با خطا رو به رو شده است. لطفا مجدد تلاش کنید."
+                        resultCode = 1002,
+                        isSuccessful = false,
+                        message = "کاربر گرامی، عملیات موردنظر با خطا رو به رو شده است. لطفا مجدد تلاش کنید."
                     }.SerializeToJson());
                     #endregion
                 }
 
                 context.Response.ContentType = "application/Json";
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                await context.Response.Body.WriteAsync(response, 0, response.Length);
+                await context.Response.Body.WriteAsync(response);
             }
         }
     }

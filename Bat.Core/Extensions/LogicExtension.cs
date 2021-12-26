@@ -14,7 +14,7 @@ namespace Bat.Core
 
         public static bool IsNotNull(this object obj) => obj != null;
 
-        public static bool IsNull(this Guid token) => token == null || token == Guid.Empty;
+        public static bool IsNull(this Guid? token) => token == null || token == Guid.Empty;
 
         public static bool IsNotNull(this Guid token) => !IsNull(token);
 
