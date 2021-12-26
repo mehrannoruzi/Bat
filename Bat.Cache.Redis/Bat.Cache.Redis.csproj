@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>© All rights reserved.</Copyright>
     <RepositoryType>Microsoft DevOps Server</RepositoryType>
@@ -24,10 +24,11 @@ ForExample : Implementation Of StackExchange Library Of Redis, ...</Description>
 
 Tel : 09301919109
 Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StackExchange.Redis" Version="2.2.62" />
+    <PackageReference Include="StackExchange.Redis" Version="2.2.88" />
   </ItemGroup>
 
   <ItemGroup>

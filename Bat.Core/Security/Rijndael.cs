@@ -41,7 +41,7 @@ namespace Bat.Core
             byte[] keyBytes = password.GetBytes(keySize / 8);
 
             // Create uninitialized Rijndael encryption object.
-            RijndaelManaged symmetricKey = new RijndaelManaged();
+            var symmetricKey = new RijndaelManaged();
 
             // It is reasonable to set encryption mode to Cipher Block Chaining
             // (CBC). Use default options for other symmetric key parameters.

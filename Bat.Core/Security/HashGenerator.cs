@@ -15,17 +15,6 @@ namespace Bat.Core
 
     public class HashGenerator
     {
-        public static string GetRandomSalt
-        {
-            get
-            {
-                var rng = new RNGCryptoServiceProvider();
-                var buff = new byte[32];
-                rng.GetBytes(buff);
-                return Convert.ToBase64String(buff);
-            }
-        }
-
         public static string Hash(string key, HashAlgorithms hashAlgorithm = HashAlgorithms.SHA256)
         {
             string salt = "Hill@v@$";

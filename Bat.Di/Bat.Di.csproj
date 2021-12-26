@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Copyright>© All rights reserved.</Copyright>
     <Authors>Mehran Norouzi</Authors>
     <Company>Mehran Norouzi</Company>
@@ -24,10 +24,11 @@ ForExample : ExtensionMethods For Dynamically Register Service And Componnent Ba
 
 Tel : 09301919109
 Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
     <PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="5.1.0" />
   </ItemGroup>
 

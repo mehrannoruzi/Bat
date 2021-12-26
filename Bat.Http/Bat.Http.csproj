@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Authors>Mehran Norouzi</Authors>
     <Company>Mehran Norouzi</Company>
     <Description>This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Application.
@@ -24,6 +24,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>Bat.png</PackageIcon>
     <PackageIconUrl />
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>

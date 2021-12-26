@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Drawing;
 
 namespace Bat.Core
 {
@@ -35,14 +33,6 @@ namespace Bat.Core
         public static byte[] ToByteArray(string file) => Convert.FromBase64String(file);
 
         public static string ToBase64(byte[] file) => Convert.ToBase64String(file);
-
-        public static Image ToImage(byte[] file)
-        {
-            var ms = new MemoryStream(file, 0, file.Length);
-            ms.Write(file, 0, file.Length);
-            Image image = Image.FromStream(ms, true);
-            return image;
-        }
 
         public static string ToStandardSize(long size) => ToCurrectSize(size);
 
@@ -83,5 +73,4 @@ namespace Bat.Core
         public static float ToNewSize(long size, SizeType inputSizeType, SizeType outputSizeType) => 1;
 
     }
-    
 }

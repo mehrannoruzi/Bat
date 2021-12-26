@@ -1,8 +1,8 @@
 ﻿using Dapper;
 using System.Linq;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using System.Collections.Generic;
 
 namespace Bat.Dapper

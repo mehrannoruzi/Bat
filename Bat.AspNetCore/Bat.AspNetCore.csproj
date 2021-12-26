@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Mehran Norouzi</Authors>
     <Company>Mehran Norouzi</Company>
@@ -24,13 +24,14 @@ Tel : 09301919109
 Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
     <PackageIcon>Bat.png</PackageIcon>
     <PackageIconUrl />
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.7" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -41,7 +42,6 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
     <ProjectReference Include="..\Bat.Http\Bat.Http.csproj" />
   </ItemGroup>
 

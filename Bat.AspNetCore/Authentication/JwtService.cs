@@ -74,6 +74,12 @@ namespace Bat.AspNetCore
             return new JwtToken(tokenDescriptor);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="jwtSettings">SecretKey Longer than 16 character || Encryptionkey Must be 16 character</param>
+        /// <returns></returns>
         public ClaimsPrincipal GetClaimsPrincipal(string token, JwtSettings jwtSettings)
         {
             var secretKey = Encoding.UTF8.GetBytes(!string.IsNullOrWhiteSpace(jwtSettings.SecretKey) ? jwtSettings.SecretKey : "<-- Mehran@Norouzi|123456789987654321|Mehran@Norouzi -->"); // Longer than 16 character
