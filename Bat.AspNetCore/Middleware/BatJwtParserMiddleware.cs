@@ -32,11 +32,11 @@ namespace Bat.AspNetCore
                 {
                     if (_jwtService.IsNull())
                     {
-                        var response = Encoding.UTF8.GetBytes(new Response<object>
+                        var response = Encoding.UTF8.GetBytes(new
                         {
-                            ResultCode = 1001,
-                            IsSuccessful = false,
-                            Message = "Jwt Service Not Configure !"
+                            resultCode = 1001,
+                            isSuccessful = false,
+                            message = "Jwt Service Not Configure !"
                         }.SerializeToJson());
 
                         context.Response.ContentType = "application/Json";
@@ -67,11 +67,11 @@ namespace Bat.AspNetCore
                 {
                     #region Expired Token
                     //var validationTime = _jwtService.GetTokenExpireTime(token, _jwtSettings);
-                    response = Encoding.UTF8.GetBytes(new Response<object>
+                    response = Encoding.UTF8.GetBytes(new
                     {
-                        ResultCode = 1001,
-                        IsSuccessful = false,
-                        Message = "کاربر گرامی، توکن اعتبارسنجی شما منقضی شده است. لطفا مجدد وارد سامانه شوید."
+                        resultCode = 1001,
+                        isSuccessful = false,
+                        message = "کاربر گرامی، توکن اعتبارسنجی شما منقضی شده است. لطفا مجدد وارد سامانه شوید."
                     }.SerializeToJson());
                     #endregion
                 }
@@ -80,11 +80,11 @@ namespace Bat.AspNetCore
                     FileLoger.Error(e);
 
                     #region Another Exception
-                    response = Encoding.UTF8.GetBytes(new Response<object>
+                    response = Encoding.UTF8.GetBytes(new
                     {
-                        ResultCode = 1002,
-                        IsSuccessful = false,
-                        Message = "کاربر گرامی، عملیات موردنظر با خطا رو به رو شده است. لطفا مجدد تلاش کنید."
+                        resultCode = 1002,
+                        isSuccessful = false,
+                        message = "کاربر گرامی، عملیات موردنظر با خطا رو به رو شده است. لطفا مجدد تلاش کنید."
                     }.SerializeToJson());
                     #endregion
                 }

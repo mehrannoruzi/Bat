@@ -108,8 +108,8 @@ namespace Bat.EntityFrameworkCore
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.Conditions != null) query = query.Where(model.Conditions);
             if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-            if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
             if (model.OrderBy != null) query = model.OrderBy(query);
+            if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
             return await query.ToListAsync();
         }
 
@@ -120,8 +120,8 @@ namespace Bat.EntityFrameworkCore
             IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
             if (model.Conditions != null) query = query.Where(model.Conditions);
             if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-            if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
             if (model.OrderBy != null) query = model.OrderBy(query);
+            if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
             return await query.Select(model.Selector).ToListAsync();
         }
 

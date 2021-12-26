@@ -23,22 +23,37 @@ namespace Bat.Http
         }
 
 
-
         public static async Task<T> GetAsync<T>(string url)
         {
-            string result = string.Empty;
+            var responseBody = string.Empty;
             try
             {
-                using (var client = new WebClient())
-                {
-                    client.Encoding = Encoding.UTF8;
-                    result = await client.DownloadStringTaskAsync(url);
-                    return result.DeSerializeJson<T>();
-                }
+                using var httpClient = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
+                var response = await httpClient.SendAsync(request);
+                responseBody = await response.Content.ReadAsStringAsync();
+                return responseBody.DeSerializeJson<T>();
             }
             catch (Exception e)
             {
-                throw new Exception(result, e);
+                throw new Exception(responseBody, e);
+            }
+        }
+
+        public static async Task<string> GetAsync(string url)
+        {
+            var responseBody = string.Empty;
+            try
+            {
+                using var httpClient = new HttpClient();
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(url));
+                var response = await httpClient.SendAsync(request);
+                responseBody = await response.Content.ReadAsStringAsync();
+                return responseBody;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
             }
         }
 
@@ -59,9 +74,9 @@ namespace Bat.Http
                     return result.DeSerializeJson<T>();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -141,12 +156,40 @@ namespace Bat.Http
                     var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
 
                     var request = new HttpRequestMessage(HttpMethod.Get, new Uri(completeUrl));
-                        foreach (var item in header)
-                            request.Headers.Add(item.Key, item.Value);
+                    foreach (var item in header)
+                        request.Headers.Add(item.Key, item.Value);
 
                     var response = await httpClient.SendAsync(request);
                     responseBody = await response.Content.ReadAsStringAsync();
                     return responseBody.DeSerializeJson<T>();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
+            }
+        }
+
+        public static async Task<string> GetAsync(string url, Dictionary<string, string> parameter, Dictionary<string, string> header)
+        {
+            string responseBody = string.Empty;
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var param = string.Empty;
+                    if (parameter.IsNotNull())
+                        foreach (var item in parameter)
+                            param += $"{item.Key}={item.Value}&";
+                    var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
+
+                    var request = new HttpRequestMessage(HttpMethod.Get, new Uri(completeUrl));
+                    foreach (var item in header)
+                        request.Headers.Add(item.Key, item.Value);
+
+                    var response = await httpClient.SendAsync(request);
+                    responseBody = await response.Content.ReadAsStringAsync();
+                    return responseBody;
                 }
             }
             catch (Exception e)
@@ -201,12 +244,62 @@ namespace Bat.Http
             return response.DeSerializeJson<T>();
         }
 
+        public static async Task<T> GetAsync<T>(HttpClient httpClient, string url, Dictionary<string, string> parameter, Dictionary<string, string> header) where T : class
+        {
+            string responseBody = string.Empty;
+            try
+            {
+                var param = string.Empty;
+                if (parameter.IsNotNull())
+                    foreach (var item in parameter)
+                        param += $"{item.Key}={item.Value}&";
+                var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(completeUrl));
+                foreach (var item in header)
+                    request.Headers.Add(item.Key, item.Value);
+
+                var response = await httpClient.SendAsync(request);
+                responseBody = await response.Content.ReadAsStringAsync();
+                return responseBody.DeSerializeJson<T>();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
+            }
+        }
+
+        public static async Task<string> GetAsync(HttpClient httpClient, string url, Dictionary<string, string> parameter, Dictionary<string, string> header)
+        {
+            string responseBody = string.Empty;
+            try
+            {
+                var param = string.Empty;
+                if (parameter.IsNotNull())
+                    foreach (var item in parameter)
+                        param += $"{item.Key}={item.Value}&";
+                var completeUrl = string.IsNullOrWhiteSpace(param) ? url : $"{url}?{param.Substring(0, param.Length - 1)}";
+
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(completeUrl));
+                foreach (var item in header)
+                    request.Headers.Add(item.Key, item.Value);
+
+                var response = await httpClient.SendAsync(request);
+                responseBody = await response.Content.ReadAsStringAsync();
+                return responseBody;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(responseBody, e);
+            }
+        }
+
 
 
 
         public static async Task<T> PostAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
-            string responseBody = string.Empty;
+            var responseBody = string.Empty;
             try
             {
                 using (var httpClient = new HttpClient())
@@ -244,9 +337,9 @@ namespace Bat.Http
                     return await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -290,9 +383,9 @@ namespace Bat.Http
                     return await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -387,9 +480,9 @@ namespace Bat.Http
                 var response = await httpClient.SendAsync(request);
                 return await response.Content.ReadAsStringAsync();
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -436,9 +529,9 @@ namespace Bat.Http
                     return await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -482,9 +575,9 @@ namespace Bat.Http
                     return await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -523,17 +616,16 @@ namespace Bat.Http
                 var response = await httpClient.SendAsync(request);
                 return await response.Content.ReadAsStringAsync();
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
 
 
 
-
-        public static async Task<T> DeleteAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
+        public static async Task<T> DeleteAsync<T>(string url, object contentValues = null, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
             string responseBody = string.Empty;
             try
@@ -541,7 +633,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+                    if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -557,14 +649,14 @@ namespace Bat.Http
             }
         }
 
-        public static async Task<string> DeleteAsync(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null)
+        public static async Task<string> DeleteAsync(string url, object contentValues = null, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                    request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+                    if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -573,13 +665,13 @@ namespace Bat.Http
                     return await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
-        public static async Task<T> DeleteAsync<T>(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
+        public static async Task<T> DeleteAsync<T>(string url, string contentJsonString = null, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
             string responseBody = string.Empty;
             try
@@ -587,7 +679,7 @@ namespace Bat.Http
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                    request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
+                    if (contentJsonString.IsNotNull()) request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -603,14 +695,14 @@ namespace Bat.Http
             }
         }
 
-        public static async Task<string> DeleteAsync(string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null)
+        public static async Task<string> DeleteAsync(string url, string contentJsonString = null, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
                     var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                    request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
+                    if (contentJsonString.IsNotNull()) request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                     if (header.IsNotNull())
                         foreach (var item in header)
                             request.Headers.Add(item.Key, item.Value);
@@ -619,20 +711,20 @@ namespace Bat.Http
                     return await response.Content.ReadAsStringAsync();
                 }
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
 
-        public static async Task<T> DeleteAsync<T>(HttpClient httpClient, string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
+        public static async Task<T> DeleteAsync<T>(HttpClient httpClient, string url, string contentJsonString = null, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
         {
             string responseBody = string.Empty;
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
+                if (contentJsonString.IsNotNull()) request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
@@ -647,12 +739,12 @@ namespace Bat.Http
             }
         }
 
-        public static async Task<string> DeleteAsync(HttpClient httpClient, string url, string contentJsonString, Dictionary<string, string> header = null, Encoding resultEncoding = null)
+        public static async Task<string> DeleteAsync(HttpClient httpClient, string url, string contentJsonString = null, Dictionary<string, string> header = null, Encoding resultEncoding = null)
         {
             try
             {
                 var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-                request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
+                if (contentJsonString.IsNotNull()) request.Content = new StringContent(contentJsonString, resultEncoding ?? Encoding.UTF8, "application/json");
                 if (header.IsNotNull())
                     foreach (var item in header)
                         request.Headers.Add(item.Key, item.Value);
@@ -660,9 +752,9 @@ namespace Bat.Http
                 var response = await httpClient.SendAsync(request);
                 return await response.Content.ReadAsStringAsync();
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -690,9 +782,9 @@ namespace Bat.Http
                 }
                 return null;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
@@ -717,9 +809,9 @@ namespace Bat.Http
                 }
                 return null;
             }
-            catch (Exception e)
+            catch
             {
-                throw e;
+                throw;
             }
         }
 
