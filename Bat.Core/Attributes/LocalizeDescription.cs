@@ -1,29 +1,26 @@
-﻿using System;
-using System.Resources;
-using System.ComponentModel;
+﻿using System.Resources;
 
-namespace Bat.Core
+namespace Bat.Core;
+
+public class LocalizeDescriptionAttribute : DescriptionAttribute
 {
-    public class LocalizeDescriptionAttribute : DescriptionAttribute
+    readonly string _resourceKey;
+    readonly ResourceManager _resource;
+
+    public LocalizeDescriptionAttribute(string Name, Type ResourceType)
     {
-        readonly string _resourceKey;
-        readonly ResourceManager _resource;
+        _resourceKey = Name;
+        _resource = new ResourceManager(ResourceType);
+    }
 
-        public LocalizeDescriptionAttribute(string Name, Type ResourceType)
+    public override string Description
+    {
+        get
         {
-            _resourceKey = Name;
-            _resource = new ResourceManager(ResourceType);
-        }
-
-        public override string Description
-        {
-            get
-            {
-                string displayName = _resource.GetString(_resourceKey);
-                return string.IsNullOrEmpty(displayName)
-                    ? string.Format("[[{0}]]", _resourceKey)
-                    : displayName;
-            }
+            string displayName = _resource.GetString(_resourceKey);
+            return string.IsNullOrEmpty(displayName)
+                ? string.Format("[[{0}]]", _resourceKey)
+                : displayName;
         }
     }
 }

@@ -1,17 +1,13 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿namespace Bat.Core;
 
-namespace Bat.Core
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+public sealed class BiggerThanZero : ValidationAttribute
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public sealed class BiggerThanZero : ValidationAttribute
+    public override bool IsValid(object value)
     {
-        public override bool IsValid(object value)
-        {
-            if (int.TryParse(value.ToString(), out int val))
-                if (int.Parse(value.ToString()) > 0) return true;
+        if (int.TryParse(value.ToString(), out int val))
+            if (int.Parse(value.ToString()) > 0) return true;
 
-            return false;
-        }
+        return false;
     }
 }

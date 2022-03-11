@@ -1,12 +1,11 @@
-﻿namespace Bat.Core
+﻿namespace Bat.Core;
+
+public enum SizeType
 {
-    public enum SizeType
-    {
-        Bit,
-        Byte,
-        KB,
-        MB,
-        GB,
-        TB
-    }
+    Bit,
+    Byte,
+    KB,
+    MB,
+    GB,
+    TB
 }

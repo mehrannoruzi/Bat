@@ -1,7 +1,6 @@
-﻿namespace Bat.Core
+﻿namespace Bat.Core;
+
+public class PagingListDetails<T> : PagingDetails
 {
-    public class PagingListDetails<T> : PagingDetails
-    {
-        public PagingList<T> Items { get; set; }
-    }
+    public PagingList<T> Items { get; set; }
 }

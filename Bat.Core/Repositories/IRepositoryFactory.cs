@@ -1,7 +1,6 @@
-﻿namespace Bat.Core
+﻿namespace Bat.Core;
+
+public interface IRepositoryFactory
 {
-    public interface IRepositoryFactory
-    {
-        IGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity;
-    }
+    IGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity;
 }

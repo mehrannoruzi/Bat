@@ -1,5 +1,4 @@
-﻿namespace Bat.Core
-{
-    public interface ITransientInjection
-    { }
-}
+﻿namespace Bat.Core;
+
+public interface ITransientInjection
+{ }

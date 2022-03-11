@@ -1,7 +1,6 @@
-﻿namespace Bat.Core
+﻿namespace Bat.Core;
+
+public interface IIsActiveProperty : IBaseProperties
 {
-    public interface IIsActiveProperty : IBaseProperties
-    {
-        bool IsActive { get; set; }
-    }
+    bool IsActive { get; set; }
 }

@@ -1,18 +1,14 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿namespace Bat.Core;
 
-namespace Bat.Core
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+public sealed class DoubleAttribute : ValidationAttribute
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public sealed class DoubleAttribute : ValidationAttribute
+    public override bool IsValid(object value)
     {
-        public override bool IsValid(object value)
-        {
-            if (value == null) return true;
+        if (value == null) return true;
 
-            double.TryParse(value.ToString(), out double result);
-            if (result != 0) return true;
-            else return false;
-        }
+        double.TryParse(value.ToString(), out double result);
+        if (result != 0) return true;
+        else return false;
     }
 }

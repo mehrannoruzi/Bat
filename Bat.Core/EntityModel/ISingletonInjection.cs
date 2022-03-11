@@ -1,5 +1,4 @@
-﻿namespace Bat.Core
-{
-    public interface ISingletonInjection
-    { }
-}
+﻿namespace Bat.Core;
+
+public interface ISingletonInjection
+{ }

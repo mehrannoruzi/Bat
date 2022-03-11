@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace Bat.Core;
 
-namespace Bat.Core
+public interface IInsertDateProperties : IBaseProperties
 {
-    public interface IInsertDateProperties : IBaseProperties
-    {
-        string InsertDateSh { get; set; }
-        DateTime InsertDateMi { get; set; }
-    }
+    string InsertDateSh { get; set; }
+    DateTime InsertDateMi { get; set; }
 }

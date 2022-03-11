@@ -1,11 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Bat.Core
+namespace Bat.Core;
+
+public class QueryFilterWithSelector<TEntity, TResult> : QueryFilter<TEntity> where TEntity : class
 {
-    public class QueryFilterWithSelector<TEntity, TResult> : QueryFilter<TEntity> where TEntity : class
-    {
-        public QueryFilterWithSelector() { AsNoTracking = true; }
-        public Expression<Func<TEntity, TResult>> Selector { set; get; }
-    }
+    public QueryFilterWithSelector() { AsNoTracking = true; }
+    public Expression<Func<TEntity, TResult>> Selector { set; get; }
 }

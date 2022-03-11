@@ -1,7 +1,6 @@
-﻿namespace Bat.Core
+﻿namespace Bat.Core;
+
+public interface ISoftDeleteProperty : IBaseProperties
 {
-    public interface ISoftDeleteProperty : IBaseProperties
-    {
-        bool IsDeleted { get; set; }
-    }
+    bool IsDeleted { get; set; }
 }

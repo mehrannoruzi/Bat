@@ -1,10 +1,7 @@
-﻿using System;
+﻿namespace Bat.Core;
 
-namespace Bat.Core
+public interface IModifyDateProperties : IBaseProperties
 {
-    public interface IModifyDateProperties : IBaseProperties
-    {
-        string ModifyDateSh { get; set; }
-        DateTime ModifyDateMi { get; set; }
-    }
+    string ModifyDateSh { get; set; }
+    DateTime ModifyDateMi { get; set; }
 }

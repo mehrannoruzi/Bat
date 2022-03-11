@@ -1,6 +1,4 @@
-﻿namespace Bat.Core
-{
-    public interface IBaseProperties
-    { }
+﻿namespace Bat.Core;
 
-}
+public interface IBaseProperties
+{ }

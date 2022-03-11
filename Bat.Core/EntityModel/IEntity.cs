@@ -1,5 +1,4 @@
-﻿namespace Bat.Core
-{
-    public interface IEntity : IBaseEntity
-    { }
-}
+﻿namespace Bat.Core;
+
+public interface IEntity : IBaseEntity
+{ }

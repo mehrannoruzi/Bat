@@ -1,19 +1,14 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using System.ComponentModel.DataAnnotations;
+﻿namespace Bat.Core;
 
-namespace Bat.Core
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
+public sealed class IpAttribute : ValidationAttribute
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    public sealed class IpAttribute : ValidationAttribute
+    private readonly Regex rgx = new(RegexPattern.Ip1);
+
+    public override bool IsValid(object value)
     {
-        private readonly Regex rgx = new Regex(RegexPattern.Ip1);
+        if (value != null) return rgx.IsMatch(value.ToString());
 
-        public override bool IsValid(object value)
-        {
-            if (value != null) return rgx.IsMatch(value.ToString());
-
-            return false;
-        }
+        return false;
     }
 }

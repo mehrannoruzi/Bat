@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace Bat.Core
+﻿namespace Bat.Core
 {
     //public class PagingQueryFilterWithSelector<TEntity, TResult> : PagingQueryFilter<TEntity> where TEntity : class
     //{
