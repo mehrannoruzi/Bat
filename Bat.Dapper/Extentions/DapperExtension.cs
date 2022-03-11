@@ -26,11 +26,11 @@ public static class DapperExtension
     /// <param name="transaction"></param>
     /// <param name="commandTimOut"></param>
     /// <returns></returns>
-    public static T ExecuteSpSingle<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
+    public static T ExecuteProcedure<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
         IDbTransaction transaction = null, int? commandTimOut = null)
         => sqlConnection.Query<T>(spName, parameters, transaction, false, commandTimOut, CommandType.StoredProcedure).FirstOrDefault();
 
-    public static async Task<T> ExecuteSpSingleAsync<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
+    public static async Task<T> ExecuteProcedureAsync<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
         IDbTransaction transaction = null, int? commandTimOut = null)
     {
         var result = await sqlConnection.QueryAsync<T>(spName, parameters, transaction, commandTimOut, CommandType.StoredProcedure);
@@ -48,15 +48,15 @@ public static class DapperExtension
     /// <param name="transaction"></param>
     /// <param name="commandTimOut"></param>
     /// <returns></returns>
-    public static IEnumerable<T> ExecuteSpList<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
+    public static IEnumerable<T> ExecuteProcedureList<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
     IDbTransaction transaction = null, int? commandTimOut = null)
     => sqlConnection.Query<T>(spName, parameters, transaction, false, commandTimOut, CommandType.StoredProcedure);
 
-    public static async Task<IEnumerable<T>> ExecuteSpListAsync<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
+    public static async Task<IEnumerable<T>> ExecuteProcedureListAsync<T>(this SqlConnection sqlConnection, string spName, object parameters = null,
         IDbTransaction transaction = null, int? commandTimOut = null)
         => await sqlConnection.QueryAsync<T>(spName, parameters, transaction, commandTimOut, CommandType.StoredProcedure);
 
-    public static async Task<bool> ExecuteSpCommandAsync(this SqlConnection sqlConnection, string spName, object parameters = null,
+    public static async Task<bool> ExecuteProcedureCommandAsync(this SqlConnection sqlConnection, string spName, object parameters = null,
         IDbTransaction transaction = null, int? commandTimOut = null)
         => await sqlConnection.ExecuteAsync(spName, parameters, transaction, commandTimOut, CommandType.StoredProcedure) > 0;
 
