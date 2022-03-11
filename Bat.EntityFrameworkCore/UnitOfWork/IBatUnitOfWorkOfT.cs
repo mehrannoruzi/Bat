@@ -1,11 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿namespace Bat.EntityFrameworkCore;
 
-namespace Bat.EntityFrameworkCore
+public interface IBatUnitOfWork<TContext> : IBatUnitOfWork, IDisposable where TContext : BatDbContext
 {
-    public interface IBatUnitOfWorkOfT<TContext> : IBatUnitOfWork, IDisposable where TContext : BatDbContext
-    {
-        Task<int> SaveChangesAsync(bool ensureAutoHistory = false, params IBatUnitOfWork[] unitOfWorks);
-    }
+    Task<int> SaveChangesAsync(bool ensureAutoHistory = false, params IBatUnitOfWork[] unitOfWorks);
 }

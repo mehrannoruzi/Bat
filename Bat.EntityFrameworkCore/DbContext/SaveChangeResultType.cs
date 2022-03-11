@@ -1,14 +1,13 @@
-﻿namespace Bat.EntityFrameworkCore
+﻿namespace Bat.EntityFrameworkCore;
+
+public enum SaveChangeResultType : int
 {
-    public enum SaveChangeResultType : int
-    {
-        Success = 1,
+    Success = 1,
 
-        DuplicateIndexKeyException = -2,
-        EntityValidationException = -3,
-        UpdateException = -4,
-        UpdateConcurrencyException = -5,
+    DuplicateIndexKeyException = -2,
+    EntityValidationException = -3,
+    UpdateException = -4,
+    UpdateConcurrencyException = -5,
 
-        UnknownException = -10
-    }
+    UnknownException = -10
 }

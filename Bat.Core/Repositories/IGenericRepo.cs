@@ -21,5 +21,5 @@ public interface IGenericRepo<TEntity> : ITransientInjection where TEntity : cla
     Task<PagingListDetails<TEntity>> GetPagingAsync(QueryFilter<TEntity> model = null);
     Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model);
 
-    Task<List<TEntity>> ExecuteQueryListAsync(string sql, params object[] parameters);
+    Task<List<TEntity>> ExecuteQueryAsync(string sql, params object[] parameters);
 }
