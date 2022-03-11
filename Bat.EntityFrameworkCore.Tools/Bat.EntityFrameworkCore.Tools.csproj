@@ -1,46 +1,51 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup Label="Globals">
-    <SccProjectName>SAK</SccProjectName>
-    <SccProvider>SAK</SccProvider>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccLocalPath>SAK</SccLocalPath>
-  </PropertyGroup>
+	<PropertyGroup Label="Globals">
+		<SccProjectName>SAK</SccProjectName>
+		<SccProvider>SAK</SccProvider>
+		<SccAuxPath>SAK</SccAuxPath>
+		<SccLocalPath>SAK</SccLocalPath>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.0</Version>
-    <Authors>Mehran Norouzi</Authors>
-    <Company>Mehran Norouzi</Company>
-    <Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application With EntityFrameworkCore.
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Version>1.0.0</Version>
+		<Authors>Mehran Norouzi</Authors>
+		<Company>Mehran Norouzi</Company>
+		<Description>
+			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application With EntityFrameworkCore.
 
-ForExample : Implementation Of Custom Entity Validation, Extension Method, Annotation, StoredProcedure ...</Description>
-    <Copyright>© All rights reserved.</Copyright>
-    <PackageIconUrl></PackageIconUrl>
-    <RepositoryType>Microsoft DevOps Server</RepositoryType>
-    <PackageTags>EntityValidation ExtensionMethod Annotation StoredProcedure ModelBuilder</PackageTags>
-    <PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
+			ForExample : Implementation Of Custom Entity Validation, Extension Method, Annotation, StoredProcedure ...
+		</Description>
+		<Copyright>© All rights reserved.</Copyright>
+		<PackageIconUrl></PackageIconUrl>
+		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<PackageTags>EntityValidation ExtensionMethod Annotation StoredProcedure ModelBuilder</PackageTags>
+		<PackageReleaseNotes>
+			For Contact Us Please Send Mail Or Call To :
 
-Tel : 09301919109
-Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
-    <PackageIcon>Bat.png</PackageIcon>
-    <NeutralLanguage>en-US</NeutralLanguage>
-  </PropertyGroup>
+			Tel : 09301919109
+			Mail : mehrannoruzi@gmail.com
+		</PackageReleaseNotes>
+		<PackageIcon>Bat.png</PackageIcon>
+		<NeutralLanguage>en-US</NeutralLanguage>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EFCore.BulkExtensions" Version="6.0.9" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="EFCore.BulkExtensions" Version="6.4.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Include="C:\Users\m.norouzi\Downloads\Bat.png">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Bat.EntityFrameworkCore\Bat.EntityFrameworkCore.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Bat.EntityFrameworkCore\Bat.EntityFrameworkCore.csproj" />
+	</ItemGroup>
 
 </Project>
