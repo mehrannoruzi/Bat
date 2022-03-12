@@ -11,6 +11,9 @@ public class PagingList<T> : List<T>
         PagingDetails.PageSize = pagingParameter.PageSize;
         PagingDetails.PageNumber = pagingParameter.PageNumber;
         PagingDetails.TotalPages = (int)Math.Ceiling(count / (double)pagingParameter.PageSize);
+        PagingDetails.HasNext = PagingDetails.PageNumber < PagingDetails.TotalPages;
+        PagingDetails.HasPrevious = PagingDetails.PageNumber > 1;
+
         AddRange(sourceList);
     }
 
