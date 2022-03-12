@@ -1,13 +1,11 @@
-﻿using Bat.Core;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Bat.AspNetCore
+namespace Bat.AspNetCore;
+
+public class BatExceptionLogingFilter : IExceptionFilter
 {
-    public class BatExceptionLogingFilter : IExceptionFilter
+    public void OnException(ExceptionContext context)
     {
-        public void OnException(ExceptionContext context)
-        {
-            FileLoger.Error(context.Exception);
-        }
+        FileLoger.Error(context.Exception);
     }
 }

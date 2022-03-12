@@ -1,70 +1,66 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace Bat.AspNetCore
+namespace Bat.AspNetCore;
+
+public static class CorsExtension
 {
-    public static class CorsExtension
+    public static void AddBatCors(this IServiceCollection services, string policyName, CorsPolicy corsPolicy)
     {
-        public static void AddBatCors(this IServiceCollection services, string policyName, CorsPolicy corsPolicy)
+        services.AddCors(option =>
         {
-            services.AddCors(option =>
-            {
-                option.AddPolicy(policyName, corsPolicy);
-            });
-        }
+            option.AddPolicy(policyName, corsPolicy);
+        });
+    }
 
-        public static void AddBatCors(this IServiceCollection services, string policyName, List<string> domains = null, List<string> headers = null, List<string> methods = null)
+    public static void AddBatCors(this IServiceCollection services, string policyName, List<string> domains = null, List<string> headers = null, List<string> methods = null)
+    {
+        var policyBuilder = new CorsPolicyBuilder();
+        var corsPolicy = domains == null
+                        ? policyBuilder.AllowAnyOrigin()
+                        : policyBuilder.WithOrigins(domains.ToArray());
+        corsPolicy = headers == null
+                        ? policyBuilder.AllowAnyHeader()
+                        : policyBuilder.WithHeaders(headers.ToArray());
+        corsPolicy = methods == null
+                        ? policyBuilder.AllowAnyMethod()
+                        : policyBuilder.WithMethods(methods.ToArray());
+
+        services.AddCors(option =>
         {
-            var policyBuilder = new CorsPolicyBuilder();
-            var corsPolicy = domains == null
-                            ? policyBuilder.AllowAnyOrigin()
-                            : policyBuilder.WithOrigins(domains.ToArray());
-            corsPolicy = headers == null
-                            ? policyBuilder.AllowAnyHeader()
-                            : policyBuilder.WithHeaders(headers.ToArray());
-            corsPolicy = methods == null
-                            ? policyBuilder.AllowAnyMethod()
-                            : policyBuilder.WithMethods(methods.ToArray());
-
-            services.AddCors(option =>
-            {
-                option.AddPolicy(policyName, policyBuilder.Build());
-            });
-        }
+            option.AddPolicy(policyName, policyBuilder.Build());
+        });
+    }
 
 
 
-        public static void UseBatCrossOriginResource(this IApplicationBuilder app, string policyName)
+    public static void UseBatCors(this IApplicationBuilder app, string policyName)
+    {
+        app.UseCors(policyName);
+    }
+
+    public static void UseBatCors(this IApplicationBuilder app)
+    {
+        app.UseCors(corsPolicyBuilder =>
         {
-            app.UseCors(policyName);
-        }
+            corsPolicyBuilder.AllowAnyHeader();
+            corsPolicyBuilder.AllowAnyMethod();
+            corsPolicyBuilder.AllowAnyOrigin();
+        });
+    }
 
-        public static void UseBatCrossOriginResource(this IApplicationBuilder app)
-        {
-            app.UseCors(corsPolicyBuilder =>
-            {
-                corsPolicyBuilder.AllowAnyHeader();
-                corsPolicyBuilder.AllowAnyMethod();
-                corsPolicyBuilder.AllowAnyOrigin();
-            });
-        }
+    public static void UseBatCors(this IApplicationBuilder app, List<string> domains = null, List<string> headers = null, List<string> methods = null)
+    {
+        var policyBuilder = new CorsPolicyBuilder();
+        var corsPolicy = domains == null
+                        ? policyBuilder.AllowAnyOrigin()
+                        : policyBuilder.WithOrigins(domains.ToArray());
+        corsPolicy = headers == null
+                        ? policyBuilder.AllowAnyHeader()
+                        : policyBuilder.WithHeaders(headers.ToArray());
+        corsPolicy = methods == null
+                        ? policyBuilder.AllowAnyMethod()
+                        : policyBuilder.WithMethods(methods.ToArray());
 
-        public static void UseBatCrossOriginResource(this IApplicationBuilder app, List<string> domains = null, List<string> headers = null, List<string> methods = null)
-        {
-            var policyBuilder = new CorsPolicyBuilder();
-            var corsPolicy = domains == null
-                            ? policyBuilder.AllowAnyOrigin()
-                            : policyBuilder.WithOrigins(domains.ToArray());
-            corsPolicy = headers == null
-                            ? policyBuilder.AllowAnyHeader()
-                            : policyBuilder.WithHeaders(headers.ToArray());
-            corsPolicy = methods == null
-                            ? policyBuilder.AllowAnyMethod()
-                            : policyBuilder.WithMethods(methods.ToArray());
-
-            app.UseCors(corsPolicyBuilder => corsPolicyBuilder = corsPolicy);
-        }
+        app.UseCors(corsPolicyBuilder => corsPolicyBuilder = corsPolicy);
     }
 }

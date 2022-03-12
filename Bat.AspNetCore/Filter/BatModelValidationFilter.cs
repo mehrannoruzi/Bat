@@ -1,7 +1,4 @@
-﻿using System;
-using Bat.Core;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace Bat.AspNetCore
@@ -13,7 +10,7 @@ namespace Bat.AspNetCore
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(new Response<object> { Message = context.ModelState.GetModelError() });
+                context.Result = new BadRequestObjectResult(new Response<object>(context.ModelState.GetModelError()));
                 await Task.CompletedTask;
             }
             else
@@ -24,7 +21,7 @@ namespace Bat.AspNetCore
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(new Response<object> { Message = context.ModelState.GetModelError() });
+                context.Result = new BadRequestObjectResult(new Response<object>(context.ModelState.GetModelError()));
             }
             else
                 base.OnActionExecuting(context);

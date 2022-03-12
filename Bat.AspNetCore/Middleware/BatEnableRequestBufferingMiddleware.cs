@@ -1,22 +1,18 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿namespace Bat.AspNetCore;
 
-namespace Bat.AspNetCore
+public class BatEnableRequestBufferingMiddleware
 {
-    public class BatEnableRequestBufferingMiddleware
+    private readonly RequestDelegate _next;
+
+    public BatEnableRequestBufferingMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public BatEnableRequestBufferingMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+    public async Task Invoke(HttpContext context)
+    {
+        context.Request.EnableBuffering();
 
-        public async Task Invoke(HttpContext context)
-        {
-            context.Request.EnableBuffering();
-
-            await _next(context);
-        }
+        await _next(context);
     }
 }
