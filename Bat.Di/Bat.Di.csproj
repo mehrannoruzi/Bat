@@ -15,7 +15,7 @@
 		<Company>Mehran Norouzi</Company>
 		<Product>Bat.Di</Product>
 		<Description>
-			This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Mvc Application.
+			This Package Contain Useful Library And Extention Method For Dependency Injection in High Tech .Net Application.
 
 			ForExample : ExtensionMethods For Dynamically Register Service And Componnent Base On Inherit From ITransientInjection, IScopedInjection Or ISingletonInjection
 		</Description>
@@ -42,7 +42,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+		<None Include="C:\Users\Mehran Norouzi\Downloads\Bat.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>

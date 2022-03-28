@@ -15,9 +15,9 @@
 		<Authors>Mehran Norouzi</Authors>
 		<Company>Mehran Norouzi</Company>
 		<Description>
-			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application With EntityFrameworkCore.
+			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Application With EntityFrameworkCore.
 
-			ForExample : Implementation Of Custom Entity Validation, Extension Method, Annotation, StoredProcedure ...
+			ForExample : Implementation Of Custom Entity Validation, Extension Method, Bulk Operation, Annotation, StoredProcedure ...
 		</Description>
 		<Copyright>© All rights reserved.</Copyright>
 		<PackageIconUrl></PackageIconUrl>
@@ -34,11 +34,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EFCore.BulkExtensions" Version="6.4.1" />
+		<PackageReference Include="EFCore.BulkExtensions" Version="6.4.2" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+		<None Include="C:\Users\Mehran Norouzi\Downloads\Bat.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>

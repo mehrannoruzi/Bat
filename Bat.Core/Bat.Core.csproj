@@ -15,7 +15,7 @@
 		<Company>Mehran Norouzi</Company>
 		<Product>Bat.Core</Product>
 		<Description>
-			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Core Application.
+			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Application.
 
 			ForExample : Implementation Of Convertor, FileOperation, FileLoger, Encryption, Hash, Validation,  ...
 		</Description>
@@ -56,7 +56,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+		<None Include="C:\Users\Mehran Norouzi\Downloads\Bat.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>

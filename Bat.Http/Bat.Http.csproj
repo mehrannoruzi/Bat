@@ -13,7 +13,7 @@
 		<Authors>Mehran Norouzi</Authors>
 		<Company>Mehran Norouzi</Company>
 		<Description>
-			This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Application.
+			This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Application.
 
 			ForExample : Implementation Of HttpRequestTools, ClientInfo, ExtentionMethod, ...
 		</Description>
@@ -37,7 +37,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="C:\Users\m.norouzi\Downloads\Bat.png">
+		<None Include="C:\Users\Mehran Norouzi\Downloads\Bat.png">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
