@@ -12,6 +12,6 @@ public class RepositoryFactory
     }
 
 
-    public IGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity
-        => _serviceProvider.GetService<IGenericRepo<T>>();
+    public IEFGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity
+        => _serviceProvider.GetService<IEFGenericRepo<T>>();
 }

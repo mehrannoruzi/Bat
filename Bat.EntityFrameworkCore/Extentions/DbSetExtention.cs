@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace Bat.EntityFrameworkCore;
+﻿namespace Bat.EntityFrameworkCore;
 
 public static class DbSetExtention
 {

@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-namespace Bat.EntityFrameworkCore;
+﻿namespace Bat.EntityFrameworkCore;
 
 public static class DbContextExtention
 {

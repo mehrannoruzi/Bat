@@ -1,6 +1,6 @@
 ﻿namespace Bat.EntityFrameworkCore;
 
-public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : class, IBaseEntity
+public class EfGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : class, IBaseEntity
 {
     public DbSet<TEntity> _dbSet;
 
@@ -46,6 +46,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         return await query.AnyAsync(model.Token);
     }
@@ -56,6 +57,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         return await query.CountAsync(model.Token);
     }
@@ -66,6 +68,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         return await query.LongCountAsync(model.Token);
     }
@@ -76,6 +79,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.OrderBy != null) query = model.OrderBy(query);
         return await query.FirstOrDefaultAsync(model.Token);
@@ -87,6 +91,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.OrderBy != null) query = model.OrderBy(query);
         return await query.Select(model.Selector).FirstOrDefaultAsync(model.Token);
@@ -99,6 +104,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
         if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
         return await query.ToListAsync();
@@ -111,6 +117,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
         if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
         return await query.Select(model.Selector).ToListAsync();
@@ -123,6 +130,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
         return await query.ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 100 });
     }
@@ -134,6 +142,7 @@ public class EfGenericRepo<TEntity> : IGenericRepo<TEntity> where TEntity : clas
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
         return await query.Select(model.Selector).ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 100 });
     }
