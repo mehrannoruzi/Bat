@@ -12,7 +12,7 @@ public class RegexPattern
 
     public const string Url = @"(?i)\b((?:[a-z][\w-]+:(?:/{1,3}|[a-z0-9%])|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'"".,<>?«»“”‘’]))";
 
-    public const string PersianDateTime = @"(13\d{2})[-/](\d{1,2})[-/](\d{1,2})([ -]*(\d{1,2}:?){2,3})?";
+    public const string PersianDateTime = @"(1\d{3})[-/](\d{1,2})[-/](\d{1,2})([ -]*(\d{1,2}:?){2,3})?";
 
     public const string LatinDateTime = @"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})";
 
