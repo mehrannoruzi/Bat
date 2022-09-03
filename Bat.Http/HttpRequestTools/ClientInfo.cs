@@ -7,6 +7,17 @@ public static class ClientInfo
         return httpContext?.Connection?.RemoteIpAddress?.ToString();
     }
 
+    public static string GetIPBehindCloud(HttpContext httpContext)
+    {
+        var ip = httpContext?.Request?.Headers["CF-Connecting-IP"];
+        if(!string.IsNullOrWhiteSpace(ip)) return ip;
+
+        ip = httpContext?.Request?.Headers["True-Client-IP"];
+        if (!string.IsNullOrWhiteSpace(ip)) return ip;
+
+        return httpContext?.Connection?.RemoteIpAddress?.ToString();
+    }
+
     public static string GetIP(IHttpContextAccessor httpContextAccessor)
     {
         try
