@@ -40,7 +40,7 @@ public class AesAlgorithm
         var decryptedByteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
         memoryStream.Close();
         cryptoStream.Close();
-        string plainText = Encoding.UTF8.GetString(plainTextBytes, 0, decryptedByteCount);
+        string plainText = Encoding.UTF8.GetString(plainTextBytes, 0, plainTextBytes.Length);
 
         return plainText;
     }
