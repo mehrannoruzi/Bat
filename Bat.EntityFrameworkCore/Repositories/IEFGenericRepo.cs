@@ -2,14 +2,18 @@
 
 public interface IEFGenericRepo<TEntity> : ITransientInjection where TEntity : class, IBaseEntity
 {
+    void Add(TEntity model);
     Task AddAsync(TEntity model, CancellationToken token = default);
+    void AddRange(IEnumerable<TEntity> models);
     Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken token = default);
     void Update(TEntity model);
-    void UpdateRange(IEnumerable<TEntity> models);
     void UpdateUnAttached(TEntity model);
+    void UpdateRange(IEnumerable<TEntity> models);
+    void UpdateRange(Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setProperties);
     void Delete(TEntity model);
-    void DeleteRange(IEnumerable<TEntity> models);
     void DeleteUnAttached(TEntity model);
+    void DeleteRange(IEnumerable<TEntity> models);
+    Task DeleteRange(Expression<Func<TEntity, bool>> Conditions);
     Task<TEntity> FindAsync(object id, CancellationToken token = default);
     Task<bool> AnyAsync(QueryFilter<TEntity> model = null);
     Task<int> CountAsync(QueryFilter<TEntity> model = null);

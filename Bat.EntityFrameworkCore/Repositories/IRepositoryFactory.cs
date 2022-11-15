@@ -2,5 +2,5 @@
 
 public interface IRepositoryFactory
 {
-    IEFGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity;
+    EFGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity;
 }

@@ -1,10 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace Bat.EntityFrameworkCore;
 
-namespace Bat.EntityFrameworkCore;
-
-public class RepositoryFactory
+public class RepositoryFactory : IRepositoryFactory
 {
-    private IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider;
 
     public RepositoryFactory(IServiceProvider serviceProvider)
     {
@@ -12,6 +10,8 @@ public class RepositoryFactory
     }
 
 
-    public IEFGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity
-        => _serviceProvider.GetService<IEFGenericRepo<T>>();
+    public EFGenericRepo<T> GetRepository<T>() where T : class, IBaseEntity
+        => (EFGenericRepo<T>)_serviceProvider.GetService<IEFGenericRepo<T>>();
+        // => _serviceProvider.GetRequiredService<EFGenericRepo<T>>();
+
 }

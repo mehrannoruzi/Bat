@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace Bat.EntityFrameworkCore;
+﻿namespace Bat.EntityFrameworkCore;
 
 public interface IBatUnitOfWork : IRepositoryFactory, IDisposable
 {
