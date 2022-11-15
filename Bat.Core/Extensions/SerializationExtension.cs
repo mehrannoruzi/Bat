@@ -1,6 +1,5 @@
 ﻿using System.Xml;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
 using System.Xml.Serialization;
 
 namespace Bat.Core;
@@ -66,58 +65,89 @@ public static class SerializationExtension
     public static string SerializeToJson(this object jsonObject)
     {
         if (jsonObject == null) return string.Empty;
-        return JsonConvert.SerializeObject(jsonObject);
+
+        return JsonSerializer.Serialize(jsonObject);
     }
 
     public static string SerializeToJson(this object jsonObject, int depth)
     {
         if (jsonObject == null) return string.Empty;
 
-        var setting = new JsonSerializerSettings { MaxDepth = depth };
-        return JsonConvert.SerializeObject(jsonObject, setting);
+        var options = new JsonSerializerOptions { MaxDepth = depth };
+        return JsonSerializer.Serialize(jsonObject, options);
     }
 
-    public static string SerializeToJson(this object jsonObject, JsonSerializerSettings settings)
+    public static string SerializeToJson(this object jsonObject, JsonSerializerOptions options)
     {
         if (jsonObject == null) return string.Empty;
 
-        return JsonConvert.SerializeObject(jsonObject, settings);
+        return JsonSerializer.Serialize(jsonObject, options);
     }
 
     public static T DeSerializeJson<T>(this string json)
     {
-        if (string.IsNullOrEmpty(json)) return default;
+        if (string.IsNullOrWhiteSpace(json)) return default;
 
-        return JsonConvert.DeserializeObject<T>(json);
+        return JsonSerializer.Deserialize<T>(json);
     }
 
     public static T DeSerializeJson<T>(this string json, int depth)
     {
-        if (string.IsNullOrEmpty(json)) throw new ArgumentNullException("json");
+        if (string.IsNullOrWhiteSpace(json)) return default;
 
-        var setting = new JsonSerializerSettings { MaxDepth = depth };
-        return JsonConvert.DeserializeObject<T>(json as string, setting);
+        var options = new JsonSerializerOptions { MaxDepth = depth };
+        return JsonSerializer.Deserialize<T>(json, options);
     }
 
-    public static T DeSerializeJson<T>(this string json, JsonSerializerSettings settings)
+    public static T DeSerializeJson<T>(this string json, JsonSerializerOptions options)
     {
-        if (string.IsNullOrEmpty(json)) throw new ArgumentNullException("json");
+        if (string.IsNullOrWhiteSpace(json)) return default;
 
-        return JsonConvert.DeserializeObject<T>(json as string, settings);
+        return JsonSerializer.Deserialize<T>(json as string, options);
     }
 
-    public static dynamic DeSerializeJson(this string json)
+    public static dynamic DeSerializeJsonToDynamic(this string json)
     {
-        if (string.IsNullOrEmpty(json)) return null;
+        if (string.IsNullOrWhiteSpace(json)) return null;
 
-        return JToken.Parse(json);
+        return JsonSerializer.Deserialize<dynamic>(json);
     }
 
-    public static dynamic DeSerializeJson(this string json, JsonLoadSettings settings)
+    public static dynamic DeSerializeJsonToDynamic(this string json, int depth)
     {
-        if (string.IsNullOrEmpty(json)) return string.Empty;
+        if (string.IsNullOrWhiteSpace(json)) return default;
 
-        return JToken.Parse(json, settings);
+        var options = new JsonSerializerOptions { MaxDepth = depth };
+        return JsonSerializer.Deserialize<dynamic>(json, options);
+    }
+
+    public static dynamic DeSerializeJsonToDynamic(this string json, JsonSerializerOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return string.Empty;
+
+        return JsonSerializer.Deserialize<dynamic>(json, options);
+    }
+
+    public static JsonElement DeSerializeJson(this string json)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return default;
+
+        return JsonSerializer.Deserialize<JsonElement>(json);
+    }
+
+    public static JsonElement DeSerializeJsonToJsonElement(this string json, int depth)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return default;
+
+        var options = new JsonSerializerOptions { MaxDepth = depth };
+        return JsonSerializer.Deserialize<JsonElement>(json, options);
+    }
+
+    public static JsonElement DeSerializeJsonToJsonElement(this string json, JsonSerializerOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(json)) return default;
+
+        return JsonSerializer.Deserialize<JsonElement>(json, options);
     }
 
 }

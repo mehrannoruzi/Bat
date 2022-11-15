@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Bat.Core;
+﻿namespace Bat.Core;
 
 public class MenuModel
 {
@@ -25,5 +23,7 @@ public class MenuModel
     public bool HavePath { get { return !string.IsNullOrWhiteSpace(Path); } }
 
     [NotMapped]
-    public List<MenuModel> ChildMenus { get { return JsonConvert.DeserializeObject<List<MenuModel>>(Menus ?? "[]"); } }
+    public List<MenuModel> ChildMenus { get { return (Menus ?? "[]").DeSerializeJson<List<MenuModel>>(); } }
+    //public List<MenuModel> ChildMenus { get { return JsonConvert.DeserializeObject<List<MenuModel>>(Menus ?? "[]"); } }
+
 }
