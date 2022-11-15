@@ -72,6 +72,7 @@ public static class PublicExtension
     }
 
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public static string GetCaptcha(string text)
     {
         var bitmap = new Bitmap(1, 1);
@@ -108,6 +109,7 @@ public static class PublicExtension
         return Convert.ToBase64String(ms.ToArray());
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public static string GetCaptcha2(string text)
     {
         var bitmap = new Bitmap(1, 1);

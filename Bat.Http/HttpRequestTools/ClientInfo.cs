@@ -52,6 +52,7 @@ public static class ClientInfo
         else if (userAgent.Contains("Windows NT 6.2")) os = "Windows 8";
         else if (userAgent.Contains("Windows NT 6.3")) os = "Windows 8.1";
         else if (userAgent.Contains("Windows NT 10")) os = "Windows 10";
+        else if (userAgent.Contains("Windows NT 11")) os = "Windows 11";
         else if (userAgent.Contains("Postman")) { os = "Postman"; version = GetRequestOsVersion(userAgent, os); }
         else os = "Unknown";
     }
@@ -61,7 +62,7 @@ public static class ClientInfo
         if (os == null) throw new ArgumentNullException(nameof(os));
 
         var version = string.Empty;
-        var temp = userAgent.Substring(userAgent.IndexOf(os) + os.Length).TrimStart();
+        var temp = userAgent[(userAgent.IndexOf(os) + os.Length)..].TrimStart();
         if (string.IsNullOrWhiteSpace(temp) | temp.StartsWith(".")) return version;
 
         foreach (var character in temp)
@@ -89,7 +90,7 @@ public static class ClientInfo
     {
         version = "0.0";
         browser = "Unknown";
-        var result = userAgent.Substring(userAgent.LastIndexOf(")") + 1).Trim();
+        var result = userAgent[(userAgent.LastIndexOf(")") + 1)..].Trim();
 
         if (result.Contains("Edge"))
         {
@@ -138,7 +139,7 @@ public static class ClientInfo
         var version = string.Empty;
         if (browser == "Unknown") return "0.0";
 
-        var temp = userAgent.Substring(userAgent.IndexOf(browser) + browser.Length + 1).TrimStart();
+        var temp = userAgent[(userAgent.IndexOf(browser) + browser.Length + 1)..].TrimStart();
         if (string.IsNullOrWhiteSpace(temp) | temp.StartsWith(".")) return version;
 
         foreach (var character in temp)
@@ -174,32 +175,22 @@ public static class ClientInfo
 
     public static string GetRequestDeviceManufacture(string os)
     {
-        string manufacture;
-        switch (os)
+        string manufacture = os switch
         {
-            case "Unity":
-            case "Windows XP":
-            case "Windows Vista":
-            case "Windows 7":
-            case "Windows 8":
-            case "Windows 8.1":
-            case "Windows 10":
-            case "Windows Phone":
-                manufacture = $"Microsoft {os}";
-                break;
-            case "IOS":
-            case "Mac OS":
-                manufacture = $"Apple {os}";
-                break;
-            case "Black Berry":
-                manufacture = os;
-                break;
-
-            default:
-                manufacture = "Unknown";
-                break;
-        }
-
+            "Unity" 
+            or "Windows XP" 
+            or "Windows Vista" 
+            or "Windows 7" 
+            or "Windows 8" 
+            or "Windows 8.1" 
+            or "Windows 10" 
+            or "Windows 11" 
+            or "Windows Phone" => $"Microsoft {os}",
+            "IOS" 
+            or "Mac OS" => $"Apple {os}",
+            "Black Berry" => os,
+            _ => "Unknown",
+        };
         return manufacture;
     }
 
@@ -238,7 +229,7 @@ public static class ClientInfo
         {
             var requestDetails = GetRequestDetails(httpContext);
             var ip = GetIP(httpContext);
-            var isMobile = requestDetails == null ? false : requestDetails.IsMobile;
+            var isMobile = requestDetails != null && requestDetails.IsMobile;
             var os = $"{requestDetails?.OsName} {requestDetails?.OsVersion}";
             var device = $"{requestDetails?.Manufacture} {requestDetails?.Model}";
             var application = $"{requestDetails?.BrowserName} {requestDetails?.BrowserVersion}";
@@ -247,9 +238,9 @@ public static class ClientInfo
             {
                 IsMobile = isMobile,
                 IP = ip,
-                Os = os.Length > 25 ? os.Substring(0, 25) : os,
-                Device = device.Length > 50 ? device.Substring(0, 50) : device,
-                Application = application.Length > 50 ? application.Substring(0, 50) : application
+                Os = os.Length > 25 ? os[..25] : os,
+                Device = device.Length > 50 ? device[..50] : device,
+                Application = application.Length > 50 ? application[..50] : application
             };
         }
         catch

@@ -219,7 +219,7 @@ public static class HttpRequestTools
     public static async Task<T> PostAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
     {
         var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
@@ -233,7 +233,7 @@ public static class HttpRequestTools
     public static async Task<string> PostAsync(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url));
-        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
@@ -340,7 +340,7 @@ public static class HttpRequestTools
     public static async Task<T> PutAsync<T>(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
     {
         var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
-        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
@@ -354,7 +354,7 @@ public static class HttpRequestTools
     public static async Task<string> PutAsync(string url, object contentValues, Dictionary<string, string> header = null, Encoding resultEncoding = null)
     {
         var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url));
-        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+        request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
@@ -423,7 +423,7 @@ public static class HttpRequestTools
     public static async Task<T> DeleteAsync<T>(string url, object contentValues = null, Dictionary<string, string> header = null, Encoding resultEncoding = null) where T : class
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
@@ -437,7 +437,7 @@ public static class HttpRequestTools
     public static async Task<string> DeleteAsync(string url, object contentValues = null, Dictionary<string, string> header = null, Encoding resultEncoding = null)
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore }), resultEncoding ?? Encoding.UTF8, "application/json");
+        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
