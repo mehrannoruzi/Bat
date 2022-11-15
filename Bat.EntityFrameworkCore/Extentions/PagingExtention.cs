@@ -22,4 +22,5 @@ public static class PagingExtention
             HasNext = list.PagingDetails.HasNext
         };
     }
+
 }
