@@ -3,9 +3,13 @@
 public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : class, IBaseEntity
 {
     public DbSet<TEntity> _dbSet;
+    private readonly DbContext _context;
 
     public EFGenericRepo(DbContext context)
-        => _dbSet = context.Set<TEntity>();
+    {
+        _context = context;
+        _dbSet = context.Set<TEntity>();
+    }
 
 
     public void Add(TEntity model)
@@ -23,10 +27,16 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
     public void Update(TEntity model)
         => _dbSet.Update(model);
 
-    public void UpdateUnAttached(TEntity model)
+    public void UpdateSpecificProperties(TEntity entity, List<string> updatedProperties)
     {
-        _dbSet.Attach(model);
-        _dbSet.Update(model);
+        foreach (var property in updatedProperties)
+            _context.Entry(entity).Property(property).IsModified = true;
+    }
+
+    public void UpdateSpecificProperties(TEntity entity, params Expression<Func<TEntity, object>>[] updatedProperties)
+    {
+        foreach (var property in updatedProperties)
+            _context.Entry(entity).Property(property).IsModified = true;
     }
 
     public void UpdateRange(IEnumerable<TEntity> models)
