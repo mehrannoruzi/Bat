@@ -1,6 +1,6 @@
 ﻿using global::RabbitMQ.Client;
 
-namespace Bat.MessagingQueue;
+namespace Bat.Queue;
 
 public class Producer
 {

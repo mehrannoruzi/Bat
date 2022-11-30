@@ -1,7 +1,7 @@
 ﻿using global::RabbitMQ.Client;
 using global::RabbitMQ.Client.Events;
 
-namespace Bat.MessagingQueue;
+namespace Bat.Queue;
 
 public class Consumer
 {
