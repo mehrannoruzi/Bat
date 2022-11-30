@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Bat.Core;
+namespace Bat.Tools;
 
 public static class EnumExtension
 {
@@ -36,15 +36,15 @@ public static class EnumExtension
         else return enumObj.ToString();
     }
 
-    public static IEnumerable<PropertyInfo> GetEnumElements<T>() where T : Enum
+    public static IEnumerable<Core.PropertyInfo> GetEnumElements<T>() where T : Enum
     {
-        var result = new List<PropertyInfo>();
+        var result = new List<Core.PropertyInfo>();
         if (typeof(T).BaseType == typeof(Enum))
         {
             foreach (var item in Enum.GetValues(typeof(T)))
             {
                 Enum val = Enum.Parse(typeof(T), item.ToString()) as Enum;
-                result.Add(new PropertyInfo
+                result.Add(new Core.PropertyInfo
                 {
                     Name = item.ToString(),
                     Type = item.GetType().Name,

@@ -4,11 +4,6 @@ namespace Bat.Core;
 
 public class ExceptionBusiness
 {
-    /// <summary>
-    /// Get Caller Method Name
-    /// </summary>
-    /// <param name="error">Exception</param>
-    /// <returns>ExceptionDetails</returns>
     public static ExceptionDetails GetCallerMethodName(Exception error)
     {
         var result = new ExceptionDetails();
@@ -46,11 +41,6 @@ public class ExceptionBusiness
         }
     }
 
-    /// <summary>
-    /// Get Caller Method Name In AOP Mode
-    /// </summary>
-    /// <param name="error">Exception</param>
-    /// <returns>ExceptionDetails</returns>
     public static ExceptionDetails AOPGetCallerMethodName(Exception error)
     {
         var result = new ExceptionDetails();

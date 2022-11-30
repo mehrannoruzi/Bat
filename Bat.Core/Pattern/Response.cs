@@ -7,19 +7,28 @@ public class Response<T> : IResponse<T>
 
     public Response(string errorMessage)
     {
-        IsSuccessful = false;
+        IsSuccess = false;
         Message = errorMessage;
+    }
+
+    public Response(string errorMessage, int resultCode)
+    {
+        IsSuccess = false;
+        Message = errorMessage;
+        ResultCode = resultCode;
     }
 
     public Response(T result, string message = null)
     {
-        IsSuccessful = true;
+        IsSuccess = true;
         Message = message;
         Result = result;
     }
 
-    public bool IsSuccessful { get; set; }
+
+    public bool IsSuccess { get; set; }
     public string Message { get; set; }
     public T Result { get; set; }
     public int ResultCode { get; set; } = 200;
+    public DateTime ExecutionTime => DateTime.Now;
 }

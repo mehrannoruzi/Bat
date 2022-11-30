@@ -89,8 +89,20 @@ public static class ValidatorExtension
     {
         if (string.IsNullOrWhiteSpace(persianDate)) return false;
 
-        var regex = new Regex(RegexPattern.PersianDateTime);
+        var regex = new Regex(RegexPattern.PersianDate);
         if (!regex.Match(persianDate).Success) return false;
+
+        return true;
+    }
+
+    public static bool IsPicture(this string fileNameWithExtension)
+    {
+        var fileExtention = Path.GetExtension(fileNameWithExtension);
+        if (!fileExtention.ToLower().Contains("jpg") ||
+                !fileExtention.ToLower().Contains("jpeg") ||
+                !fileExtention.ToLower().Contains("png") ||
+                !fileExtention.ToLower().Contains("gif") ||
+                !fileExtention.ToLower().Contains("bmp")) return false;
 
         return true;
     }

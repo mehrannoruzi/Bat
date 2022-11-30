@@ -150,7 +150,7 @@ public abstract class BatDbContext : DbContext, IBatDbContext
         try
         {
             var validationError = this.ValidateContext();
-            if (validationError.Count() > 0)
+            if (validationError.Count > 0)
             {
                 #region Validation Exception
                 result.IsSuccessful = false;

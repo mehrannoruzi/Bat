@@ -2,8 +2,9 @@
 
 public interface IResponse<TResult>
 {
-    bool IsSuccessful { get; set; }
+    bool IsSuccess { get; set; }
     string Message { get; set; }
     TResult Result { get; set; }
     int ResultCode { get; set; }
+    DateTime ExecutionTime { get; }
 }

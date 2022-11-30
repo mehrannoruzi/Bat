@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace Bat.AspNetCore;
 
@@ -35,7 +36,7 @@ public class BatJwtParserMiddleware
 
                     context.Response.ContentType = "application/Json";
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    await context.Response.Body.WriteAsync(response, 0, response.Length);
+                    await context.Response.Body.WriteAsync(response);
                 }
 
                 var userClaims = _jwtService.GetClaimsPrincipal(token, _jwtSettings);
@@ -53,7 +54,7 @@ public class BatJwtParserMiddleware
                         isSuccessful = false,
                         message = "UnAuthorized Access To Api !. Token Not Sent.",
                     }.SerializeToJson());
-                    await context.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+                    await context.Response.Body.WriteAsync(bytes);
                 }
             }
 
@@ -90,7 +91,7 @@ public class BatJwtParserMiddleware
 
             context.Response.ContentType = "application/Json";
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-            await context.Response.Body.WriteAsync(response, 0, response.Length);
+            await context.Response.Body.WriteAsync(response);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Bat.Core;
+namespace Bat.Tools;
 
 public static class NumberExtension
 {
@@ -125,12 +125,6 @@ public static class NumberExtension
             return number.ToString("##,###") + " ریال ";
     }
 
-    /// <summary>
-    /// متد تبدیل عدد به حروف فارسی
-    /// </summary>
-    /// <param name="number">عدد ورودی</param>
-    /// <param name="level">سطح تبدیل </param>
-    /// <returns>خروجی حروف تبدیل شده</returns>
     private static string ToText(long number, int level)
     {
         var numstr = new string[][]
@@ -196,11 +190,6 @@ public static class NumberExtension
     }
 
 
-    /// <summary>
-    /// برداشتن کاراکتر های . و , از روی عدد
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string ToPlainNumber(this string number)
     {
         if (!IsNumber(number)) return number;
@@ -211,11 +200,6 @@ public static class NumberExtension
         return result;
     }
 
-    /// <summary>
-    /// تبدیل عدد به عددی که 3کاراکتر 3کاراکتر جدا شده است
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string To3DigitSplited(this long number, char symbol = ',')
     {
         if (number == 0) return "0";
@@ -223,11 +207,6 @@ public static class NumberExtension
         else return string.Format("{0:N0}", long.Parse(number.ToString().Replace(",", "")));
     }
 
-    /// <summary>
-    /// تبدیل عدد به عددی که 3کاراکتر 3کاراکتر جدا شده است
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string To3DigitSplited(this int number)
     {
         if (number == 0) return "0";
@@ -235,11 +214,6 @@ public static class NumberExtension
         else return string.Format("{0:N0}", int.Parse(number.ToString().Replace(",", "")));
     }
 
-    /// <summary>
-    /// تبدیل عدد به حروف با فرمت خاص
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string ToNormalNumber(this long number)
     {
         try
@@ -290,11 +264,6 @@ public static class NumberExtension
         }
     }
 
-    /// <summary>
-    /// تبدیل عدد به حروف با فرمت خاص
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string ToNormalNumber(this int number)
     {
         try
@@ -345,21 +314,11 @@ public static class NumberExtension
         }
     }
 
-    /// <summary>
-    /// تبدیل عدد به حروف
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string ToText(this long number)
     {
         return ToText(number, 1);
     }
 
-    /// <summary>
-    /// تبدیل عدد به حروف
-    /// </summary>
-    /// <param name="number">عدد مورد نظر</param>
-    /// <returns></returns>
     public static string ToText(this int number)
     {
         return ToText(number, 1);

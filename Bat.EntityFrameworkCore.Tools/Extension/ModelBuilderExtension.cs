@@ -46,20 +46,5 @@ public static class ModelBuilderExtension
     {
         foreach (var assembly in assemblies)
             modelBuilder.ApplyConfigurationsFromAssembly(assembly);
-
-        //MethodInfo applyGenericMethod = typeof(ModelBuilder).GetMethods().First(m => m.Name == nameof(ModelBuilder.ApplyConfiguration));
-        //IEnumerable<Type> types = assemblies.SelectMany(a => a.GetExportedTypes())
-        //                                    .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic);
-        //foreach (var type in types)
-        //{
-        //    foreach (var iface in type.GetInterfaces())
-        //    {
-        //        if (iface.IsConstructedGenericType && iface.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>))
-        //        {
-        //            MethodInfo applyConcreteMethod = applyGenericMethod.MakeGenericMethod(iface.GenericTypeArguments[0]);
-        //            applyConcreteMethod.Invoke(modelBuilder, new object[] { Activator.CreateInstance(type) });
-        //        }
-        //    }
-        //}
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Bat.Core;
+namespace Bat.Tools;
 
 public static class ExpressionExtension
 {

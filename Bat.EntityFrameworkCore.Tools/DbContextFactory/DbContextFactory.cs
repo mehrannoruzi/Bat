@@ -2,16 +2,16 @@
 
 public static class DbContextFactory
 {
-    private static object _lock = new();
+    private static readonly object _lock = new();
+    public static readonly string _connectionString;
     private static SqlConnection _sqlConnection = null;
-    public static string _connectionString = string.Empty;
-    private static readonly Dictionary<string, object> _contextPool = new Dictionary<string, object>();
+    private static readonly Dictionary<string, object> _contextPool = new();
 
     public static BatDbContext GetInstance<TDbContext>() where TDbContext : BatDbContext, new()
     {
         lock (_lock)
         {
-            if (_sqlConnection == null) _sqlConnection = new SqlConnection(_connectionString);
+            _sqlConnection ??= new SqlConnection(_connectionString);
 
             var connectioOptions = new DbContextOptionsBuilder<TDbContext>()
                          .UseSqlServer(_sqlConnection).Options;
@@ -30,7 +30,7 @@ public static class DbContextFactory
     {
         lock (_lock)
         {
-            if (_sqlConnection == null) _sqlConnection = new SqlConnection(connectionString);
+            _sqlConnection ??= new SqlConnection(connectionString);
 
             var connectioOptions = new DbContextOptionsBuilder<TDbContext>()
                          .UseSqlServer(_sqlConnection).Options;

@@ -48,6 +48,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Bat.Http\Bat.Http.csproj" />
+		<ProjectReference Include="..\Bat.Tools\Bat.Tools.csproj" />
 	</ItemGroup>
 
 

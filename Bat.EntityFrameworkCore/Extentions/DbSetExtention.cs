@@ -24,7 +24,7 @@ public static class DbSetExtention
                 fieldValue = field.GetValue(entry);
                 Json += ("\"" + field.Name + "\":\"" + (fieldValue == null ? string.Empty : fieldValue.ToString()) + "\",");
             }
-            return Json.Substring(0, Json.Length - 1) + "}";
+            return Json[..^1] + "}";
         }
         catch
         {

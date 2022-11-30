@@ -2,21 +2,21 @@
 
 public enum FileType : byte
 {
-    [LocalizeDescription(nameof(DisplayName.Unknown), typeof(DisplayName))]
+    [Description(nameof(DisplayName.Unknown))]
     Unknown = 0,
 
-    [LocalizeDescription(nameof(DisplayName.Image), typeof(DisplayName))]
+    [Description(nameof(DisplayName.Image))]
     Image = 1,
 
-    [LocalizeDescription(nameof(DisplayName.Document), typeof(DisplayName))]
+    [Description(nameof(DisplayName.Document))]
     Document = 2,
 
-    [LocalizeDescription(nameof(DisplayName.Archive), typeof(DisplayName))]
+    [Description(nameof(DisplayName.Archive))]
     Archive = 3,
 
-    [LocalizeDescription(nameof(DisplayName.Audio), typeof(DisplayName))]
+    [Description(nameof(DisplayName.Audio))]
     Audio = 4,
 
-    [LocalizeDescription(nameof(DisplayName.Video), typeof(DisplayName))]
+    [Description(nameof(DisplayName.Video))]
     Video = 5
 }

@@ -2,7 +2,7 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Bat.AspNetCore.Filter.Swagger;
+namespace Bat.AspNetCore;
 
 public class BatSwaggerExcludeFilter : ISchemaFilter
 {

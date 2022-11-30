@@ -5,11 +5,6 @@ public static class ObjectExtension
     public static T GetInstance<T>(this T obj) where T : new() => obj == null ? new T() : obj;
 
 
-    /// <summary>
-    /// Copy Given Object To New Object
-    /// </summary>
-    /// <typeparam name="TDestination">This Object</typeparam>
-    /// <param name="sourceObject">Given Object</param>
     public static TDestination CopyFrom<TDestination>(object sourceObject) where TDestination : class, new()
     {
         var result = new TDestination();
@@ -31,13 +26,6 @@ public static class ObjectExtension
     }
 
 
-    /// <summary>
-    /// Copy Given Object To This Object
-    /// </summary>
-    /// <typeparam name="TDestination">This Object</typeparam>
-    /// <typeparam name="TSource">Given Object</typeparam>
-    /// <param name="destinationObject">This Object</param>
-    /// <param name="sourceObject">Given Object</param>
     public static TDestination CopyFrom<TDestination, TSource>(this TDestination destinationObject, TSource sourceObject) where TDestination : class where TSource : class
     {
         var sourceProperties = sourceObject.GetType().GetProperties();
@@ -57,13 +45,6 @@ public static class ObjectExtension
     }
 
 
-    /// <summary>
-    /// Update This Object with Given Object 
-    /// </summary>
-    /// <typeparam name="TDestination">This Object</typeparam>
-    /// <typeparam name="TSource">Given Object</typeparam>
-    /// <param name="destinationObject">This Object</param>
-    /// <param name="sourceObject">Given Object</param>
     public static void UpdateWith<TDestination, TSource>(this TDestination destinationObject, TSource sourceObject) where TDestination : class where TSource : class
     {
         var sourceProperties = sourceObject.GetType().GetProperties();

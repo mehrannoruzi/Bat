@@ -1,4 +1,4 @@
-﻿namespace Bat.Core;
+﻿namespace Bat.Tools;
 
 public class DomainException : Exception
 {

@@ -5,73 +5,8 @@ using System.Drawing.Drawing2D;
 
 namespace Bat.Tools;
 
-public static class PublicExtension
+public static class CaptchaExtension
 {
-    public static byte[] ToExcel<T>(this List<T> data) where T : class
-    {
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-        using var package = new ExcelPackage();
-        var workSheet = package.Workbook.Worksheets.Add("ReportData");
-        var reportFields = data.Count > 0 ? data.First().GetType().GetProperties() : typeof(T).GetProperties();
-        var row = 1;
-        var cell = 1;
-        foreach (var field in reportFields)
-        {
-            workSheet.Cells[row, cell].Value = field.Name;
-            workSheet.Cells[row, cell].Style.Font.Size = 16;
-            workSheet.Cells[row, cell].Style.Font.Bold = true;
-            workSheet.Cells[row, cell].AutoFitColumns(15, 20);
-            cell++;
-        }
-
-        if (data.Any())
-        {
-            row = 2;
-            foreach (var record in data)
-            {
-                cell = 1;
-                foreach (var field in reportFields)
-                {
-                    var value = field.GetValue(record);
-                    workSheet.Cells[row, cell].Value = value == null
-                        ? string.Empty
-                        : (value.GetType().Name.Contains("Anonymous") ? value?.SerializeToJson() : value.ToString());
-                    cell++;
-                }
-                row++;
-            }
-        }
-
-        workSheet.Protection.IsProtected = false;
-        workSheet.Protection.AllowSelectLockedCells = false;
-        using var fileStream = new MemoryStream();
-        package.SaveAs(fileStream);
-        return fileStream.ToArray();
-    }
-
-    public static bool IsPicture(this string fileNameWithExtension)
-    {
-        var fileExtention = Path.GetExtension(fileNameWithExtension);
-        if (!fileExtention.ToLower().Contains("jpg") ||
-                !fileExtention.ToLower().Contains("jpeg") ||
-                !fileExtention.ToLower().Contains("png") ||
-                !fileExtention.ToLower().Contains("gif") ||
-                !fileExtention.ToLower().Contains("bmp")) return false;
-
-        return true;
-    }
-
-    public static bool IsValidPersianDate(this string persianDate)
-    {
-        if (string.IsNullOrWhiteSpace(persianDate)) return false;
-
-        var regex = new Regex(@"(1\d{3})[-/](\d{1,2})[-/](\d{1,2})([ -]*(\d{1,2}:?){2,3})?");
-        if (!regex.Match(persianDate).Success) return false;
-
-        return true;
-    }
-
-
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
     public static string GetCaptcha(string text)
     {

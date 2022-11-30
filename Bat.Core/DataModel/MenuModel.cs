@@ -24,6 +24,5 @@ public class MenuModel
 
     [NotMapped]
     public List<MenuModel> ChildMenus { get { return (Menus ?? "[]").DeSerializeJson<List<MenuModel>>(); } }
-    //public List<MenuModel> ChildMenus { get { return JsonConvert.DeserializeObject<List<MenuModel>>(Menus ?? "[]"); } }
 
 }

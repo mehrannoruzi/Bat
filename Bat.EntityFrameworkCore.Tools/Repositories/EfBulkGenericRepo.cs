@@ -24,4 +24,5 @@ public class EfBulkGenericRepo<TEntity> : IEfBulkGenericRepo<TEntity> where TEnt
 
     public async Task BulkReadAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default)
         => await _context.BulkReadAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: token);
+
 }

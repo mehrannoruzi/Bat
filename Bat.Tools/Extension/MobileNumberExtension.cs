@@ -1,4 +1,4 @@
-﻿namespace Bat.Core;
+﻿namespace Bat.Tools;
 
 public static class MobileNumberExtension
 {
@@ -50,11 +50,6 @@ public static class MobileNumberExtension
 
 
 
-    /// <summary>
-    /// متدی برای تبدیل شماره موبایل به قالب استاندارد, برای مثال : 989301919109
-    /// </summary>
-    /// <param name="mobileNumber">شماره موبایل</param>
-    /// <returns>شماره موبایل با قالب استاندارد</returns>
     public static string ToMobileNumberPattern(this string mobileNumber)
     {
         string pattern = mobileNumber;
@@ -74,18 +69,8 @@ public static class MobileNumberExtension
         return pattern;
     }
 
-    /// <summary>
-    /// متدی برای اضافه کردن 0 به ابتدای شماره موبایل
-    /// </summary>
-    /// <param name="mobileNumber">شماره موبایل</param>
-    /// <returns>شماره موبایل همراه با صفر</returns>
     public static string ToMobileNumberPattern(this long mobileNumber) => $"0{mobileNumber}";
 
-    /// <summary>
-    /// متدی برای تبدیل شماره موبایل به عدد از نوع لانگ
-    /// </summary>
-    /// <param name="mobileNumber">شماره موبایل</param>
-    /// <returns>شماره موبایل از نوع داده عددی لانگ</returns>
     public static long ToMobileNumber(this string mobileNumber)
     {
         if (long.TryParse(mobileNumber, out long value))
@@ -97,11 +82,6 @@ public static class MobileNumberExtension
     public static long ToStandardMobileNumber(this string mobileNumber)
         => long.Parse(mobileNumber.StartsWith("98") ? mobileNumber.Substring(2, mobileNumber.Length) : mobileNumber);
 
-    /// <summary>
-    /// متدی برای تبدیل شماره موبایل به قالب استاندارد, برای مثال : 989301919109
-    /// </summary>
-    /// <param name="mobileNumber">شماره موبایل</param>
-    /// <returns>شماره موبایل با قالب استاندارد</returns>
     public static long ToMobileNumber(this long mobileNumber)
     {
         if (!mobileNumber.ToString().IsMobileNumber()) return 0;
