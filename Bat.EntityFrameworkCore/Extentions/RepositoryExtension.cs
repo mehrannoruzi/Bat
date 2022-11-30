@@ -7,6 +7,7 @@ public static class RepositoryExtension
 
     public static IQueryable<T> AsNoTracking<T>(this EFGenericRepo<T> repo) where T : class, IBaseEntity
         => repo._dbSet.AsNoTracking();
+
     public static IQueryable<T> AsNoTrackingWithIdentityResolution<T>(this EFGenericRepo<T> repo) where T : class, IBaseEntity
         => repo._dbSet.AsNoTrackingWithIdentityResolution();
 
