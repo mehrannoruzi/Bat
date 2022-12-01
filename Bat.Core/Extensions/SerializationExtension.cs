@@ -69,6 +69,13 @@ public static class SerializationExtension
         return JsonSerializer.Serialize(jsonObject);
     }
 
+    public static string SerializeToJson<T>(this T jsonObject)
+    {
+        if (jsonObject == null) return string.Empty;
+
+        return JsonSerializer.Serialize(jsonObject);
+    }
+
     public static string SerializeToJson(this object jsonObject, int depth)
     {
         if (jsonObject == null) return string.Empty;
@@ -77,7 +84,22 @@ public static class SerializationExtension
         return JsonSerializer.Serialize(jsonObject, options);
     }
 
+    public static string SerializeToJson<T>(this T jsonObject, int depth)
+    {
+        if (jsonObject == null) return string.Empty;
+
+        var options = new JsonSerializerOptions { MaxDepth = depth };
+        return JsonSerializer.Serialize(jsonObject, options);
+    }
+
     public static string SerializeToJson(this object jsonObject, JsonSerializerOptions options)
+    {
+        if (jsonObject == null) return string.Empty;
+
+        return JsonSerializer.Serialize(jsonObject, options);
+    }
+
+    public static string SerializeToJson<T>(this T jsonObject, JsonSerializerOptions options)
     {
         if (jsonObject == null) return string.Empty;
 
