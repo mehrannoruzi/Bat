@@ -18,7 +18,11 @@ public class RabbitService : IRabbitService
             HostName = _rabbitConfiguration.HostName,
             DispatchConsumersAsync = true
         };
+        connection.Port = _rabbitConfiguration.Port > 0 ? _rabbitConfiguration.Port : connection.Port;
 
         return connection.CreateConnection();
     }
+
+    public IConnection CreateConnection(ConnectionFactory connectionFactory)
+        => connectionFactory.CreateConnection();
 }

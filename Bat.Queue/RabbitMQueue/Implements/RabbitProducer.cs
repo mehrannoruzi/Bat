@@ -4,7 +4,7 @@ public class RabbitProducer : IRabbitProducer
 {
     private IModel _model;
     private IConnection _connection;
-    private string _queueName = "Rabbit";
+    private string _exchangeName = "Bat_Exchange";
     private readonly IRabbitService _rabbitService;
 
     public RabbitProducer(IRabbitService rabbitService)
@@ -12,26 +12,41 @@ public class RabbitProducer : IRabbitProducer
         _rabbitService = rabbitService;
     }
 
-    public bool Publish<T>(T message, string queueName = null)
+
+    public bool Publish<T>(T message, string exchangeName = null, string routingKey = "", 
+        bool mandatory = false, IBasicProperties basicProperties = null)
     {
-        try
-        {
-            _connection = _rabbitService.CreateConnection();
-            _model = _connection.CreateModel();
+        _connection = _rabbitService.CreateConnection();
+        _model = _connection.CreateModel();
 
-            if (!string.IsNullOrWhiteSpace(queueName)) _queueName = queueName;
-            _model.QueueDeclare($"{_queueName}_Queue");
-            _model.BasicPublish(
-                exchange: $"{_queueName}_Exchange",
-                routingKey: "",
-                body: Encoding.UTF8.GetBytes(message.SerializeToJson()));
+        if (!string.IsNullOrWhiteSpace(exchangeName)) _exchangeName = $"{exchangeName}_Exchange";
 
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        _model.BasicPublish(
+            exchange: _exchangeName,
+            routingKey: routingKey,
+            mandatory: mandatory,
+            basicProperties: basicProperties,
+            body: Encoding.UTF8.GetBytes(message.SerializeToJson()));
+
+        return true;
+    }
+
+    public bool Publish<T>(IConnection connection, T message, string exchangeName = null, string routingKey = "", 
+        bool mandatory = false, IBasicProperties basicProperties = null)
+    {
+        _connection = connection;
+        _model = _connection.CreateModel();
+
+        if (!string.IsNullOrWhiteSpace(exchangeName)) _exchangeName = $"{exchangeName}_Exchange";
+
+        _model.BasicPublish(
+            exchange: _exchangeName,
+            routingKey: routingKey,
+            mandatory: mandatory,
+            basicProperties: basicProperties,
+            body: Encoding.UTF8.GetBytes(message.SerializeToJson()));
+
+        return true;
     }
 
     public void Dispose()

@@ -2,7 +2,7 @@
 
 public static class MenuExtension
 {
-    public static IEnumerable<MenuModel>? GetAllMenu(this IEnumerable<MenuModel> userMenus)
+    public static IEnumerable<MenuModel> GetAllMenu(this IEnumerable<MenuModel> userMenus)
     {
         if (userMenus.IsNull()) return null;
 
@@ -16,7 +16,7 @@ public static class MenuExtension
         return result;
     }
 
-    public static List<MenuModel>? GetAllMenu(this List<MenuModel> userMenus)
+    public static List<MenuModel> GetAllMenu(this List<MenuModel> userMenus)
     {
         if (userMenus.IsNull()) return null;
 
