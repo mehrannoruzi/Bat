@@ -158,5 +158,4 @@ public static class PublicExtension
         return fileStream.ToArray();
     }
 
-
 }

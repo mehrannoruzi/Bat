@@ -13,23 +13,21 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<Authors>Mehran Norouzi</Authors>
 		<Company>Mehran Norouzi</Company>
-		<Description>
-			This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Mvc Application.
+		<Description>This Package Contain Useful Library And Extention Method For Easy Develop High Tech Asp.Net Core Mvc Application.
 
-			ForExample : Implementation Of Authentication, Authorization, TagHelpers, CustomAttribute, ResponseCache, ExtensionMethod, ...
-		</Description>
+ForExample : Implementation Of Authentication, Authorization, TagHelpers, CustomAttribute, ResponseCache, ExtensionMethod, ...</Description>
 		<Copyright>© All rights reserved.</Copyright>
 		<RepositoryType>Microsoft DevOps Server</RepositoryType>
 		<PackageTags>Asp Asp.Net Asp.NetCore Mvc Attribute Authorization Authentication ResponseCache TagHelpers ExtentionMethod</PackageTags>
-		<PackageReleaseNotes>
-			For Contact Us Please Send Mail Or Call To :
+		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
-			Tel : 09301919109
-			Mail : mehrannoruzi@gmail.com
-		</PackageReleaseNotes>
+Tel : +989301919109
+Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 		<PackageIcon>Bat.png</PackageIcon>
 		<PackageIconUrl />
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<Version>7.0.0</Version>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -49,6 +47,13 @@
 	<ItemGroup>
 		<ProjectReference Include="..\Bat.Http\Bat.Http.csproj" />
 		<ProjectReference Include="..\Bat.Tools\Bat.Tools.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 

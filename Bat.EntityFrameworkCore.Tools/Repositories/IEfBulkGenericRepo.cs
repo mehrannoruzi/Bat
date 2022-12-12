@@ -2,7 +2,7 @@
 
 namespace Bat.EntityFrameworkCore.Tools;
 
-public interface IEfBulkGenericRepo<TEntity> : ITransientInjection where TEntity : class, IBaseEntity
+public interface IEFBulkGenericRepo<TEntity> : ITransientInjection where TEntity : class, IBaseEntity
 {
     Task BulkInsertAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default);
     Task BulkUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default);

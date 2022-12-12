@@ -2,11 +2,11 @@
 
 namespace Bat.EntityFrameworkCore.Tools;
 
-public class EfBulkGenericRepo<TEntity> : IEfBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
+public class EFBulkGenericRepo<TEntity> : IEFBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
 {
     public DbContext _context;
 
-    public EfBulkGenericRepo(DbContext context)
+    public EFBulkGenericRepo(DbContext context)
         => _context = context;
 
 

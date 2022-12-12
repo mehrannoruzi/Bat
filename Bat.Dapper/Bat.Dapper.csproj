@@ -13,28 +13,23 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Mehran Norouzi</Authors>
 		<Company></Company>
-		<Description>
-			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Application.
+		<Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Application.
 
 
-
-			ForExample : Implementation Of DapperExtensionMethods, ExecuteSp, ExecuteQuery, ExecuteQueryCommand  ...
-		</Description>
+ForExample : Implementation Of DapperExtensionMethods, ExecuteSp, ExecuteQuery, ExecuteQueryCommand  ...		</Description>
 		<Copyright>© All rights reserved.</Copyright>
 		<PackageIcon>Bat.png</PackageIcon>
 		<PackageIconUrl />
 		<RepositoryType>Microsoft DevOps Server</RepositoryType>
-		<PackageReleaseNotes>
-			For Contact Us Please Send Mail Or Call To :
+		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
 
-
-			Tel : 09301919109
-
-			Mail : mehrannoruzi@gmail.com
-		</PackageReleaseNotes>
+Tel : +989301919109
+Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 		<PackageTags>Dapper DapperExtensionMethods ExecuteSp ExecuteQuery ExecuteQueryCommand</PackageTags>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<Version>7.0.0</Version>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -52,6 +47,13 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

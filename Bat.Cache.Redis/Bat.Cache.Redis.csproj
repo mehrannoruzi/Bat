@@ -13,27 +13,25 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Copyright>© All rights reserved.</Copyright>
 		<RepositoryType>Microsoft DevOps Server</RepositoryType>
-		<Description>
-			This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Application.
+		<Description>This Package Contain Useful Library And Extension Method For Easy Develop High Tech .Net Application.
 
-			ForExample : Implementation Of StackExchange Library Of Redis, ...
+ForExample : Implementation Of StackExchange Library Of Redis, ...
 		</Description>
 		<Authors>Mehran Norouzi</Authors>
 		<Company>Mehran Norouzi</Company>
 		<PackageIcon>Bat.png</PackageIcon>
 		<PackageIconUrl />
 		<PackageTags>Cache Redis StackExchange ExtensionMethods RedisConfiguration</PackageTags>
-		<PackageReleaseNotes>
-			For Contact Us Please Send Mail Or Call To :
+		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
-			Tel : 09301919109
-			Mail : mehrannoruzi@gmail.com
-		</PackageReleaseNotes>
+Tel : 09301919109
+Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<Version>7.0.0</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="StackExchange.Redis" Version="2.6.70" />
+		<PackageReference Include="StackExchange.Redis" Version="2.6.80" />
 	</ItemGroup>
 
 	<ItemGroup>

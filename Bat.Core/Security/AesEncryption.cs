@@ -2,16 +2,16 @@
 
 public class AesEncryption
 {
-    public static string Encrypt(string PlainText)
+    public static string Encrypt(string plainText)
     {
-        return AesAlgorithm.Encrypt(PlainText, "!@#$%^^%$#@!", "!@#$%^", "MD5", 1, "XYZxyzAZSawsTRCE", 128);
+        return AesAlgorithm.Encrypt(plainText, "!@#$%^^%$#@!", "!@#$%^", "MD5", 1, "XYZxyzAZSawsTRCE", 128);
     }
 
-    public static string Encrypt(string PlainText, HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Encrypt(string plainText, HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -33,15 +33,15 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Encrypt(PlainText, "!@#$%^^%$#@!", "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)KeySize);
+        return AesAlgorithm.Encrypt(plainText, "!@#$%^^%$#@!", "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)keySize);
     }
 
-    public static string Encrypt(string PlainText, string EncryptKey,
-        HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Encrypt(string plainText, string encryptKey,
+        HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -63,15 +63,15 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Encrypt(PlainText, EncryptKey, "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)KeySize);
+        return AesAlgorithm.Encrypt(plainText, encryptKey, "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)keySize);
     }
 
-    public static string Encrypt(string PlainText, string EncryptKey,
-        string Salt, HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Encrypt(string plainText, string encryptKey,
+        string salt, HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -93,15 +93,15 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Encrypt(PlainText, EncryptKey, Salt, KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)KeySize);
+        return AesAlgorithm.Encrypt(plainText, encryptKey, salt, KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)keySize);
     }
 
-    public static string Encrypt(string PlainText, string EncryptKey,
-        string Salt, string InitVector, HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Encrypt(string plainText, string encryptKey,
+        string salt, string initVector, HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -123,21 +123,21 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Encrypt(PlainText, EncryptKey, Salt, KeyAlgoritm, 1, InitVector, (int)KeySize);
+        return AesAlgorithm.Encrypt(plainText, encryptKey, salt, KeyAlgoritm, 1, initVector, (int)keySize);
     }
 
 
 
-    public static string Decrypt(string CipherText)
+    public static string Decrypt(string cipherText)
     {
-        return AesAlgorithm.Decrypt(CipherText.Replace(' ', '+'), "!@#$%^^%$#@!", "!@#$%^", "MD5", 1, "XYZxyzAZSawsTRCE", 128);
+        return AesAlgorithm.Decrypt(cipherText.Replace(' ', '+'), "!@#$%^^%$#@!", "!@#$%^", "MD5", 1, "XYZxyzAZSawsTRCE", 128);
     }
 
-    public static string Decrypt(string CipherText, HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Decrypt(string cipherText, HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -159,15 +159,15 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Decrypt(CipherText.Replace(' ', '+'), "!@#$%^^%$#@!", "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)KeySize);
+        return AesAlgorithm.Decrypt(cipherText.Replace(' ', '+'), "!@#$%^^%$#@!", "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)keySize);
     }
 
-    public static string Decrypt(string CipherText, string EncryptKey,
-        HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Decrypt(string cipherText, string encryptKey,
+        HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -189,15 +189,15 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Decrypt(CipherText.Replace(' ', '+'), EncryptKey, "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)KeySize);
+        return AesAlgorithm.Decrypt(cipherText.Replace(' ', '+'), encryptKey, "!@#$%^", KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)keySize);
     }
 
-    public static string Decrypt(string CipherText, string EncryptKey,
-        string Salt, HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Decrypt(string cipherText, string encryptKey,
+        string salt, HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -219,15 +219,15 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Decrypt(CipherText.Replace(' ', '+'), EncryptKey, Salt, KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)KeySize);
+        return AesAlgorithm.Decrypt(cipherText.Replace(' ', '+'), encryptKey, salt, KeyAlgoritm, 1, "XYZxyzAZSawsTRCE", (int)keySize);
     }
 
-    public static string Decrypt(string CipherText, string EncryptKey,
-        string Salt, string InitVector, HashAlgorithm Algoritm = HashAlgorithm.MD5,
-        EncryptKeySize KeySize = EncryptKeySize.KeySize128)
+    public static string Decrypt(string cipherText, string encryptKey,
+        string salt, string initVector, HashAlgorithm algoritm = HashAlgorithm.MD5,
+        EncryptKeySize keySize = EncryptKeySize.KeySize128)
     {
         string KeyAlgoritm = "MD5";
-        switch (Algoritm)
+        switch (algoritm)
         {
             case HashAlgorithm.MD4:
                 KeyAlgoritm = "MD4";
@@ -249,6 +249,6 @@ public class AesEncryption
                 break;
         }
 
-        return AesAlgorithm.Decrypt(CipherText.Replace(' ', '+'), EncryptKey, Salt, KeyAlgoritm, 1, InitVector, (int)KeySize);
+        return AesAlgorithm.Decrypt(cipherText.Replace(' ', '+'), encryptKey, salt, KeyAlgoritm, 1, initVector, (int)keySize);
     }
 }
