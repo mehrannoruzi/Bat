@@ -7,12 +7,9 @@ public static class MicrosoftIocExtention
     public static IServiceCollection AddBatDynamicTransient(this IServiceCollection services, Assembly assembly)
     {
         var allAssembly = new List<Assembly>();
-        var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(x => x.FullName.Contains(assembly.FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
-            .OrderBy(x => x.FullName).ToList();
+        var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
         allAssemblyNames.ForEach(x => allAssembly.Add(Assembly.Load(x.FullName)));
-
         var types = allAssembly.SelectMany(a => a.GetExportedTypes())
             .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(ITransientInjection).IsAssignableFrom(c)).ToList();
 
@@ -43,12 +40,9 @@ public static class MicrosoftIocExtention
     public static IServiceCollection AddBatDynamicScoped(this IServiceCollection services, Assembly assembly)
     {
         var allAssembly = new List<Assembly>();
-        var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(x => x.FullName.Contains(assembly.FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
-            .OrderBy(x => x.FullName).ToList();
+        var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
         allAssemblyNames.ForEach(x => allAssembly.Add(Assembly.Load(x.FullName)));
-
         var types = allAssembly.SelectMany(a => a.GetExportedTypes())
             .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(IScopedInjection).IsAssignableFrom(c)).ToList();
 
@@ -79,12 +73,9 @@ public static class MicrosoftIocExtention
     public static IServiceCollection AddBatDynamicSingleton(this IServiceCollection services, Assembly assembly)
     {
         var allAssembly = new List<Assembly>();
-        var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies()
-            .Where(x => x.FullName.Contains(assembly.FullName.Split('.')[0]) || x.FullName.Contains("Bat"))
-            .OrderBy(x => x.FullName).ToList();
+        var allAssemblyNames = AppDomain.CurrentDomain.GetAssemblies().ToList();
 
         allAssemblyNames.ForEach(x => allAssembly.Add(Assembly.Load(x.FullName)));
-
         var types = allAssembly.SelectMany(a => a.GetExportedTypes())
             .Where(c => c.IsClass && !c.IsAbstract && c.IsPublic && typeof(ISingletonInjection).IsAssignableFrom(c)).ToList();
 
