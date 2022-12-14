@@ -15,9 +15,9 @@ public static class MvcExtension
         }).ToList();
     }
 
-    public static List<SelectListItem> ToSelectListFromLocalizeDescription(this Enum @enum)
+    public static List<SelectListItem> ToSelectListFromDescriptionAttribute(this Enum @enum)
     {
-        var values = from Enum e in Enum.GetValues(@enum.GetType()) select new { ID = e, Name = e.GetLocalizeDescription() };
+        var values = from Enum e in Enum.GetValues(@enum.GetType()) select new { ID = e, Name = e.GetDescription() };
         return values.Select(x => new SelectListItem
         {
             Value = x.ID.ToString(),

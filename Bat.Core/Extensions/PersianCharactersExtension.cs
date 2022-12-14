@@ -12,7 +12,9 @@ public static class PersianCharactersExtension
 
 
     public static string ToPersianCharacters(this string data)
-        => string.IsNullOrWhiteSpace(data) ? string.Empty : data.Replace(ArabicYeChar, PersianYeChar).Replace(ArabicKeChar, PersianKeChar).Trim();
+        => string.IsNullOrWhiteSpace(data) 
+            ? string.Empty 
+            : data.Replace(ArabicYeChar, PersianYeChar).Replace(ArabicKeChar, PersianKeChar).Trim();
 
     public static string ToPersianCharacters2(this string data)
     {

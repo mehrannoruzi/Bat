@@ -190,6 +190,18 @@ public static class NumberExtension
     }
 
 
+    public static string ToNumeric(this int value) => value.ToString("N0"); //"123,456"
+
+    public static string ToNumeric(this string value) => value.ToInt().ToString("N0");
+
+    public static string ToNumeric(this decimal value) => value.ToString("N0");
+
+    public static string ToCurrency(this int value) => value.ToString("C0"); //fa-IR => current culture currency symbol => ریال
+
+    public static string ToCurrency(this string value) => value.ToInt().ToString("C0");
+
+    public static string ToCurrency(this decimal value) => value.ToString("C0");
+
     public static string ToPlainNumber(this string number)
     {
         if (!IsNumber(number)) return number;

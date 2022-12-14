@@ -79,7 +79,7 @@ public static class ReflectionExtension
         return genericType.ToString();
     }
 
-    public static string GetLocalizeDescription<T>(this T genericType)
+    public static string GetDescription<T>(this T genericType)
     {
         var fieldInfo = genericType.GetType().GetField(genericType.ToString());
         var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);

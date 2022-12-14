@@ -25,6 +25,18 @@ public static class StringExtensions
         return result;
     }
 
+    public static long ToLong(this string text)
+    {
+        long.TryParse(text, out long result);
+        return result;
+    }
+
+    public static decimal ToDecimal(this string text)
+    {
+        decimal.TryParse(text, out decimal result);
+        return result;
+    }
+
     public static string ToBinary(this string text)
     {
         var bytes = Encoding.UTF8.GetBytes(text);
@@ -32,7 +44,11 @@ public static class StringExtensions
         return result;
     }
 
+    public static string ToBase64String(this byte[] bytes) => Convert.ToBase64String(bytes);
+
     public static byte[] ToBytes(this string text) => Encoding.UTF8.GetBytes(text);
+
+    public static byte[] ToBytesFromBase64(this string text) => Convert.FromBase64String(text);
 
     public static string ToPersianAlphaNumeric(this string text) => Regex.Replace(text, "[^A-Za-z0-9]", string.Empty);
 
@@ -101,15 +117,19 @@ public static class StringExtensions
         return (value.Substring(0, lenght) + appendString);
     }
 
+    public static bool IsNullOrEmpty(this string text) => string.IsNullOrEmpty(text);
+
+    public static bool IsNullOrWhiteSpace(this string text) => string.IsNullOrWhiteSpace(text);
+
 
 
     public static string Fill(this string input, params string[] values) => string.Format(input, values);
 
-    public static List<T> SplitCsv<T>(this string text, char seperator)
+    public static List<T> SplitTo<T>(this string text, char seperator)
     {
         if (string.IsNullOrWhiteSpace(text)) return null;
 
-        List<T> result = new List<T>();
+        List<T> result = new();
         List<string> tokens = text.Split(seperator).Select(i => i.Trim()).ToList();
         tokens.ForEach(t =>
         {
@@ -120,6 +140,7 @@ public static class StringExtensions
             catch
             { }
         });
+
         return result;
     }
 

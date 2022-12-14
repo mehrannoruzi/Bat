@@ -27,15 +27,6 @@ public static class EnumExtension
         return enumObj.ToString();
     }
 
-    public static string GetLocalizeDescription(this Enum enumObj)
-    {
-        var fieldInfo = enumObj.GetType().GetField(enumObj.ToString());
-        var attributes = (DescriptionAttribute[])fieldInfo.GetCustomAttributes(typeof(DescriptionAttribute), false);
-
-        if (attributes != null && attributes.Length > 0) return attributes[0].Description;
-        else return enumObj.ToString();
-    }
-
     public static IEnumerable<Core.PropertyInfo> GetEnumElements<T>() where T : Enum
     {
         var result = new List<Core.PropertyInfo>();
@@ -51,7 +42,7 @@ public static class EnumExtension
                     Value = Convert.ToInt32(val),
                     DisplayName = item.GetDisplayName(),
                     DataType = item.GetType().BaseType.Name,
-                    Description = item.GetLocalizeDescription()
+                    Description = item.GetDescription()
                 });
             }
         }
