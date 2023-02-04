@@ -3,19 +3,19 @@
 public interface IEFGenericRepo<TEntity> : ITransientInjection where TEntity : class, IBaseEntity
 {
     void Add(TEntity model);
-    Task AddAsync(TEntity model, CancellationToken token = default);
+    Task AddAsync(TEntity model, CancellationToken cancellationToken = default);
     void AddRange(IEnumerable<TEntity> models);
-    Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken token = default);
+    Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken cancellationToken = default);
     void Update(TEntity model);
     void UpdateSpecificProperties(TEntity entity, List<string> updatedProperties);
     void UpdateSpecificProperties(TEntity entity, params Expression<Func<TEntity, object>>[] updatedProperties);
     void UpdateRange(IEnumerable<TEntity> models);
-    void UpdateRange(Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setProperties);
+    void UpdateRange(Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setProperties, CancellationToken cancellationToken = default);
     void Delete(TEntity model);
     void DeleteUnAttached(TEntity model);
     void DeleteRange(IEnumerable<TEntity> models);
-    Task DeleteRange(Expression<Func<TEntity, bool>> Conditions);
-    Task<TEntity> FindAsync(object id, CancellationToken token = default);
+    Task DeleteRange(Expression<Func<TEntity, bool>> Conditions, CancellationToken cancellationToken = default);
+    Task<TEntity> FindAsync(object id, CancellationToken cancellationToken = default);
     Task<bool> AnyAsync(QueryFilter<TEntity> model = null);
     Task<int> CountAsync(QueryFilter<TEntity> model = null);
     Task<long> LongCountAsync(QueryFilter<TEntity> model = null);
@@ -26,5 +26,5 @@ public interface IEFGenericRepo<TEntity> : ITransientInjection where TEntity : c
     Task<PagingListDetails<TEntity>> GetPagingAsync(QueryFilter<TEntity> model = null);
     Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model);
 
-    Task<List<TEntity>> ExecuteQueryAsync(string sql, params object[] parameters);
+    Task<List<TEntity>> ExecuteQueryAsync(string sql, CancellationToken cancellationToken = default, params object[] parameters);
 }

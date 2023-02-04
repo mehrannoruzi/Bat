@@ -8,14 +8,14 @@ public static class HttpFileOperation
 {
     public static byte[] ToByteArray(IFormFile file)
     {
-        var target = new MemoryStream();
+        using var target = new MemoryStream();
         file.OpenReadStream().CopyTo(target);
         return target.ToArray();
     }
 
     public static string ToBase64(IFormFile file)
     {
-        var target = new MemoryStream();
+        using var target = new MemoryStream();
         file.OpenReadStream().CopyTo(target);
         return Convert.ToBase64String(target.ToArray());
     }
@@ -57,49 +57,44 @@ public static class HttpFileOperation
 
     public static string Save(byte[] fileBytes, string fullPath)
     {
-        if (fileBytes != null && fileBytes.Length > 0)
+        if (fileBytes is null || fileBytes.Length <= 0) return null;
+
+        var file = new FormFile(null, 0, fileBytes.Length, "", "");
+
+        using (var stream = new FileStream(fullPath, FileMode.Create))
         {
-            var file = new FormFile(null, 0, fileBytes.Length, "", "");
-
-            using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-            if (File.Exists(fullPath)) return fullPath;
+            file.CopyTo(stream);
         }
-
+        if (File.Exists(fullPath)) return fullPath;
         return null;
     }
 
     public static string Save(IFormFile file, string fullPath)
     {
-        if (file != null && file.Length > 0)
-        {
-            using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-            if (File.Exists(fullPath)) return fullPath.Contains("wwwroot/") ? fullPath.Remove(0, 8) : fullPath;
-        }
+        if (file is null || file.Length <= 0) return null;
 
+        using (var stream = new FileStream(fullPath, FileMode.Create))
+        {
+            file.CopyTo(stream);
+        }
+        if (File.Exists(fullPath)) return fullPath.Contains("wwwroot/") ? fullPath.Remove(0, 8) : fullPath;
         return null;
     }
 
     public static string SaveWithPath(IFormFile file, string path)
     {
-        if (file.Length > 0)
-        {
-            var fileName = Path.GetFileNameWithoutExtension(file.FileName)
-                            + DateTime.Now.Ticks.ToString()
-                            + Path.GetExtension(file.FileName);
-            var fullPath = Path.Combine(path, fileName);
+        if (file.Length <= 0) return string.Empty;
 
-            using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
-            if (File.Exists(fullPath)) return fullPath;
+        var fileName = Path.GetFileNameWithoutExtension(file.FileName)
+                        + DateTime.Now.Ticks.ToString()
+                        + Path.GetExtension(file.FileName);
+        var fullPath = Path.Combine(path, fileName);
+
+        using (var stream = new FileStream(fullPath, FileMode.Create))
+        {
+            file.CopyTo(stream);
         }
+        if (File.Exists(fullPath)) return fullPath;
         return string.Empty;
     }
 

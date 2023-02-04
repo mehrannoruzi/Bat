@@ -39,15 +39,6 @@ for example :
                 .GetData(2, 10)
                 .ToList();
 
-
-            //some useful extension methods
-            var x1 = 9301919109.IsMobileNumber();
-            var x2 = "9301919109".ToStandardMobileNumber();
-
-            var x3 = 1258963.ToNumeric(); //1,258,963
-            var x4 = 1258963.ToCurrency(); //1,258,963ریال
-            var x5 = 1100000.ToText(); //یک میلیون و صد هزار تومان
-
             var base64ImageString = "569821".GetCaptchaImage();
 
         }

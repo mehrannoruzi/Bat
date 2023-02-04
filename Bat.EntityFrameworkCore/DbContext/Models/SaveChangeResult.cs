@@ -2,7 +2,7 @@
 
 public class SaveChangeResult
 {
-    public bool IsSuccessful { get; set; }
+    public bool IsSuccess { get; set; }
     public Dictionary<string, ValidationError> ValidationErrors { get; set; }
     public Exception Exception { get; set; }
     public SaveChangeResultType ResultType { get; set; }

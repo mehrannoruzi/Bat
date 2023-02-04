@@ -10,19 +10,19 @@ public class EFBulkGenericRepo<TEntity> : IEFBulkGenericRepo<TEntity> where TEnt
         => _context = context;
 
 
-    public async Task BulkInsertAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default)
-        => await _context.BulkInsertAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: token);
+    public async Task BulkInsertAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
+        => await _context.BulkInsertAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: cancellationToken);
 
-    public async Task BulkUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default)
-        => await _context.BulkUpdateAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: token);
+    public async Task BulkUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
+        => await _context.BulkUpdateAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: cancellationToken);
 
-    public async Task BulkInsertOrUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default)
-        => await _context.BulkInsertOrUpdateAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: token);
+    public async Task BulkInsertOrUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
+        => await _context.BulkInsertOrUpdateAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: cancellationToken);
 
-    public async Task BulkDeleteAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default)
-        => await _context.BulkDeleteAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: token);
+    public async Task BulkDeleteAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
+        => await _context.BulkDeleteAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: cancellationToken);
 
-    public async Task BulkReadAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken token = default)
-        => await _context.BulkReadAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: token);
+    public async Task BulkReadAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
+        => await _context.BulkReadAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: cancellationToken);
 
 }

@@ -15,14 +15,14 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
     public void Add(TEntity model)
         => _dbSet.Add(model);
 
-    public async Task AddAsync(TEntity model, CancellationToken token = default)
-        => await _dbSet.AddAsync(model, token);
+    public async Task AddAsync(TEntity model, CancellationToken cancellationToken = default)
+        => await _dbSet.AddAsync(model, cancellationToken);
 
     public void AddRange(IEnumerable<TEntity> models)
         => _dbSet.AddRange(models);
 
-    public async Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken token = default)
-        => await _dbSet.AddRangeAsync(models, token);
+    public async Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken cancellationToken = default)
+        => await _dbSet.AddRangeAsync(models, cancellationToken);
 
     public void Update(TEntity model)
         => _dbSet.Update(model);
@@ -42,8 +42,8 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
     public void UpdateRange(IEnumerable<TEntity> models)
         => _dbSet.UpdateRange(models);
 
-    public void UpdateRange(Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setProperties)
-        => _dbSet.ExecuteUpdate(setProperties);
+    public void UpdateRange(Expression<Func<SetPropertyCalls<TEntity>, SetPropertyCalls<TEntity>>> setProperties, CancellationToken cancellationToken = default)
+        => _dbSet.ExecuteUpdateAsync(setProperties, cancellationToken);
 
     public void Delete(TEntity model)
         => _dbSet.Remove(model);
@@ -57,12 +57,12 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
     public void DeleteRange(IEnumerable<TEntity> models)
         => _dbSet.RemoveRange(models);
 
-    public async Task DeleteRange(Expression<Func<TEntity, bool>> Conditions)
-        => await _dbSet.Where(Conditions).ExecuteDeleteAsync();
+    public async Task DeleteRange(Expression<Func<TEntity, bool>> Conditions, CancellationToken cancellationToken = default)
+        => await _dbSet.Where(Conditions).ExecuteDeleteAsync(cancellationToken);
 
 
-    public async Task<TEntity> FindAsync(object id, CancellationToken token = default)
-        => await _dbSet.FindAsync(new object[] { id }, token);
+    public async Task<TEntity> FindAsync(object id, CancellationToken cancellationToken = default)
+        => await _dbSet.FindAsync(new object[] { id }, cancellationToken);
 
     public async Task<bool> AnyAsync(QueryFilter<TEntity> model = null)
     {
@@ -72,7 +72,7 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
-        return await query.AnyAsync(model.Token);
+        return await query.AnyAsync(model.CancellationToken);
     }
 
     public async Task<int> CountAsync(QueryFilter<TEntity> model = null)
@@ -83,7 +83,7 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
-        return await query.CountAsync(model.Token);
+        return await query.CountAsync(model.CancellationToken);
     }
 
     public async Task<long> LongCountAsync(QueryFilter<TEntity> model = null)
@@ -94,7 +94,7 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
-        return await query.LongCountAsync(model.Token);
+        return await query.LongCountAsync(model.CancellationToken);
     }
 
     public async Task<TEntity> FirstOrDefaultAsync(QueryFilter<TEntity> model = null)
@@ -106,7 +106,7 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.OrderBy != null) query = model.OrderBy(query);
-        return await query.FirstOrDefaultAsync(model.Token);
+        return await query.FirstOrDefaultAsync(model.CancellationToken);
     }
 
     public async Task<TResult> FirstOrDefaultAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model)
@@ -118,7 +118,7 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.OrderBy != null) query = model.OrderBy(query);
-        return await query.Select(model.Selector).FirstOrDefaultAsync(model.Token);
+        return await query.Select(model.Selector).FirstOrDefaultAsync(model.CancellationToken);
     }
 
     public async Task<List<TEntity>> GetAsync(QueryFilter<TEntity> model = null)
@@ -131,7 +131,7 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
         if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
-        return await query.ToListAsync();
+        return await query.ToListAsync(model.CancellationToken);
     }
 
     public async Task<List<TResult>> GetAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model)
@@ -144,19 +144,19 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
         if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
-        return await query.Select(model.Selector).ToListAsync();
+        return await query.Select(model.Selector).ToListAsync(model.CancellationToken);
     }
 
     public async Task<PagingListDetails<TEntity>> GetPagingAsync(QueryFilter<TEntity> model = null)
     {
-        if (model.IsNull()) return await _dbSet.ToPagingListDetailsAsync(new PagingParameter { PageNumber = 1, PageSize = 100 });
+        if (model.IsNull()) return await _dbSet.ToPagingListDetailsAsync(new PagingParameter { PageNumber = 1, PageSize = 10 });
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
         if (model.Conditions != null) query = query.Where(model.Conditions);
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
-        return await query.ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 100 });
+        return await query.ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 10 }, model.CancellationToken);
     }
 
     public async Task<PagingListDetails<TResult>> GetPagingAsync<TResult>(QueryFilterWithSelector<TEntity, TResult> model)
@@ -168,11 +168,11 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
         if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
         if (model.OrderBy != null) query = model.OrderBy(query);
-        return await query.Select(model.Selector).ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 100 });
+        return await query.Select(model.Selector).ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 10 }, model.CancellationToken);
     }
 
 
-    public async Task<List<TEntity>> ExecuteQueryAsync(string sql, params object[] parameters)
-        => await _dbSet.FromSqlRaw(sql, parameters).ToListAsync();
+    public async Task<List<TEntity>> ExecuteQueryAsync(string sql, CancellationToken cancellationToken = default, params object[] parameters)
+        => await _dbSet.FromSqlRaw(sql, parameters).ToListAsync(cancellationToken);
 
 }

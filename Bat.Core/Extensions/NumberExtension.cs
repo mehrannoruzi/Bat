@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Bat.Tools;
+namespace Bat.Core;
 
 public static class NumberExtension
 {

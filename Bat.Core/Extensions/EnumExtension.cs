@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Bat.Tools;
+namespace Bat.Core;
 
 public static class EnumExtension
 {
