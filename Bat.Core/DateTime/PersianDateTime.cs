@@ -31,11 +31,12 @@ public class PersianDateTime
             }
             catch
             {
-                var persianTimeZone = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x =>
-                    x.Id.Contains("Iran") ||
-                    x.Id.Contains("Tehran") ||
-                    x.Id.Contains("Persian") ||
-                    x.Id.Contains("Ir-Fa"));
+                var persianTimeZone = TimeZoneInfo.GetSystemTimeZones()
+                    .FirstOrDefault(x =>
+                        x.Id.Contains("Iran") ||
+                        x.Id.Contains("Tehran") ||
+                        x.Id.Contains("Persian") ||
+                        x.Id.Contains("Ir-Fa"));
 
                 if (persianTimeZone.IsNotNull()) return persianTimeZone;
                 else return TimeZoneInfo.Local;

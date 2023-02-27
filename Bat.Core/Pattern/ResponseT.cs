@@ -1,6 +1,6 @@
 ﻿namespace Bat.Core;
 
-public class Response : IResponse
+public class Response<T> : IResponse<T>
 {
     public Response()
     { }
@@ -18,9 +18,17 @@ public class Response : IResponse
         ResultCode = resultCode;
     }
 
+    public Response(T result, string message = null)
+    {
+        IsSuccess = true;
+        Message = message;
+        Result = result;
+    }
+
 
     public bool IsSuccess { get; set; }
     public string Message { get; set; }
+    public T Result { get; set; }
     public int ResultCode { get; set; } = 200;
     public DateTime ExecutionTime => DateTime.Now;
 }
