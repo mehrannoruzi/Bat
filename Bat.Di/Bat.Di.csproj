@@ -32,7 +32,7 @@ Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 
 	<ItemGroup>
 		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
-		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="6.1.0" />
+		<PackageReference Include="DryIoc.Microsoft.DependencyInjection" Version="6.1.1" />
 	</ItemGroup>
 
 	<ItemGroup>
