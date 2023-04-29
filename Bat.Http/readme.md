@@ -9,7 +9,7 @@ for example :
     {
         private readonly HttpClient _httpClient;
 
-        public QcCallController(IHttpClientFactory httpClientFactory)
+        public BaseService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
         }
