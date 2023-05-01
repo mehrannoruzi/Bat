@@ -1,2 +1,2 @@
 # Bat
-Bat is my minimal framework for work with .NetCore Platform.
+Bat is my minimal framework for work with .Net Platform.
