@@ -32,7 +32,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 	<ItemGroup>
 		<PackageReference Include="Experimental.System.Messaging" Version="1.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
-		<PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+		<PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
