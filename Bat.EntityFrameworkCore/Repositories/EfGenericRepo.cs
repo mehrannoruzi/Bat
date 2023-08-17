@@ -2,10 +2,14 @@
 
 public class EfGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : class, IBaseEntity
 {
+    private DbContext _context;
     public DbSet<TEntity> _dbSet;
 
     public EfGenericRepo(DbContext context)
-        => _dbSet = context.Set<TEntity>();
+    {
+        _context = context;
+        _dbSet = context.Set<TEntity>();
+    }
 
     public async Task AddAsync(TEntity model, CancellationToken token = default)
         => await _dbSet.AddAsync(model, token);
@@ -16,7 +20,19 @@ public class EfGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
     public void Update(TEntity model)
         => _dbSet.Update(model);
 
-    public void UpdateRange(IEnumerable<TEntity> models)
+	public void UpdateSpecificProperties(TEntity entity, List<string> updatedProperties)
+	{
+		foreach (var property in updatedProperties)
+			_context.Entry(entity).Property(property).IsModified = true;
+	}
+
+	public void UpdateSpecificProperties(TEntity entity, params Expression<Func<TEntity, object>>[] updatedProperties)
+	{
+		foreach (var property in updatedProperties)
+			_context.Entry(entity).Property(property).IsModified = true;
+	}
+
+	public void UpdateRange(IEnumerable<TEntity> models)
         => _dbSet.UpdateRange(models);
 
     public void UpdateUnAttached(TEntity model)
