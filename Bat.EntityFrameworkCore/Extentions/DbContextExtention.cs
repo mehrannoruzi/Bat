@@ -1,6 +1,4 @@
-﻿using Bat.Core;
-
-namespace Bat.EntityFrameworkCore;
+﻿namespace Bat.EntityFrameworkCore;
 
 public static class DbContextExtention
 {
