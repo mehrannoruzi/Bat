@@ -5,8 +5,10 @@ public interface IEFGenericRepo<TEntity> : ITransientInjection where TEntity : c
     Task AddAsync(TEntity model, CancellationToken token = default);
     Task AddRangeAsync(IEnumerable<TEntity> models, CancellationToken token = default);
     void Update(TEntity model);
-    void UpdateRange(IEnumerable<TEntity> models);
+	void UpdateRange(IEnumerable<TEntity> models);
     void UpdateUnAttached(TEntity model);
+	void UpdateSpecificProperties(TEntity entity, List<string> updatedProperties);
+	void UpdateSpecificProperties(TEntity entity, params Expression<Func<TEntity, object>>[] updatedProperties);
     void Delete(TEntity model);
     void DeleteRange(IEnumerable<TEntity> models);
     void DeleteUnAttached(TEntity model);
