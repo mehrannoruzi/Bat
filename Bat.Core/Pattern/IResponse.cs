@@ -1,9 +1,6 @@
 ﻿namespace Bat.Core;
 
-public interface IResponse<TResult>
+public interface IResponse : IBaseResponse
 {
-    bool IsSuccessful { get; set; }
-    string Message { get; set; }
-    TResult Result { get; set; }
-    int ResultCode { get; set; }
+
 }
