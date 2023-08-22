@@ -19,7 +19,7 @@
 ForExample : Implementation Of Custom Entity Validation, Extension Method, Bulk Operation, Annotation, StoredProcedure ...</Description>
 		<Copyright>© All rights reserved.</Copyright>
 		<PackageIconUrl></PackageIconUrl>
-		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<RepositoryType>GitHub</RepositoryType>
 		<PackageTags>EntityValidation ExtensionMethod Annotation StoredProcedure ModelBuilder</PackageTags>
 		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
@@ -28,6 +28,8 @@ Mail : mehrannoruzi@gmail.com
 		</PackageReleaseNotes>
 		<PackageIcon>Bat.png</PackageIcon>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -43,6 +45,13 @@ Mail : mehrannoruzi@gmail.com
 
 	<ItemGroup>
 		<ProjectReference Include="..\Bat.EntityFrameworkCore\Bat.EntityFrameworkCore.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

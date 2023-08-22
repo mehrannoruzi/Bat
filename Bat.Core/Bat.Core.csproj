@@ -22,7 +22,7 @@ ForExample : Implementation Of Convertor, FileOperation, FileLoger, Encryption, 
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageIconUrl></PackageIconUrl>
-		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<RepositoryType>GitHub</RepositoryType>
 		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
 Tel : +989301919109
@@ -30,6 +30,8 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 		<PackageTags>FileOperation Convertor FileLoger Encryption Hash Validation Attributes ExtensionMethods</PackageTags>
 		<PackageIcon>Bat.png</PackageIcon>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -52,6 +54,13 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

@@ -23,11 +23,13 @@ Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 ForExample : Implementation Of Custom DbContext, DbContext Extension Method, DbSet Extension Method, ...		</Description>
 		<Copyright>© All rights reserved.</Copyright>
 		<PackageIconUrl></PackageIconUrl>
-		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<RepositoryType>GitHub</RepositoryType>
 		<PackageTags>EntityFrameworkCore DbContext  ExtensionMethod EntityValidation Log AuditLog EventLog</PackageTags>
 		<PackageIcon>Bat.png</PackageIcon>
 		<UserSecretsId>573a03b9-e138-4f18-ac14-5a7c6a480b13</UserSecretsId>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -63,6 +65,13 @@ ForExample : Implementation Of Custom DbContext, DbContext Extension Method, DbS
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>Strings.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>

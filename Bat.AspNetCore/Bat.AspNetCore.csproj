@@ -17,7 +17,7 @@
 
 ForExample : Implementation Of Authentication, Authorization, TagHelpers, CustomAttribute, ResponseCache, ExtensionMethod, ...</Description>
 		<Copyright>© All rights reserved.</Copyright>
-		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<RepositoryType>GitHub</RepositoryType>
 		<PackageTags>Asp Asp.Net Asp.NetCore Mvc Attribute Authorization Authentication ResponseCache TagHelpers ExtentionMethod</PackageTags>
 		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
@@ -28,6 +28,7 @@ Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<Version>7.0.0</Version>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

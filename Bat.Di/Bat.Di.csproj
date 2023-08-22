@@ -19,7 +19,7 @@
 ForExample : ExtensionMethods For Dynamically Register Service And Componnent Base On Inherit From ITransientInjection, IScopedInjection Or ISingletonInjection</Description>
 		<PackageIcon>Bat.png</PackageIcon>
 		<PackageIconUrl />
-		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<RepositoryType>GitHub</RepositoryType>
 		<PackageTags>Ioc Di Dependency DependencyInjection AutofacExtension ExtentionMethod Autofac DryIoc</PackageTags>
 		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
@@ -28,6 +28,7 @@ Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<Version>7.0.0</Version>
 		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>

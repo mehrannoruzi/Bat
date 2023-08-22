@@ -20,7 +20,7 @@ ForExample : Implementation Of Runtime Caching, MemoryCache, ExtensionMethods,  
 		</Description>
 		<Copyright>© All rights reserved.</Copyright>
 		<PackageIconUrl></PackageIconUrl>
-		<RepositoryType>Microsoft DevOps Server</RepositoryType>
+		<RepositoryType>GitHub</RepositoryType>
 		<PackageReleaseNotes>For Contact Us Please Send Mail Or Call To :
 
 Tel : 09301919109
@@ -29,6 +29,8 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 		<PackageTags>Cache RuntimeCache MemoryCache</PackageTags>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<NeutralLanguage>en-US</NeutralLanguage>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -44,6 +46,13 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Bat.Core\Bat.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
