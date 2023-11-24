@@ -2,15 +2,11 @@
 
 namespace Bat.EntityFrameworkCore.Tools;
 
-public class EFBulkGenericRepo<TEntity> : IEFBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
+public class EFBulkGenericRepo<TEntity>(DbContext context) : IEFBulkGenericRepo<TEntity> where TEntity : class, IBaseEntity
 {
-    public DbContext _context;
+    public DbContext _context = context;
 
-    public EFBulkGenericRepo(DbContext context)
-        => _context = context;
-
-
-    public async Task BulkInsertAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
+	public async Task BulkInsertAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)
         => await _context.BulkInsertAsync(entities: entities, bulkConfig: bulkConfig, cancellationToken: cancellationToken);
 
     public async Task BulkUpdateAsync(IList<TEntity> entities, BulkConfig bulkConfig = null, CancellationToken cancellationToken = default)

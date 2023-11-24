@@ -69,9 +69,9 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IsNull()) return await _dbSet.AnyAsync();
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.Conditions != null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
         return await query.AnyAsync(model.CancellationToken);
     }
 
@@ -80,9 +80,9 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IsNull()) return await _dbSet.CountAsync();
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.Conditions != null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
         return await query.CountAsync(model.CancellationToken);
     }
 
@@ -91,9 +91,9 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IsNull()) return await _dbSet.LongCountAsync();
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.Conditions != null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
         return await query.LongCountAsync(model.CancellationToken);
     }
 
@@ -102,10 +102,10 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IsNull()) return await _dbSet.FirstOrDefaultAsync();
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.Conditions != null) query = query.Where(model.Conditions);
-        if (model.OrderBy != null) query = model.OrderBy(query);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
+        if (model.OrderBy is not null) query = model.OrderBy(query);
         return await query.FirstOrDefaultAsync(model.CancellationToken);
     }
 
@@ -114,10 +114,10 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.Selector.IsNull()) throw new Exception(Strings.SelectorNotAssigned);
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.Conditions != null) query = query.Where(model.Conditions);
-        if (model.OrderBy != null) query = model.OrderBy(query);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
+        if (model.OrderBy is not null) query = model.OrderBy(query);
         return await query.Select(model.Selector).FirstOrDefaultAsync(model.CancellationToken);
     }
 
@@ -126,11 +126,11 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IsNull()) return await _dbSet.ToListAsync();
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.Conditions != null) query = query.Where(model.Conditions);
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.OrderBy != null) query = model.OrderBy(query);
-        if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.OrderBy is not null) query = model.OrderBy(query);
+        if (model.PagingParameter is not null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
         return await query.ToListAsync(model.CancellationToken);
     }
 
@@ -139,11 +139,11 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.Selector.IsNull()) throw new Exception(Strings.SelectorNotAssigned);
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.Conditions != null) query = query.Where(model.Conditions);
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.OrderBy != null) query = model.OrderBy(query);
-        if (model.PagingParameter != null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.OrderBy is not null) query = model.OrderBy(query);
+        if (model.PagingParameter is not null) query = query.Skip((model.PagingParameter.PageNumber - 1) * model.PagingParameter.PageSize).Take(model.PagingParameter.PageSize);
         return await query.Select(model.Selector).ToListAsync(model.CancellationToken);
     }
 
@@ -152,10 +152,10 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.IsNull()) return await _dbSet.ToPagingListDetailsAsync(new PagingParameter { PageNumber = 1, PageSize = 10 });
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.Conditions != null) query = query.Where(model.Conditions);
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.OrderBy != null) query = model.OrderBy(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.OrderBy is not null) query = model.OrderBy(query);
         return await query.ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 10 }, model.CancellationToken);
     }
 
@@ -164,10 +164,10 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
         if (model.Selector.IsNull()) throw new Exception(Strings.SelectorNotAssigned);
 
         IQueryable<TEntity> query = model.AsNoTracking ? _dbSet.AsNoTracking() : _dbSet.AsQueryable();
-        if (model.Conditions != null) query = query.Where(model.Conditions);
-        if (model.IncludeProperties != null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
-        if (model.ThenIncludeProperties != null) query = model.ThenIncludeProperties(query);
-        if (model.OrderBy != null) query = model.OrderBy(query);
+        if (model.Conditions is not null) query = query.Where(model.Conditions);
+        if (model.IncludeProperties is not null) model.IncludeProperties.ForEach(i => { query = query.Include(i); });
+        if (model.ThenIncludeProperties is not null) query = model.ThenIncludeProperties(query);
+        if (model.OrderBy is not != null) query = model.OrderBy(query);
         return await query.Select(model.Selector).ToPagingListDetailsAsync(model.PagingParameter ?? new PagingParameter { PageNumber = 1, PageSize = 10 }, model.CancellationToken);
     }
 

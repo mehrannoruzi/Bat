@@ -1,103 +1,97 @@
 ﻿namespace Bat.Queue;
 
-public class RabbitConsumer : IRabbitConsumer
+public class RabbitConsumer(IRabbitService rabbitService) : IRabbitConsumer, IDisposable
 {
-    private IModel _model;
-    private IConnection _connection;
-    private string _queueName = "Bat_Queue";
-    private string _exchangeName = "Bat_Exchange";
-    private readonly IRabbitService _rabbitService;
+	private IModel _model;
+	private IConnection _connection;
+	private string _queueName = "Bat_Queue";
+	private string _exchangeName = "Bat_Exchange";
+	private readonly IRabbitService _rabbitService = rabbitService;
 
-    public RabbitConsumer(IRabbitService rabbitService)
-    {
-        _rabbitService = rabbitService;
-    }
+	public async Task Subscribe(Action<string, object> receiveEventAction, string queueName = null, string exchangeName = null,
+		string routingKey = "", RabbitExchangeType exchangeType = RabbitExchangeType.Direct, bool durable = true,
+		bool autoDelete = false, string consumerTag = "", IDictionary<string, object> arguments = null)
+	{
+		_connection = _rabbitService.CreateConnection();
+		_model = _connection.CreateModel();
 
+		if (!string.IsNullOrWhiteSpace(queueName)) _queueName = $"{queueName}_Queue";
+		if (!string.IsNullOrWhiteSpace(exchangeName)) _exchangeName = $"{exchangeName}_Exchange";
 
-    public async Task Subscribe(Action<string, object> receiveEventAction, string queueName = null, string exchangeName = null,
-        string routingKey = "", RabbitExchangeType exchangeType = RabbitExchangeType.Direct, bool durable = true,
-        bool autoDelete = false, string consumerTag = "", IDictionary<string, object> arguments = null)
-    {
-        _connection = _rabbitService.CreateConnection();
-        _model = _connection.CreateModel();
+		_model.QueueDeclare(_queueName, durable: durable, exclusive: false, autoDelete: autoDelete);
 
-        if (!string.IsNullOrWhiteSpace(queueName)) _queueName = $"{queueName}_Queue";
-        if (!string.IsNullOrWhiteSpace(exchangeName)) _exchangeName = $"{exchangeName}_Exchange";
+		if (exchangeType == RabbitExchangeType.Direct)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Direct, durable: durable, autoDelete: autoDelete);
+		else if (exchangeType == RabbitExchangeType.Fanout)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Fanout, durable: durable, autoDelete: autoDelete);
+		else if (exchangeType == RabbitExchangeType.Headers)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Headers, durable: durable, autoDelete: autoDelete);
+		else if (exchangeType == RabbitExchangeType.Topic)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Topic, durable: durable, autoDelete: autoDelete);
 
-        _model.QueueDeclare(_queueName, durable: durable, exclusive: false, autoDelete: autoDelete);
+		_model.QueueBind(_queueName, _exchangeName, routingKey);
 
-        if (exchangeType == RabbitExchangeType.Direct)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Direct, durable: durable, autoDelete: autoDelete);
-        else if (exchangeType == RabbitExchangeType.Fanout)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Fanout, durable: durable, autoDelete: autoDelete);
-        else if (exchangeType == RabbitExchangeType.Headers)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Headers, durable: durable, autoDelete: autoDelete);
-        else if (exchangeType == RabbitExchangeType.Topic)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Topic, durable: durable, autoDelete: autoDelete);
+		var consumer = new AsyncEventingBasicConsumer(_model);
+		consumer.Received += async (model, eventArgs) =>
+		{
+			await Task.Run(() => receiveEventAction.Invoke(Encoding.UTF8.GetString(eventArgs.Body.ToArray()), eventArgs));
+		};
 
-        _model.QueueBind(_queueName, _exchangeName, routingKey);
+		_model.BasicConsume(
+			consumer: consumer,
+			queue: _queueName,
+			autoAck: true,
+			consumerTag: consumerTag,
+			arguments: arguments);
+		await Task.CompletedTask;
+	}
 
-        var consumer = new AsyncEventingBasicConsumer(_model);
-        consumer.Received += async (model, eventArgs) =>
-        {
-            await Task.Run(() => receiveEventAction.Invoke(Encoding.UTF8.GetString(eventArgs.Body.ToArray()), eventArgs));
-        };
+	public async Task Subscribe(IConnection connection, Action<string, object> receiveEventAction, string queueName = null, string exchangeName = null,
+		string routingKey = "", RabbitExchangeType exchangeType = RabbitExchangeType.Direct, bool durable = true,
+		bool autoDelete = false, string consumerTag = "", IDictionary<string, object> arguments = null)
+	{
+		_connection = connection;
+		_model = connection.CreateModel();
 
-        _model.BasicConsume(
-            consumer: consumer,
-            queue: _queueName,
-            autoAck: true,
-            consumerTag: consumerTag,
-            arguments: arguments);
-        await Task.CompletedTask;
-    }
+		if (!string.IsNullOrWhiteSpace(queueName)) _queueName = $"{queueName}_Queue";
+		if (!string.IsNullOrWhiteSpace(exchangeName)) _exchangeName = $"{exchangeName}_Exchange";
 
-    public async Task Subscribe(IConnection connection, Action<string, object> receiveEventAction, string queueName = null, string exchangeName = null,
-        string routingKey = "", RabbitExchangeType exchangeType = RabbitExchangeType.Direct, bool durable = true,
-        bool autoDelete = false, string consumerTag = "", IDictionary<string, object> arguments = null)
-    {
-        _connection = connection;
-        _model = connection.CreateModel();
+		_model.QueueDeclare(_queueName, durable: durable, exclusive: false, autoDelete: autoDelete);
 
-        if (!string.IsNullOrWhiteSpace(queueName)) _queueName = $"{queueName}_Queue";
-        if (!string.IsNullOrWhiteSpace(exchangeName)) _exchangeName = $"{exchangeName}_Exchange";
+		if (exchangeType == RabbitExchangeType.Direct)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Direct, durable: durable, autoDelete: autoDelete);
+		else if (exchangeType == RabbitExchangeType.Fanout)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Fanout, durable: durable, autoDelete: autoDelete);
+		else if (exchangeType == RabbitExchangeType.Headers)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Headers, durable: durable, autoDelete: autoDelete);
+		else if (exchangeType == RabbitExchangeType.Topic)
+			_model.ExchangeDeclare(_exchangeName, ExchangeType.Topic, durable: durable, autoDelete: autoDelete);
 
-        _model.QueueDeclare(_queueName, durable: durable, exclusive: false, autoDelete: autoDelete);
+		_model.QueueBind(_queueName, _exchangeName, routingKey);
 
-        if (exchangeType == RabbitExchangeType.Direct)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Direct, durable: durable, autoDelete: autoDelete);
-        else if (exchangeType == RabbitExchangeType.Fanout)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Fanout, durable: durable, autoDelete: autoDelete);
-        else if (exchangeType == RabbitExchangeType.Headers)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Headers, durable: durable, autoDelete: autoDelete);
-        else if (exchangeType == RabbitExchangeType.Topic)
-            _model.ExchangeDeclare(_exchangeName, ExchangeType.Topic, durable: durable, autoDelete: autoDelete);
+		var consumer = new AsyncEventingBasicConsumer(_model);
+		consumer.Received += async (model, eventArgs) =>
+		{
+			await Task.Run(() => receiveEventAction.Invoke(Encoding.UTF8.GetString(eventArgs.Body.ToArray()), eventArgs));
+		};
 
-        _model.QueueBind(_queueName, _exchangeName, routingKey);
+		_model.BasicConsume(
+			consumer: consumer,
+			queue: _queueName,
+			autoAck: true,
+			consumerTag: consumerTag,
+			arguments: arguments);
+		await Task.CompletedTask;
+	}
 
-        var consumer = new AsyncEventingBasicConsumer(_model);
-        consumer.Received += async (model, eventArgs) =>
-        {
-            await Task.Run(() => receiveEventAction.Invoke(Encoding.UTF8.GetString(eventArgs.Body.ToArray()), eventArgs));
-        };
+	public void Dispose()
+	{
+		if (_model.IsOpen) _model.Close();
+		_model.Dispose();
 
-        _model.BasicConsume(
-            consumer: consumer,
-            queue: _queueName,
-            autoAck: true,
-            consumerTag: consumerTag,
-            arguments: arguments);
-        await Task.CompletedTask;
-    }
+		if (_connection.IsOpen) _connection.Close();
+		_connection.Dispose();
 
-    public void Dispose()
-    {
-        if (_model.IsOpen) _model.Close();
-        _model.Dispose();
-
-        if (_connection.IsOpen) _connection.Close();
-        _connection.Dispose();
-
-        GC.SuppressFinalize(this);
-    }
+		GC.SuppressFinalize(this);
+	}
 }

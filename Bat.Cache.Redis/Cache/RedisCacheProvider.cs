@@ -7,8 +7,8 @@ public class RedisCacheProvider : IDistributedMemoryCacheProvider
 
     public RedisCacheProvider()
     {
-        ConfigurationOptions config = new ConfigurationOptions
-        {
+        ConfigurationOptions config = new()
+		{
             EndPoints =
                 {
                     { "127.0.0.1", 6379 },

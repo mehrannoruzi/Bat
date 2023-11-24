@@ -2,11 +2,14 @@
 
 public interface IBatUnitOfWork : IRepositoryFactory, IDisposable
 {
-    public DatabaseFacade Database { get; }
-    public ChangeTracker ChangeTracker { get; }
+	public DatabaseFacade Database { get; }
+	public ChangeTracker ChangeTracker { get; }
 
 
-    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-    Task<SaveChangeResult> BatSaveChangesAsync(CancellationToken cancellationToken = default);
-    Task<SaveChangeResult> BatSaveChangesWithValidationAsync(CancellationToken cancellationToken = default);
+	int SaveChangesAsync();
+	Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+	SaveChangeResult BatSaveChangesAsync();
+	Task<SaveChangeResult> BatSaveChangesAsync(CancellationToken cancellationToken = default);
+	SaveChangeResult BatSaveChangesWithValidationAsync();
+	Task<SaveChangeResult> BatSaveChangesWithValidationAsync(CancellationToken cancellationToken = default);
 }

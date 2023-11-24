@@ -5,7 +5,7 @@ public static class DbContextFactory
     private static readonly object _lock = new();
     public static readonly string _connectionString;
     private static SqlConnection _sqlConnection = null;
-    private static readonly Dictionary<string, object> _contextPool = new();
+    private static readonly Dictionary<string, object> _contextPool = [];
 
     public static BatDbContext GetInstance<TDbContext>() where TDbContext : BatDbContext, new()
     {
