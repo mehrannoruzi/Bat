@@ -2,10 +2,8 @@
 
 public enum HashAlgorithm
 {
-    MD4 = 0,
     MD5 = 1,
-    SHA1 = 2,
-    SHA256 = 3,
-    SHA384 = 4,
-    SHA512 = 5
+    SHA = 2,
+	SHA1 = 3,
+    SHA256 = 4,
 }

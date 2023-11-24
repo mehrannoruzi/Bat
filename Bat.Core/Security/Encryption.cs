@@ -32,9 +32,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -43,12 +40,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -71,9 +62,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -82,12 +70,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -111,9 +93,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -122,12 +101,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -152,9 +125,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -163,12 +133,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -204,9 +168,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -215,12 +176,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -243,9 +198,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -254,12 +206,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -283,9 +229,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -294,12 +237,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 
@@ -324,9 +261,6 @@ public class Encryption
         string KeyAlgoritm = "MD5";
         switch (algoritm)
         {
-            case HashAlgorithm.MD4:
-                KeyAlgoritm = "MD4";
-                break;
             case HashAlgorithm.MD5:
                 KeyAlgoritm = "MD5";
                 break;
@@ -335,12 +269,6 @@ public class Encryption
                 break;
             case HashAlgorithm.SHA256:
                 KeyAlgoritm = "SHA256";
-                break;
-            case HashAlgorithm.SHA384:
-                KeyAlgoritm = "SHA384";
-                break;
-            case HashAlgorithm.SHA512:
-                KeyAlgoritm = "SHA512";
                 break;
         }
 

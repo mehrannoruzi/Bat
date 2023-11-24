@@ -35,7 +35,10 @@ public class EFGenericRepo<TEntity> : IEFGenericRepo<TEntity> where TEntity : cl
 
     public void UpdateSpecificProperties(TEntity entity, params Expression<Func<TEntity, object>>[] updatedProperties)
     {
-        foreach (var property in updatedProperties)
+		//if (_context.Entry(entity).State == EntityState.Added)
+		//	_context.Entry(entity).State = EntityState.Detached;
+
+		foreach (var property in updatedProperties)
             _context.Entry(entity).Property(property).IsModified = true;
     }
 
