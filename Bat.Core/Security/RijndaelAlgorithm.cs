@@ -9,7 +9,6 @@ public class RijndaelAlgorithm
     {
         var initVectorBytes = Encoding.ASCII.GetBytes(initVector);
         var saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
-        var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
         var password = new PasswordDeriveBytes(passPhrase, saltValueBytes, hashAlgorithm, passwordIterations);
         var keyBytes = password.GetBytes(keySize / 8);
         var symmetricKey = new RijndaelManaged
