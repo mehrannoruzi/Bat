@@ -1,14 +1,19 @@
 ﻿namespace Bat.EntityFrameworkCore.Tools;
 
-public class BulkRepositoryFactory : IBulkRepositoryFactory
+public class BulkRepositoryFactory(IServiceProvider serviceProvider) : IBulkRepositoryFactory
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    public BulkRepositoryFactory(IServiceProvider serviceProvider)
+
+    public void Dispose()
     {
-        _serviceProvider = serviceProvider;
+        throw new NotImplementedException();
     }
 
+    public ValueTask DisposeAsync()
+    {
+        throw new NotImplementedException();
+    }
 
     public EFBulkGenericRepo<T> GetBulkRepository<T>() where T : class, IBaseEntity
         => (EFBulkGenericRepo<T>)_serviceProvider.GetService<IEFBulkGenericRepo<T>>();

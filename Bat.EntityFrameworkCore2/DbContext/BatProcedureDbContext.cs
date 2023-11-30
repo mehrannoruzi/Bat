@@ -1,8 +1,13 @@
 ﻿namespace Bat.EntityFrameworkCore;
 
-public class BatProcedureDbContext<TResult>(string connectionStrings) : DbContext where TResult : class
+public class BatProcedureDbContext<TResult> : DbContext where TResult : class
 {
-    private readonly string _connectionStrings = connectionStrings;
+    private readonly string _connectionStrings;
+
+    public BatProcedureDbContext(string connectionStrings)
+    {
+        _connectionStrings = connectionStrings;
+    }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -16,7 +21,7 @@ public class BatProcedureDbContext<TResult>(string connectionStrings) : DbContex
         optionsBuilder.UseSqlServer(_connectionStrings,
             sqlServerOption =>
             {
-                //sqlServerOption.MaxBatchSize(50);
+                sqlServerOption.MaxBatchSize(50);
                 sqlServerOption.CommandTimeout(null);
                 sqlServerOption.UseRelationalNulls(true);
             });

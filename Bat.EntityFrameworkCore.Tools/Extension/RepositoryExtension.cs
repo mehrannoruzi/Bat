@@ -7,5 +7,4 @@ public static class RepositoryExtension
 
     public static EFBulkGenericRepo<T> GetBulkRepository<T>(this IServiceProvider serviceProvider) where T : class, IBaseEntity
         => (EFBulkGenericRepo<T>)serviceProvider.GetService<IEFBulkGenericRepo<T>>();
-
 }
