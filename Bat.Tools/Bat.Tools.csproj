@@ -7,7 +7,6 @@
 	  <Authors>Mehran Norouzi</Authors>
 	  <Company>Mehran Norouzi</Company>
     <PackageIcon>Bat.png</PackageIcon>
-    <PackageReadmeFile>readme.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>

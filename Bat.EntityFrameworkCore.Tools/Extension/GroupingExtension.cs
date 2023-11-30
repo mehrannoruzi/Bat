@@ -66,7 +66,7 @@ public static class GroupingExtension
         IEnumerable<Grouping<TKey1, TElement>> groupedItems = orderedElements.GroupByMany(groupByKey1Expression, groupByKey2Expression, newElementExpression);
 
         // Create a new list the items, subtotals, and the grand total.
-        List<TElement> results = new();
+        List<TElement> results = [];
         foreach (Grouping<TKey1, TElement> item in groupedItems)
         {
             // Add items under current group

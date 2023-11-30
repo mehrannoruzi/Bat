@@ -11,12 +11,14 @@ public class RijndaelAlgorithm
         var saltValueBytes = Encoding.ASCII.GetBytes(saltValue);
         var password = new PasswordDeriveBytes(passPhrase, saltValueBytes, hashAlgorithm, passwordIterations);
         var keyBytes = password.GetBytes(keySize / 8);
+#pragma warning disable SYSLIB0022 // Type or member is obsolete
         var symmetricKey = new RijndaelManaged
         {
             Mode = CipherMode.CBC,
             Key = keyBytes,
             IV = initVectorBytes
         };
+#pragma warning restore SYSLIB0022 // Type or member is obsolete
         var encryptor = symmetricKey.CreateEncryptor();
         byte[] cipherTextBytes;
         using (var memoryStream = new MemoryStream())
@@ -38,12 +40,14 @@ public class RijndaelAlgorithm
         var cipherTextBytes = Convert.FromBase64String(cipherText);
         var password = new PasswordDeriveBytes(passPhrase, saltValueBytes, hashAlgorithm, passwordIterations);
         var keyBytes = password.GetBytes(keySize / 8);
+#pragma warning disable SYSLIB0022 // Type or member is obsolete
         var symmetricKey = new RijndaelManaged
         {
             Mode = CipherMode.CBC,
             Key = keyBytes,
             IV = initVectorBytes
         };
+#pragma warning restore SYSLIB0022 // Type or member is obsolete
         var decryptor = symmetricKey.CreateDecryptor();
         using var memoryStream = new MemoryStream(cipherTextBytes);
         using var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read);

@@ -5,17 +5,18 @@ public class BulkRepositoryFactory(IServiceProvider serviceProvider) : IBulkRepo
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
 
+    public EFBulkGenericRepo<T> GetBulkRepository<T>() where T : class, IBaseEntity
+        => (EFBulkGenericRepo<T>)_serviceProvider.GetService<IEFBulkGenericRepo<T>>();
+
     public void Dispose()
     {
-        throw new NotImplementedException();
+        GC.SuppressFinalize(this);
+        this.Dispose();
     }
 
     public ValueTask DisposeAsync()
     {
-        throw new NotImplementedException();
+        GC.SuppressFinalize(this);
+        return DisposeAsync();
     }
-
-    public EFBulkGenericRepo<T> GetBulkRepository<T>() where T : class, IBaseEntity
-        => (EFBulkGenericRepo<T>)_serviceProvider.GetService<IEFBulkGenericRepo<T>>();
-
 }
