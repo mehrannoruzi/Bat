@@ -6,7 +6,7 @@ public class PagingList<T> : List<T>
 
     public PagingList(List<T> sourceList, int count, PagingParameter pagingParameter)
     {
-        if (PagingDetails == null) PagingDetails = new PagingDetails();
+        PagingDetails ??= new PagingDetails();
         PagingDetails.TotalCount = count;
         PagingDetails.PageSize = pagingParameter.PageSize;
         PagingDetails.PageNumber = pagingParameter.PageNumber;

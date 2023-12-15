@@ -16,7 +16,7 @@ public class Grouping<TKey, TElement> : IGrouping<TKey, TElement>
     }
 }
 
-public static class GroupingExtension
+public static class GroupByExtension
 {
     /// <summary>
     /// Groups by two columns.
