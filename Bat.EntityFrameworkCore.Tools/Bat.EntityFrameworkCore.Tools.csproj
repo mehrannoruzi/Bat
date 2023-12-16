@@ -33,7 +33,7 @@ Mail : mehrannoruzi@gmail.com
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="EFCore.BulkExtensions" Version="8.0.0" />
+		<PackageReference Include="EFCore.BulkExtensions" Version="8.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
