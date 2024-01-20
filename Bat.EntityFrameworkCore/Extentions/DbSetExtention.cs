@@ -18,15 +18,15 @@ public static class DbSetExtention
             var Json = "{";
             var record = entry.GetType().GetProperties();
             foreach (var field in record)
-			{
-				if (field.PropertyType.IsValueType)
-				{
-					if (field.PropertyType.Name == "Binary") continue;
-					fieldValue = field.GetValue(entry);
-					Json += ("\"" + field.Name + "\":\"" + (fieldValue == null ? string.Empty : fieldValue.ToString()) + "\",");
-				}
-			}
-			return Json[..^1] + "}";
+            {
+                if (field.PropertyType.IsValueType)
+                {
+                    if (field.PropertyType.Name == "Binary") continue;
+                    fieldValue = field.GetValue(entry);
+                    Json += ("\"" + field.Name + "\":\"" + (fieldValue == null ? string.Empty : fieldValue.ToString()) + "\",");
+                }
+            }
+            return Json[..^1] + "}";
         }
         catch
         {

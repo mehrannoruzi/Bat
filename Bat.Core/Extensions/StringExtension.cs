@@ -21,19 +21,19 @@ public static class StringExtensions
 {
     public static int ToInt(this string text)
     {
-        int.TryParse(text, out int result);
+        _ = int.TryParse(text, out int result);
         return result;
     }
 
     public static long ToLong(this string text)
     {
-        long.TryParse(text, out long result);
+        _ = long.TryParse(text, out long result);
         return result;
     }
 
     public static decimal ToDecimal(this string text)
     {
-        decimal.TryParse(text, out decimal result);
+        _ = decimal.TryParse(text, out decimal result);
         return result;
     }
 
@@ -78,15 +78,15 @@ public static class StringExtensions
             switch (option.Mode)
             {
                 case MaskMode.Start:
-                    return new string(option.MaskWith, option.MaskLength) + input.Substring(option.MaskLength, input.Length - option.MaskLength);
+                    return string.Concat(new string(option.MaskWith, option.MaskLength), input.AsSpan(option.MaskLength, input.Length - option.MaskLength));
 
                 case MaskMode.Middle:
                     var inputStep = input.Length / 2;
                     var maskStep = option.MaskLength / 2;
-                    return input.Substring(0, inputStep - maskStep) + new string(option.MaskWith, option.MaskLength) + input.Substring(inputStep + maskStep + 1, input.Length - (inputStep + maskStep + 1));
+                    return string.Concat(input.AsSpan(0, inputStep - maskStep), new string(option.MaskWith, option.MaskLength), input.AsSpan(inputStep + maskStep + 1, input.Length - (inputStep + maskStep + 1)));
 
                 case MaskMode.End:
-                    return input.Substring(0, input.Length - option.MaskLength) + new string(option.MaskWith, option.MaskLength);
+                    return string.Concat(input.AsSpan(0, input.Length - option.MaskLength), new string(option.MaskWith, option.MaskLength));
             }
         }
         else
@@ -94,15 +94,15 @@ public static class StringExtensions
             switch (option.Mode)
             {
                 case MaskMode.Start:
-                    return new string(option.MaskWith, option.MaxMaskLength) + input.Substring(option.MaskLength, input.Length - option.MaskLength);
+                    return string.Concat(new string(option.MaskWith, option.MaxMaskLength), input.AsSpan(option.MaskLength, input.Length - option.MaskLength));
 
                 case MaskMode.Middle:
                     var inputStep = input.Length / 2;
                     var maskStep = option.MaskLength / 2;
-                    return input.Substring(0, inputStep - maskStep) + new string(option.MaskWith, option.MaxMaskLength) + input.Substring(inputStep + maskStep + 1, input.Length - (inputStep + maskStep + 1));
+                    return string.Concat(input.AsSpan(0, inputStep - maskStep), new string(option.MaskWith, option.MaxMaskLength), input.AsSpan(inputStep + maskStep + 1, input.Length - (inputStep + maskStep + 1)));
 
                 case MaskMode.End:
-                    return input.Substring(0, input.Length - option.MaskLength) + new string(option.MaskWith, option.MaxMaskLength);
+                    return string.Concat(input.AsSpan(0, input.Length - option.MaskLength), new string(option.MaskWith, option.MaxMaskLength));
             }
         }
 
@@ -114,7 +114,7 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(value)) return defaultValue;
         if (lenght >= value.Length) return value;
 
-        return (value.Substring(0, lenght) + appendString);
+        return (string.Concat(value.AsSpan(0, lenght), appendString));
     }
 
     public static bool IsNullOrEmpty(this string text) => string.IsNullOrEmpty(text);
@@ -129,7 +129,7 @@ public static class StringExtensions
     {
         if (string.IsNullOrWhiteSpace(text)) return null;
 
-        List<T> result = new();
+        List<T> result = [];
         List<string> tokens = text.Split(seperator).Select(i => i.Trim()).ToList();
         tokens.ForEach(t =>
         {
@@ -144,9 +144,11 @@ public static class StringExtensions
         return result;
     }
 
-    public static string RemoveHtml(this string text) => Regex.Replace(text, "<.*?>", string.Empty, RegexOptions.Multiline | RegexOptions.IgnoreCase);
+    public static string RemoveHtml(this string text) 
+        => Regex.Replace(text, "<.*?>", string.Empty, RegexOptions.Multiline | RegexOptions.IgnoreCase);
 
-    public static string ReplaceAll(this string text, string regex, string replacement, RegexOptions regexOptions) => Regex.Replace(text, regex, replacement, regexOptions);
+    public static string ReplaceAll(this string text, string regex, string replacement, RegexOptions regexOptions) 
+        => Regex.Replace(text, regex, replacement, regexOptions);
 
     public static string ReplaceAll(this string text, Dictionary<string, string> values)
     {

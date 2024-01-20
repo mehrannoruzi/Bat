@@ -18,8 +18,8 @@ public static class EnglishNumberExtension
 {
     public static string ToEnglishNumber(this string input, NumericCultureType convertType = NumericCultureType.PersianToEnglish)
     {
-        string[] persian = { "۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹" };
-        string[] arabic = { "٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩" };
+        string[] persian = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
+        string[] arabic = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
 
         for (int i = 0; i <= 9; i++)
         {

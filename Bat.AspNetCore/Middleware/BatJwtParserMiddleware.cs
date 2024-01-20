@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using Microsoft.Extensions.Options;
-using System;
 
 namespace Bat.AspNetCore;
 
@@ -20,7 +19,7 @@ public class BatJwtParserMiddleware
 
     public async Task Invoke(HttpContext context)
     {
-        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        var token = context.Request.Headers.Authorization.FirstOrDefault()?.Split(" ").Last();
         try
         {
             if (token != null)

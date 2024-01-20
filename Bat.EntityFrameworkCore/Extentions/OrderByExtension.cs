@@ -5,6 +5,7 @@ public static class OrderByExtension
     private static readonly char[] separator = [' '];
     private static readonly char[] separatorArray = [','];
 
+
     private static Expression OrderBy(this Expression source, string orderBy)
     {
         if (!string.IsNullOrWhiteSpace(orderBy))
@@ -61,6 +62,7 @@ public static class OrderByExtension
 
         return Expression.Lambda<Func<T, object>>(propAsObject, parameter);
     }
+
 
     public static IOrderedQueryable<T> OrderBy<T>(this IQueryable<T> source, string propertyName)
     {

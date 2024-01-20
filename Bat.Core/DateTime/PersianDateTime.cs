@@ -4,9 +4,9 @@ namespace Bat.Core;
 
 public class PersianDateTime
 {
-    private readonly static PersianCalendar _persianCalendar = new PersianCalendar();
-    private readonly static string[] _dayNames = new string[] { "شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه" };
-    private readonly static string[] _monthNames = new string[] { "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند" };
+    private readonly static PersianCalendar _persianCalendar = new();
+    private readonly static string[] _dayNames = ["شنبه", "یکشنبه", "دوشنبه", "سه شنبه", "چهارشنبه", "پنج شنبه", "جمعه"];
+    private readonly static string[] _monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
 
     private static readonly string AM = "ق.ظ";
     private static readonly string PM = "ب.ظ";
@@ -15,7 +15,7 @@ public class PersianDateTime
     private static readonly TimeSpan DaylightSavingTimeStart = TimeSpan.FromDays(1);
     private static readonly TimeSpan DaylightSavingTimeEnd = TimeSpan.FromDays(185);
     private static readonly TimeSpan DaylightSavingTime = TimeSpan.FromHours(1);
-    private static readonly TimeSpan OffsetFromUtc = new TimeSpan(3, 30, 0);
+    private static readonly TimeSpan OffsetFromUtc = new(3, 30, 0);
 
     public static TimeZoneInfo GetPersianTimeZoneInfo()
     {
@@ -54,9 +54,9 @@ public class PersianDateTime
 
     public static bool operator <=(PersianDateTime d1, PersianDateTime d2) => d1.ToDateTime() <= d2.ToDateTime();
 
-    public static PersianDateTime operator -(PersianDateTime d, TimeSpan t) => new PersianDateTime(d.ToDateTime() - t);
+    public static PersianDateTime operator -(PersianDateTime d, TimeSpan t) => new(d.ToDateTime() - t);
 
-    public static PersianDateTime operator +(PersianDateTime d, TimeSpan t) => new PersianDateTime(d.ToDateTime() + t);
+    public static PersianDateTime operator +(PersianDateTime d, TimeSpan t) => new(d.ToDateTime() + t);
 
     public static bool operator <(PersianDateTime d1, PersianDateTime d2) => d1.ToDateTime() < d2.ToDateTime();
 
@@ -98,7 +98,7 @@ public class PersianDateTime
                     return new PersianDateTime(TimeZoneInfo.ConvertTime(DateTime.Now, PersianTimeZoneInfo));
 
                 case PersianDateTimeMode.UtcOffset:
-                    PersianDateTime now = new PersianDateTime(DateTime.UtcNow.Add(OffsetFromUtc));
+                    PersianDateTime now = new(DateTime.UtcNow.Add(OffsetFromUtc));
                     return now.IsInDaylightSavingTime ? now.Add(DaylightSavingTime) : now;
 
                 default:
@@ -107,11 +107,11 @@ public class PersianDateTime
         }
     }
 
-    public static PersianDateTime Parse(DateTime miladiDate) => new PersianDateTime(miladiDate);
+    public static PersianDateTime Parse(DateTime miladiDate) => new(miladiDate);
 
     public static PersianDateTime Parse(string persianDate) => Parse(persianDate, "0");
 
-    public static PersianDateTime Parse(string persianDate, string time) => new PersianDateTime(int.Parse(persianDate.Replace("/", "")), int.Parse(time.Replace(":", "")));
+    public static PersianDateTime Parse(string persianDate, string time) => new(int.Parse(persianDate.Replace("/", "")), int.Parse(time.Replace(":", "")));
 
     private readonly DateTime _dateTime;
 
@@ -190,7 +190,7 @@ public class PersianDateTime
 
     public string MonthName => _monthNames[Month - 1];
 
-    public PersianDateTime Date => new PersianDateTime(_dateTime.Date);
+    public PersianDateTime Date => new(_dateTime.Date);
 
     public PersianDateTime FirstDayOfYear => AddDays(-DayOfYear + 1).Date;
 
@@ -204,11 +204,11 @@ public class PersianDateTime
 
     public PersianDateTime LastDayOfWeek => AddDays(6 - DayOfWeek).Date;
 
-    public PersianDateTime AddSeconds(double value) => new PersianDateTime(_dateTime.AddSeconds(value));
+    public PersianDateTime AddSeconds(double value) => new(_dateTime.AddSeconds(value));
 
-    public PersianDateTime AddMinutes(double value) => new PersianDateTime(_dateTime.AddMinutes(value));
+    public PersianDateTime AddMinutes(double value) => new(_dateTime.AddMinutes(value));
 
-    public PersianDateTime AddHours(double value) => new PersianDateTime(_dateTime.AddHours(value));
+    public PersianDateTime AddHours(double value) => new(_dateTime.AddHours(value));
 
     public PersianDateTime AddYears(int value) => new PersianDateTime(Year + value, Month, Day).Add(TimeOfDay);
 
@@ -225,9 +225,9 @@ public class PersianDateTime
         return new PersianDateTime(newYear, newMonth, newDay).Add(TimeOfDay);
     }
 
-    public PersianDateTime AddDays(double value) => new PersianDateTime(_dateTime.AddDays(value));
+    public PersianDateTime AddDays(double value) => new(_dateTime.AddDays(value));
 
-    public PersianDateTime Add(TimeSpan value) => new PersianDateTime(_dateTime.Add(value));
+    public PersianDateTime Add(TimeSpan value) => new(_dateTime.Add(value));
 
     public DateTime ToDateTime() => _dateTime;
 
@@ -268,43 +268,21 @@ public class PersianDateTime
                      .Replace('t', dayPart[0]);
     }
 
-    public string ToString(PersianDateTimeFormat format)
+    public string ToString(PersianDateTimeFormat format = default)
     {
-        switch (format)
+        return format switch
         {
-            case PersianDateTimeFormat.Date:
-                return Year.ToString() + "/" + Month.ToString().PadLeft(2, '0') + "/" + Day.ToString().PadLeft(2, '0');
-
-            case PersianDateTimeFormat.DateTime:
-                return ToString(PersianDateTimeFormat.Date) + " " + TimeOfDay.ToHHMMSS();
-
-            case PersianDateTimeFormat.DateShortTime:
-                return ToString(PersianDateTimeFormat.Date) + " " + TimeOfDay.ToHHMM();
-
-            case PersianDateTimeFormat.LongDate:
-                return DayName + " " + Day + " " + MonthName;
-
-            case PersianDateTimeFormat.LongDateFullTime:
-                return DayName + " " + Day + " " + MonthName + " ساعت " + TimeOfDay.ToHHMMSS();
-
-            case PersianDateTimeFormat.LongDateLongTime:
-                return DayName + " " + Day + " " + MonthName + " ساعت " + TimeOfDay.ToHHMM();
-
-            case PersianDateTimeFormat.ShortDateShortTime:
-                return Day.ToString() + " " + MonthName + " " + TimeOfDay.ToHHMM();
-
-            case PersianDateTimeFormat.FullDate:
-                return DayName + " " + Day + " " + MonthName + " " + Year;
-
-            case PersianDateTimeFormat.FullDateLongTime:
-                return DayName + " " + Day + " " + MonthName + " " + Year + " ساعت " + TimeOfDay.ToHHMM();
-
-            case PersianDateTimeFormat.FullDateFullTime:
-                return DayName + " " + Day + " " + MonthName + " " + Year + " ساعت " + TimeOfDay.ToHHMMSS();
-
-            default:
-                throw new NotImplementedException(format.ToString());
-        }
+            PersianDateTimeFormat.DateTime => ToString(PersianDateTimeFormat.Date) + " " + TimeOfDay.ToHHMMSS(),
+            PersianDateTimeFormat.DateShortTime => ToString(PersianDateTimeFormat.Date) + " " + TimeOfDay.ToHHMM(),
+            PersianDateTimeFormat.LongDate => DayName + " " + Day + " " + MonthName,
+            PersianDateTimeFormat.LongDateFullTime => DayName + " " + Day + " " + MonthName + " ساعت " + TimeOfDay.ToHHMMSS(),
+            PersianDateTimeFormat.LongDateLongTime => DayName + " " + Day + " " + MonthName + " ساعت " + TimeOfDay.ToHHMM(),
+            PersianDateTimeFormat.ShortDateShortTime => Day.ToString() + " " + MonthName + " " + TimeOfDay.ToHHMM(),
+            PersianDateTimeFormat.FullDate => DayName + " " + Day + " " + MonthName + " " + Year,
+            PersianDateTimeFormat.FullDateLongTime => DayName + " " + Day + " " + MonthName + " " + Year + " ساعت " + TimeOfDay.ToHHMM(),
+            PersianDateTimeFormat.FullDateFullTime => DayName + " " + Day + " " + MonthName + " " + Year + " ساعت " + TimeOfDay.ToHHMMSS(),
+            _ => Year.ToString() + "/" + Month.ToString().PadLeft(2, '0') + "/" + Day.ToString().PadLeft(2, '0'),
+        };
     }
 
     public override int GetHashCode() => _dateTime.GetHashCode();
@@ -313,7 +291,7 @@ public class PersianDateTime
 
     public bool Equals(PersianDateTime value)
     {
-        if (object.ReferenceEquals(value, null))
+        if (value is null)
         {
             return false;
         }

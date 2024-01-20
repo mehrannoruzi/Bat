@@ -18,7 +18,7 @@ public static class ReflectionExtension
 
         if (mbody != null) return mbody.Member;
         if (ubody != null) mbody = ubody.Operand as MemberExpression;
-        if (mbody == null) throw new ArgumentException("Expression is not a MemberExpression", "expression");
+        if (mbody == null) throw new ArgumentException("Expression is not a MemberExpression", nameof(expression));
 
         return mbody.Member;
     }

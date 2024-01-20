@@ -55,7 +55,7 @@ public static class DbContextExtention
                         if (entry.Entity is IInsertDateProperties insertDateProperties)
                         {
                             insertDateProperties.InsertDateMi = DateTime.Now;
-                            insertDateProperties.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
+                            insertDateProperties.InsertDateSh = PersianDateTime.Now.ToString();
                         }
 
                         if (entry.Entity is IModifyDateProperty modifyDateProperty)
@@ -65,7 +65,7 @@ public static class DbContextExtention
                         if (entry.Entity is IModifyDateProperties modifyDateProperties)
                         {
                             modifyDateProperties.ModifyDateMi = DateTime.Now;
-                            modifyDateProperties.ModifyDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
+                            modifyDateProperties.ModifyDateSh = PersianDateTime.Now.ToString();
                         }
                         break;
                     }
@@ -78,7 +78,7 @@ public static class DbContextExtention
                         if (entry.Entity is IModifyDateProperties modifyDateProperties)
                         {
                             modifyDateProperties.ModifyDateMi = DateTime.Now;
-                            modifyDateProperties.ModifyDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
+                            modifyDateProperties.ModifyDateSh = PersianDateTime.Now.ToString();
                         }
                         break;
                     }
@@ -146,7 +146,7 @@ public static class DbContextExtention
                             audit.NewValue = entry.CurrentValues.ToObject().SerializeDbSetToJson();
                             audit.OldValue = null;
                             audit.InsertDateMi = DateTime.Now;
-                            audit.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
+                            audit.InsertDateSh = PersianDateTime.Now.ToString();
                             break;
                             #endregion
                         }
@@ -159,7 +159,7 @@ public static class DbContextExtention
                             audit.NewValue = entry.CurrentValues.ToObject().SerializeDbSetToJson();
                             audit.OldValue = entry.GetDatabaseValues().ToObject().SerializeDbSetToJson();
                             audit.InsertDateMi = DateTime.Now;
-                            audit.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
+                            audit.InsertDateSh = PersianDateTime.Now.ToString();
                             break;
                             #endregion
                         }
@@ -172,7 +172,7 @@ public static class DbContextExtention
                             audit.NewValue = null;
                             audit.OldValue = entry.OriginalValues.ToObject().SerializeDbSetToJson();
                             audit.InsertDateMi = DateTime.Now;
-                            audit.InsertDateSh = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
+                            audit.InsertDateSh = PersianDateTime.Now.ToString();
                             break;
                             #endregion
                         }

@@ -2,9 +2,9 @@
 
 public class FileLoger
 {
-    private static readonly object _infoLock = new object();
-    private static readonly object _errorLock = new object();
-    private static readonly object _messageLock = new object();
+    private static readonly object _infoLock = new();
+    private static readonly object _errorLock = new();
+    private static readonly object _messageLock = new();
 
     public static void Info(string log, string path = "")
     {
@@ -13,7 +13,7 @@ public class FileLoger
         Monitor.Enter(_infoLock);
         try
         {
-            using var stream = File.AppendText($"{path}\\Info-{PersianDateTime.Now.ToString(PersianDateTimeFormat.Date).Replace("/", "-")}.txt");
+            using var stream = File.AppendText($"{path}\\Info-{PersianDateTime.Now.ToString().Replace("/", "-")}.txt");
             stream.WriteLine($"{PersianDateTime.Now.ToString(PersianDateTimeFormat.DateTime)} :: {log}");
             stream.Close();
         }
@@ -30,7 +30,7 @@ public class FileLoger
         Monitor.Enter(_infoLock);
         try
         {
-            using var stream = File.AppendText($"{path}\\CriticalInfo-{PersianDateTime.Now.ToString(PersianDateTimeFormat.Date).Replace("/", "-")}.txt");
+            using var stream = File.AppendText($"{path}\\CriticalInfo-{PersianDateTime.Now.ToString().Replace("/", "-")}.txt");
             stream.WriteLine($"{PersianDateTime.Now.ToString(PersianDateTimeFormat.DateTime)} :: {log}");
             stream.Close();
         }
@@ -47,7 +47,7 @@ public class FileLoger
         Monitor.Enter(_messageLock);
         try
         {
-            using var stream = File.AppendText($"{path}\\Message-{PersianDateTime.Now.ToString(PersianDateTimeFormat.Date).Replace("/", "-")}.txt");
+            using var stream = File.AppendText($"{path}\\Message-{PersianDateTime.Now.ToString().Replace("/", "-")}.txt");
             stream.WriteLine($"{PersianDateTime.Now.ToString(PersianDateTimeFormat.DateTime)} :: {log}");
             stream.Close();
         }
@@ -65,7 +65,7 @@ public class FileLoger
         Monitor.Enter(_errorLock);
         try
         {
-            using var stream = File.AppendText($"{path}\\Error-{PersianDateTime.Now.ToString(PersianDateTimeFormat.Date).Replace("/", "-")}.txt");
+            using var stream = File.AppendText($"{path}\\Error-{PersianDateTime.Now.ToString().Replace("/", "-")}.txt");
             stream.WriteLine(
                 $" DateTime : {PersianDateTime.Now.ToString(PersianDateTimeFormat.DateTime)}" + Environment.NewLine +
                 $" MethodName : {exceptionDetails.MethodName}" + Environment.NewLine +
@@ -89,7 +89,7 @@ public class FileLoger
         Monitor.Enter(_errorLock);
         try
         {
-            using var stream = File.AppendText($"{path}\\CriticalError-{PersianDateTime.Now.ToString(PersianDateTimeFormat.Date).Replace("/", "-")}.txt");
+            using var stream = File.AppendText($"{path}\\CriticalError-{PersianDateTime.Now.ToString().Replace("/", "-")}.txt");
             stream.WriteLine(
                 $" DateTime : {PersianDateTime.Now.ToString(PersianDateTimeFormat.DateTime)}" + Environment.NewLine +
                 $" MethodName : {exceptionDetails.MethodName}" + Environment.NewLine +

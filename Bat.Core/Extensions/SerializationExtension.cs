@@ -10,7 +10,7 @@ public static class SerializationExtension
 
     public static string SerializeToXml<T>(this T xmlObject)
     {
-        if (xmlObject == null) throw new ArgumentNullException("xmlObject");
+        if (xmlObject == null) throw new ArgumentNullException(nameof(xmlObject));
 
         var serializer = new XmlSerializer(typeof(T));
         var outStream = new StringWriter();
@@ -20,15 +20,13 @@ public static class SerializationExtension
 
     public static T DeSerializeXml<T>(this string xml)
     {
-        if (string.IsNullOrEmpty(xml)) throw new ArgumentNullException("xml");
+        if (string.IsNullOrEmpty(xml)) throw new ArgumentNullException(nameof(xml));
 
-        T returnedXmlClass = default(T);
+        T returnedXmlClass = default;
         try
         {
-            using (TextReader reader = new StringReader(xml))
-            {
-                returnedXmlClass = (T)new XmlSerializer(typeof(T)).Deserialize(reader);
-            }
+            using TextReader reader = new StringReader(xml);
+            returnedXmlClass = (T)new XmlSerializer(typeof(T)).Deserialize(reader);
         }
         catch (Exception ex)
         {
@@ -40,7 +38,7 @@ public static class SerializationExtension
 
     public static Stream DeSerializeXml(this string xmlString)
     {
-        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentNullException("xmlString");
+        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentNullException(nameof(xmlString));
 
         var stream = new MemoryStream();
         var writer = new StreamWriter(stream);
@@ -52,7 +50,7 @@ public static class SerializationExtension
 
     public static T ParseXml<T>(this string xmlString) where T : class
     {
-        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentNullException("xmlString");
+        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentNullException(nameof(xmlString));
 
         var reader = XmlReader.Create(xmlString.Trim().DeSerializeXml(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
         return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
@@ -95,7 +93,7 @@ public static class SerializationExtension
     public static string SerializeToJson(this object jsonObject, JsonSerializerOptions options)
     {
         if (jsonObject == null) return string.Empty;
-
+        
         return JsonSerializer.Serialize(jsonObject, options);
     }
 
@@ -125,7 +123,7 @@ public static class SerializationExtension
     {
         if (string.IsNullOrWhiteSpace(json)) return default;
 
-        return JsonSerializer.Deserialize<T>(json as string, options);
+        return JsonSerializer.Deserialize<T>(json, options);
     }
 
     public static dynamic DeSerializeJsonToDynamic(this string json)

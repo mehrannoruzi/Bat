@@ -62,7 +62,7 @@ public static class RepositoryExtension
     public static async Task<PagingListDetails<T>> ToPagingListAsync<T>(this EFGenericRepo<T> repo, PagingParameter pagingParameter, CancellationToken cancellationToken = default) where T : class, IBaseEntity
         => await repo._dbSet.ToPagingListDetailsAsync(pagingParameter, cancellationToken);
 
-    public static async Task<PagingListDetails<T>> ToPagingListAsync<T>(this EFGenericRepo<T> repo, PagingParameter pagingParameter, string orderBy = null, CancellationToken cancellationToken = default) where T : class, IBaseEntity
+    public static async Task<PagingListDetails<T>> ToPagingListAsync<T>(this EFGenericRepo<T> repo, PagingParameter pagingParameter, string orderBy, CancellationToken cancellationToken = default) where T : class, IBaseEntity
         => await repo._dbSet.ToPagingListDetailsAsync(pagingParameter, orderBy, cancellationToken);
 
 }

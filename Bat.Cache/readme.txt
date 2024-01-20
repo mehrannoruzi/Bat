@@ -7,7 +7,7 @@ for example :
 
 
     builder.Services.AddMemoryCache();
-    builder.Services.AddSingleton<IMemoryCacheProvider, IMemoryCacheProvider>();
+    builder.Services.AddSingleton<IMemoryCacheProvider, MemoryCacheProvider>();
 
 
 3- Use it in bussiness logic

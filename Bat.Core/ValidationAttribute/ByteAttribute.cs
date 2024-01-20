@@ -7,7 +7,7 @@ public sealed class ByteAttribute : ValidationAttribute
     {
         if (value == null) return true;
 
-        byte.TryParse(value.ToString(), out byte result);
+        _ = byte.TryParse(value.ToString(), out byte result);
         if (result != 0) return true;
         else return false;
     }

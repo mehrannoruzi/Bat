@@ -17,23 +17,23 @@ public class MemoryCacheProvider : IMemoryCacheProvider
     }
 
 
-    public bool Add(string key, object value, DateTimeOffset expireTime) => _cache.Add(key, value, expireTime);
+    public bool Set(string key, object value, DateTimeOffset expireTime) => _cache.Add(key, value, expireTime);
 
     public bool Add(string key, object value, CacheItemPolicy cachePolicy) => _cache.Add(key, value, cachePolicy);
 
-    public bool Add(string key, object value, DateTimeOffset expireTime, TimeSpan slidingTime) => _cache.Add(key, value, new CacheItemPolicy { AbsoluteExpiration = expireTime, SlidingExpiration = slidingTime });
+    public bool Set(string key, object value, DateTimeOffset expireTime, TimeSpan slidingTime) => _cache.Add(key, value, new CacheItemPolicy { AbsoluteExpiration = expireTime, SlidingExpiration = slidingTime });
 
-    public object AddOrGetExisting(string key, object value, DateTimeOffset expireTime) => _cache.AddOrGetExisting(key, value, expireTime);
+    public object GetSet(string key, object value, DateTimeOffset expireTime) => _cache.AddOrGetExisting(key, value, expireTime);
 
     public object AddOrGetExisting(string key, object value, CacheItemPolicy cachePolicy) => _cache.AddOrGetExisting(key, value, cachePolicy);
 
-    public bool Remove(string key) { var cacheItem = _cache.Remove(key); return cacheItem != null; }
+    public bool Delete(string key) { var cacheItem = _cache.Remove(key); return cacheItem != null; }
 
     public object Get(string key) => _cache.Get(key);
 
     public CacheItem GetCacheItem(string key) => _cache.GetCacheItem(key);
 
-    public IDictionary<string, object> GetAllItem(IEnumerable<string> keys) => _cache.GetValues(keys);
+    public IDictionary<string, object> GetAll(IEnumerable<string> keys) => _cache.GetValues(keys);
 
     public long GetCount() => _cache.GetCount();
 

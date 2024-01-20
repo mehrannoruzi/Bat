@@ -2,12 +2,13 @@
 
 public interface IMemoryCacheProvider : ISingletonInjection
 {
-    bool Add(string key, object value, DateTimeOffset expireTime);
-    bool Add(string key, object value, DateTimeOffset expireTime, TimeSpan slidingTime);
-    object AddOrGetExisting(string key, object value, DateTimeOffset expireTime);
-    bool Remove(string key);
+    bool Set(string key, object value, DateTimeOffset expireTime);
+    bool Set(string key, object value, DateTimeOffset expireTime, TimeSpan slidingTime);
     object Get(string key);
-    IDictionary<string, object> GetAllItem(IEnumerable<string> keys);
+    object GetSet(string key, object value, DateTimeOffset expireTime);
+    IDictionary<string, object> GetAll(IEnumerable<string> keys);
+    bool Delete(string key);
+
     long GetCount();
     long GetSize();
     long GetMemoryLimit();

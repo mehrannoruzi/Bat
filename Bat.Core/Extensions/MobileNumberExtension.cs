@@ -60,11 +60,11 @@ public static class MobileNumberExtension
         {
             if (mobileNumber.StartsWith("0"))
             {
-                pattern = "98" + mobileNumber.Substring(1);
+                pattern = string.Concat("98", mobileNumber.AsSpan(1));
             }
         }
         else if (mobileNumber.Length == 13)
-            pattern = mobileNumber.Substring(1);
+            pattern = mobileNumber[1..];
 
         return pattern;
     }
@@ -73,7 +73,7 @@ public static class MobileNumberExtension
 
     public static long ToMobileNumber(this string mobileNumber)
     {
-        if (long.TryParse(mobileNumber, out long value))
+        if (long.TryParse(mobileNumber, out _))
             return long.Parse(mobileNumber);
 
         return 0;
@@ -87,7 +87,7 @@ public static class MobileNumberExtension
         if (!mobileNumber.ToString().IsMobileNumber()) return 0;
 
         if (mobileNumber.ToString().Length == 12) return mobileNumber;
-        else if (mobileNumber.ToString().Length == 11) return long.Parse("98" + mobileNumber.ToString().Substring(1));
+        else if (mobileNumber.ToString().Length == 11) return long.Parse("98" + mobileNumber.ToString()[1..]);
         else if (mobileNumber.ToString().Length == 10) return long.Parse("98" + mobileNumber);
 
         return 0;

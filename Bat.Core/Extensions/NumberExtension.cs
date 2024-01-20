@@ -4,7 +4,7 @@ namespace Bat.Core;
 
 public static class NumberExtension
 {
-    private static readonly Regex DetectNumberRegex = new Regex(@"^-*[0-9,\.]+$");
+    private static readonly Regex DetectNumberRegex = new(@"^-*[0-9,\.]+$");
 
     private static bool IsNumber(string number)
     {
@@ -13,27 +13,21 @@ public static class NumberExtension
 
     private static string GetStepString(long step)
     {
-        switch (step)
+        return step switch
         {
-            case 1000000000000:
-                return " تریلیارد و ";
-            case 1000000000:
-                return " میلیارد و ";
-            case 1000000:
-                return " میلیون و ";
-            case 1000:
-                return " هزار و ";
-
-            default:
-                return string.Empty;
-        }
+            1000000000000 => " تریلیارد و ",
+            1000000000 => " میلیارد و ",
+            1000000 => " میلیون و ",
+            1000 => " هزار و ",
+            _ => string.Empty,
+        };
     }
 
-    private static string GetNumberString(long number)
+    public static string GetNumberString(long number)
     {
-        long mod, step = 0;
+        long mod;
         var result = string.Empty;
-
+        long step;
         if ((number / 1000000000000) >= 1)
             step = 1000000000000;
         else if ((number / 1000000000) >= 1)
@@ -49,7 +43,7 @@ public static class NumberExtension
         {
             if (number == 0) continue;
             mod = number % i;
-            number = number / i;
+            number /= i;
             result += number + GetStepString(i);
             number = mod;
         }
@@ -129,14 +123,14 @@ public static class NumberExtension
     {
         var numstr = new string[][]
         {
-                new string[]{"0","1","2","3","4","5","6","7","8","9"},
-                new string[]{"10","11","12","13","14","15","16","17","18","19","20","30","40","50","60","70","80","90"},
-                new string[]{"","100","200","300","400","500","600","700","800","900"} ,
-                new string[]{"هزار"},
-                new string[]{"ميليون"},
-                new string[]{"ميليارد"},
-                new string[]{"تريليون"},
-                new string[]{"تريليارد"}
+            ["0","1","2","3","4","5","6","7","8","9"],
+            ["10","11","12","13","14","15","16","17","18","19","20","30","40","50","60","70","80","90"],
+            ["","100","200","300","400","500","600","700","800","900"] ,
+            ["هزار"],
+            ["ميليون"],
+            ["ميليارد"],
+            ["تريليون"],
+            ["تريليارد"]
         };
 
         switch (level)
@@ -207,16 +201,16 @@ public static class NumberExtension
         if (!IsNumber(number)) return number;
 
         var result = number;
-        if (result.Contains(".")) result = result.Substring(0, result.IndexOf('.'));
-        if (result.Contains(",")) result = result.Replace(",", "");
+        if (result.Contains('.')) result = result[..result.IndexOf('.')];
+        if (result.Contains(',')) result = result.Replace(",", "");
         return result;
     }
 
-    public static string To3DigitSplited(this long number, char symbol = ',')
+    public static string To3DigitSplited(this long number, string symbol = ",")
     {
         if (number == 0) return "0";
         else if (number < 1000 && number > -1000) return number.ToString();
-        else return string.Format("{0:N0}", long.Parse(number.ToString().Replace(",", "")));
+        else return string.Format("{0:N0}", long.Parse(number.ToString().Replace(symbol, "")));
     }
 
     public static string To3DigitSplited(this int number)
@@ -231,7 +225,10 @@ public static class NumberExtension
         try
         {
             if (!IsNumber(number.ToString())) return number.ToString();
-            if (number.ToString().StartsWith("0")) return number.ToString();
+            if (number.ToString().StartsWith("0"))
+            {
+                return number.ToString();
+            }
 
             var result = ToPlainNumber(number.ToString());
             return GetSpecialNumberString(Int64.Parse(result));
