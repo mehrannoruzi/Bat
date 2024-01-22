@@ -22,7 +22,7 @@ public static class HttpExtensions
     {
         var requestDetails = ClientInfo.GetRequestDetails(httpContext);
         var ip = httpContext.GetIPBehindCloud();
-        var isMobile = requestDetails == null ? false : requestDetails.IsMobile;
+        var isMobile = requestDetails != null && requestDetails.IsMobile;
         var os = $"{requestDetails?.OsName} {requestDetails?.OsVersion}";
         var device = $"{requestDetails?.Manufacture} {requestDetails?.Model}";
         var application = $"{requestDetails?.BrowserName} {requestDetails?.BrowserVersion}";
@@ -31,9 +31,9 @@ public static class HttpExtensions
         {
             IsMobile = isMobile,
             IP = ip,
-            Os = os.Length > 25 ? os.Substring(0, 25) : os,
-            Device = device.Length > 50 ? device.Substring(0, 50) : device,
-            Application = application.Length > 50 ? application.Substring(0, 50) : application
+            Os = os.Length > 25 ? os[..25] : os,
+            Device = device.Length > 50 ? device[..50] : device,
+            Application = application.Length > 50 ? application[..50] : application
         };
     }
 

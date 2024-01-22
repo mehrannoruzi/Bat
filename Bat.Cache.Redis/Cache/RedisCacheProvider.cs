@@ -6,31 +6,6 @@ public class RedisCacheProvider : IRedisCacheProvider
     public ConnectionMultiplexer _redisClient;
     private readonly RedisSettings _redisSettings;
 
-    public RedisCacheProvider()
-    {
-        ConfigurationOptions config = new()
-        {
-            EndPoints =
-                {
-                    { "127.0.0.1", 6379 },
-                    { "127.0.0.1", 6380 }
-                },
-            //CommandMap = CommandMap.Create(new HashSet<string>
-            //    { 
-            //        // EXCLUDE a few commands
-            //        "INFO", "CONFIG", "CLUSTER",
-            //        "PING", "ECHO", "CLIENT"
-            //    },
-            //    available: false),
-            //KeepAlive = 180,
-            //DefaultVersion = new Version(2, 8, 8),
-            //Password = "changeme"
-        };
-
-        _redisClient = ConnectionMultiplexer.Connect(config);
-        _redisDb = _redisClient.GetDatabase();
-    }
-
     public RedisCacheProvider(IOptions<RedisSettings> redisSettings)
     {
         _redisSettings = redisSettings.Value;

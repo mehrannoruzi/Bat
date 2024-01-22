@@ -29,8 +29,8 @@ public class EFGenericRepo<TEntity>(DbContext context) where TEntity : class, IB
 
     public void UpdateSpecificProperties(TEntity entity, params Expression<Func<TEntity, object>>[] updatedProperties)
     {
-        //if (_context.Entry(entity).State == EntityState.Added)
-        //	_context.Entry(entity).State = EntityState.Detached;
+        if (_context.Entry(entity) is not null)
+            _context.Entry(entity).State = EntityState.Detached;
 
         foreach (var property in updatedProperties)
             _context.Entry(entity).Property(property).IsModified = true;

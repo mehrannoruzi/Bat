@@ -29,6 +29,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 		<NeutralLanguage>en-US</NeutralLanguage>
 		<Version>8.0.0</Version>
 		<RepositoryUrl>https://github.com/mehrannoruzi/Bat</RepositoryUrl>
+		<PackageReadmeFile>readme.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
