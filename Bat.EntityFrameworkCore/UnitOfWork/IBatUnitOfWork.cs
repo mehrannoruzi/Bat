@@ -6,10 +6,10 @@ public interface IBatUnitOfWork : IDisposable, IAsyncDisposable
 	public ChangeTracker ChangeTracker { get; }
 
 
-	int SaveChangesAsync();
+	int SaveChanges();
 	Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
-	SaveChangeResult BatSaveChangesAsync();
+	SaveChangeResult BatSaveChanges();
 	Task<SaveChangeResult> BatSaveChangesAsync(CancellationToken cancellationToken = default);
-	SaveChangeResult BatSaveChangesWithValidationAsync();
+	SaveChangeResult BatSaveChangesWithValidation();
 	Task<SaveChangeResult> BatSaveChangesWithValidationAsync(CancellationToken cancellationToken = default);
 }
