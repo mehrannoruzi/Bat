@@ -1,7 +1,11 @@
-﻿namespace Bat.Core;
+﻿namespace Bat.Cache.Redis;
 
 public interface IRedisCacheProvider : ISingletonInjection
 {
+    IServer GetServer(string host = null, int port = 0);
+    IEnumerable<string> GetAllKey(RedisValue[] command, CommandFlags flags = CommandFlags.None);
+    IEnumerable<string> GetAllKey(PagingParameter pagingParameter, string pattern = null, CommandFlags flags = CommandFlags.None);
+
     public bool Set(string key, string value, TimeSpan? expiry = null, bool keepTTL = false);
     bool Set(KeyValuePair<string, string>[] values);
     public Task<bool> SetAsync(string key, string value, TimeSpan? expiry = null, bool keepTTL = false);

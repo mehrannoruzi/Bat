@@ -3,7 +3,7 @@
 public class RedisCacheProvider : IRedisCacheProvider
 {
     public IDatabase _redisDb;
-    public ConnectionMultiplexer _redisClient;
+    public ConnectionMultiplexer _redisServer;
     private readonly RedisSettings _redisSettings;
 
     public RedisCacheProvider(IOptions<RedisSettings> redisSettings)
@@ -29,42 +29,65 @@ public class RedisCacheProvider : IRedisCacheProvider
         config.SyncTimeout = _redisSettings.SyncTimeout;
         config.ConnectTimeout = _redisSettings.ConnectTimeout;
         config.ClientName = _redisSettings.ClientName ?? null;
-        config.DefaultDatabase = _redisSettings.DefaultDatabaseIndex;
         config.IncludeDetailInExceptions = _redisSettings.IncludeDetailInExceptions;
         config.CheckCertificateRevocation = _redisSettings.CheckCertificateRevocation;
+        if (_redisSettings.DefaultDatabaseIndex > 0) config.DefaultDatabase = _redisSettings.DefaultDatabaseIndex;
 
-        config.Ssl = _redisSettings.SslSettings.UseSsl;
-        config.SslHost = _redisSettings.SslSettings.SslHost ?? null;
-        //config.SslClientAuthenticationOptions = (sslTargetHost) =>
-        //{
-        //    return new SslClientAuthenticationOptions
-        //    {
-        //        TargetHost = sslTargetHost,
-        //        AllowRenegotiation = true,
-        //        AllowTlsResume = true,
-        //    };
-        //};
+        config.Ssl = _redisSettings.SslSettings?.UseSsl ?? false;
+        config.SslHost = _redisSettings.SslSettings.Host ?? null;
+        config.SslProtocols = _redisSettings.SslSettings.Protocol;
 
-        _redisClient = ConnectionMultiplexer.Connect(config);
-        _redisDb = _redisClient.GetDatabase();
+        _redisServer = ConnectionMultiplexer.Connect(config);
+        _redisDb = _redisServer.GetDatabase();
     }
 
     public RedisCacheProvider(ConnectionMultiplexer redisClient, IDatabase database = null)
     {
-        _redisClient = redisClient;
+        _redisServer = redisClient;
         if (database is null)
-            _redisDb = _redisClient.GetDatabase();
+            _redisDb = _redisServer.GetDatabase();
         else
             _redisDb = database;
     }
 
     public RedisCacheProvider(ConfigurationOptions configurationOptions, IDatabase database = null)
     {
-        _redisClient = ConnectionMultiplexer.Connect(configurationOptions);
+        _redisServer = ConnectionMultiplexer.Connect(configurationOptions);
         if (database is null)
-            _redisDb = _redisClient.GetDatabase();
+            _redisDb = _redisServer.GetDatabase();
         else
             _redisDb = database;
+    }
+
+
+    public IServer GetServer(string host = null, int port = 0)
+        => _redisServer.GetServer(
+            host: host.IsNullOrWhiteSpace() ? _redisSettings.Server1 : host,
+            port: port > 0 ? _redisSettings.Port1 : port);
+
+    public IEnumerable<string> GetAllKey(RedisValue[] command, CommandFlags flags = CommandFlags.None)
+    {
+        var server = _redisServer.GetServer(_redisSettings.Server1, _redisSettings.Port1);
+        var keys = server.CommandGetKeys(
+            command: command,
+            flags: flags);
+
+        foreach (var key in keys)
+            yield return key.ToString();
+    }
+
+    public IEnumerable<string> GetAllKey(PagingParameter pagingParameter = null, string pattern = null, CommandFlags flags = CommandFlags.None)
+    {
+        var server = _redisServer.GetServer(_redisSettings.Server1, _redisSettings.Port1);
+        var keys = server.Keys(
+            database: _redisSettings.DefaultDatabaseIndex > 0 ? _redisSettings.DefaultDatabaseIndex : 0,
+            pattern: pattern.IsNullOrWhiteSpace() ? default : pattern,
+            pageSize: pagingParameter is null ? 250 : (pagingParameter.PageSize > 250 ? 250 : pagingParameter.PageSize),
+            pageOffset: pagingParameter is null ? 0 : ((pagingParameter.PageNumber - 1) * pagingParameter.PageSize),
+            flags: flags);
+
+        foreach (var key in keys)
+            yield return key.ToString();
     }
 
 
