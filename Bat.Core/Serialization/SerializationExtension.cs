@@ -1,5 +1,4 @@
 ﻿using System.Xml;
-using System.Text.Json;
 using System.Xml.Serialization;
 
 namespace Bat.Core;
