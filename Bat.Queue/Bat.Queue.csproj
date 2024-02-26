@@ -31,7 +31,7 @@ Mail : mehrannoruzi@gmail.com</PackageReleaseNotes>
 
 	<ItemGroup>
 		<PackageReference Include="Experimental.System.Messaging" Version="1.1.0" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
 	</ItemGroup>
 

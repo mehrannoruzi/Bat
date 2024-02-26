@@ -36,7 +36,7 @@ Mail : mehrannoruzi@gmail.com		</PackageReleaseNotes>
 	<ItemGroup>
 		<PackageReference Include="Azure.Identity" Version="1.10.4" />
 		<PackageReference Include="Dapper" Version="2.1.28" />
-		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.4" />
+		<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.5" />
 		<PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
 	</ItemGroup>
 
