@@ -1,68 +1,9 @@
-﻿using System.Xml;
-using System.Xml.Serialization;
-
-namespace Bat.Core;
+﻿namespace Bat.Core;
 
 public static class SerializationExtension
 {
-    public static string AddXmlRoot(this string nodeName, string xmlString) => "<" + nodeName + ">" + xmlString + "</" + nodeName + ">";
-
-    public static string SerializeToXml<T>(this T xmlObject)
+    public static JsonSerializerOptions GetDefaultOption(int? depth = null)
     {
-        if (xmlObject == null) throw new ArgumentNullException(nameof(xmlObject));
-
-        var serializer = new XmlSerializer(typeof(T));
-        var outStream = new StringWriter();
-        serializer.Serialize(outStream, xmlObject);
-        return outStream.ToString();
-    }
-
-    public static T DeSerializeXml<T>(this string xml)
-    {
-        if (string.IsNullOrEmpty(xml)) throw new ArgumentNullException(nameof(xml));
-
-        T returnedXmlClass = default;
-        try
-        {
-            using TextReader reader = new StringReader(xml);
-            returnedXmlClass = (T)new XmlSerializer(typeof(T)).Deserialize(reader);
-        }
-        catch (Exception ex)
-        {
-            throw new Exception("String passed is not XML or can't to Deserialize to your passed object.", ex);
-        }
-
-        return returnedXmlClass;
-    }
-
-    public static Stream DeSerializeXml(this string xmlString)
-    {
-        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentNullException(nameof(xmlString));
-
-        var stream = new MemoryStream();
-        var writer = new StreamWriter(stream);
-        writer.Write(@xmlString);
-        writer.Flush();
-        stream.Position = 0;
-        return stream;
-    }
-
-    public static T ParseXml<T>(this string xmlString) where T : class
-    {
-        if (string.IsNullOrEmpty(xmlString)) throw new ArgumentNullException(nameof(xmlString));
-
-        var reader = XmlReader.Create(xmlString.Trim().DeSerializeXml(), new XmlReaderSettings() { ConformanceLevel = ConformanceLevel.Document });
-        return new XmlSerializer(typeof(T)).Deserialize(reader) as T;
-    }
-
-
-
-    public static string AddJsonArrayRoot(string JsonString) => "[" + JsonString + "]";
-
-    public static string SerializeToJson(this object jsonObject)
-    {
-        if (jsonObject == null) return string.Empty;
-
         var options = new JsonSerializerOptions()
         {
             IncludeFields = true,
@@ -76,83 +17,53 @@ public static class SerializationExtension
         options.Converters.Add(new BatStringToBoolConverter());
         options.Converters.Add(new BatNumberToStringConverter());
 
-        return JsonSerializer.Serialize(jsonObject, options);
+        if (depth is not null) options.MaxDepth = (int)depth;
+
+        return options;
+    }
+
+
+    public static string AddJsonArrayRoot(string JsonString)
+        => "[" + JsonString + "]";
+
+    public static string SerializeToJson(this object jsonObject)
+    {
+        if (jsonObject is null) return string.Empty;
+
+        return JsonSerializer.Serialize(jsonObject, GetDefaultOption());
     }
 
     public static string SerializeToJson<T>(this T jsonObject)
     {
-        if (jsonObject == null) return string.Empty;
+        if (jsonObject is null) return string.Empty;
 
-        var options = new JsonSerializerOptions()
-        {
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Serialize(jsonObject, options);
+        return JsonSerializer.Serialize(jsonObject, GetDefaultOption());
     }
 
     public static string SerializeToJson(this object jsonObject, int depth)
     {
-        if (jsonObject == null) return string.Empty;
+        if (jsonObject is null) return string.Empty;
 
-
-        var options = new JsonSerializerOptions()
-        {
-            MaxDepth = depth,
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Serialize(jsonObject, options);
+        return JsonSerializer.Serialize(jsonObject, GetDefaultOption(depth));
     }
 
     public static string SerializeToJson<T>(this T jsonObject, int depth)
     {
-        if (jsonObject == null) return string.Empty;
+        if (jsonObject is null) return string.Empty;
 
-
-        var options = new JsonSerializerOptions()
-        {
-            MaxDepth = depth,
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Serialize(jsonObject, options);
+        return JsonSerializer.Serialize(jsonObject, GetDefaultOption(depth));
     }
 
     public static string SerializeToJson(this object jsonObject, JsonSerializerOptions options)
     {
-        if (jsonObject == null) return string.Empty;
+        if (jsonObject is null) return string.Empty;
 
         return JsonSerializer.Serialize(jsonObject, options);
     }
 
     public static string SerializeToJson<T>(this T jsonObject, JsonSerializerOptions options)
     {
-        if (jsonObject == null) return string.Empty;
+        if (jsonObject is null) return string.Empty;
 
         return JsonSerializer.Serialize(jsonObject, options);
     }
@@ -161,41 +72,14 @@ public static class SerializationExtension
     {
         if (string.IsNullOrWhiteSpace(json)) return default;
 
-        var options = new JsonSerializerOptions()
-        {
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Deserialize<T>(json, options);
+        return JsonSerializer.Deserialize<T>(json, GetDefaultOption());
     }
 
     public static T DeSerializeJson<T>(this string json, int depth)
     {
         if (string.IsNullOrWhiteSpace(json)) return default;
 
-        var options = new JsonSerializerOptions()
-        {
-            MaxDepth = depth,
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Deserialize<T>(json, options);
+        return JsonSerializer.Deserialize<T>(json, GetDefaultOption(depth));
     }
 
     public static T DeSerializeJson<T>(this string json, JsonSerializerOptions options)
@@ -209,41 +93,14 @@ public static class SerializationExtension
     {
         if (string.IsNullOrWhiteSpace(json)) return null;
 
-        var options = new JsonSerializerOptions()
-        {
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Deserialize<dynamic>(json, options);
+        return JsonSerializer.Deserialize<dynamic>(json, GetDefaultOption());
     }
 
     public static dynamic DeSerializeJsonToDynamic(this string json, int depth)
     {
         if (string.IsNullOrWhiteSpace(json)) return default;
 
-        var options = new JsonSerializerOptions()
-        {
-            MaxDepth = depth,
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Deserialize<dynamic>(json, options);
+        return JsonSerializer.Deserialize<dynamic>(json, GetDefaultOption(depth));
     }
 
     public static dynamic DeSerializeJsonToDynamic(this string json, JsonSerializerOptions options)
@@ -257,41 +114,14 @@ public static class SerializationExtension
     {
         if (string.IsNullOrWhiteSpace(json)) return default;
 
-        var options = new JsonSerializerOptions()
-        {
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Deserialize<JsonElement>(json, options);
+        return JsonSerializer.Deserialize<JsonElement>(json, GetDefaultOption());
     }
 
     public static JsonElement DeSerializeJsonToJsonElement(this string json, int depth)
     {
         if (string.IsNullOrWhiteSpace(json)) return default;
 
-        var options = new JsonSerializerOptions()
-        {
-            MaxDepth = depth,
-            IncludeFields = true,
-            //WriteIndented = true,
-            AllowTrailingCommas = true,
-            PropertyNameCaseInsensitive = true,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
-        };
-        options.Converters.Add(new BatStringToBoolConverter());
-        options.Converters.Add(new BatNumberToStringConverter());
-
-        return JsonSerializer.Deserialize<JsonElement>(json, options);
+        return JsonSerializer.Deserialize<JsonElement>(json, GetDefaultOption(depth));
     }
 
     public static JsonElement DeSerializeJsonToJsonElement(this string json, JsonSerializerOptions options)

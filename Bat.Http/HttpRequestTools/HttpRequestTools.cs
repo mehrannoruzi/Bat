@@ -309,7 +309,7 @@ public static class HttpRequestTools
     {
         var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url))
         {
-            Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json")
+            Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json")
         };
         if (header.IsNotNull())
             foreach (var item in header)
@@ -325,7 +325,7 @@ public static class HttpRequestTools
     {
         var request = new HttpRequestMessage(HttpMethod.Post, new Uri(url))
         {
-            Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json")
+            Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json")
         };
         if (header.IsNotNull())
             foreach (var item in header)
@@ -588,7 +588,7 @@ public static class HttpRequestTools
     {
         var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url))
         {
-            Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json")
+            Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json")
         };
         if (header.IsNotNull())
             foreach (var item in header)
@@ -604,7 +604,7 @@ public static class HttpRequestTools
     {
         var request = new HttpRequestMessage(HttpMethod.Put, new Uri(url))
         {
-            Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json")
+            Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json")
         };
         if (header.IsNotNull())
             foreach (var item in header)
@@ -764,7 +764,7 @@ public static class HttpRequestTools
     public static async Task<T> DeleteAsync<T>(string url, object contentValues = null, Dictionary<string, string> header = null, Encoding resultEncoding = null, CancellationToken cancellationToken = default) where T : class
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
+        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
@@ -778,7 +778,7 @@ public static class HttpRequestTools
     public static async Task<(HttpStatusCode httpStatusCode, string response)> DeleteAsync(string url, object contentValues = null, Dictionary<string, string> header = null, Encoding resultEncoding = null, CancellationToken cancellationToken = default)
     {
         var request = new HttpRequestMessage(HttpMethod.Delete, new Uri(url));
-        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(new JsonSerializerOptions { ReferenceHandler = ReferenceHandler.IgnoreCycles }), resultEncoding ?? Encoding.UTF8, "application/json");
+        if (contentValues.IsNotNull()) request.Content = new StringContent(contentValues.SerializeToJson(), resultEncoding ?? Encoding.UTF8, "application/json");
         if (header.IsNotNull())
             foreach (var item in header)
                 request.Headers.Add(item.Key, item.Value);
