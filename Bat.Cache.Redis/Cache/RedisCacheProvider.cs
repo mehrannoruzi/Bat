@@ -94,6 +94,9 @@ public class RedisCacheProvider : IRedisCacheProvider
     public bool Set(string key, string value, TimeSpan? expiry = null, bool keepTTL = false)
         => _redisDb.StringSet(key, value, expiry, keepTTL);
 
+    public bool Set(string key, object value, TimeSpan? expiry = null, bool keepTTl = false)
+       => _redisDb.StringSet(key, value.SerializeToJson(), expiry, keepTTl);
+
     public bool Set(KeyValuePair<string, string>[] values)
     {
         var list = new KeyValuePair<RedisKey, RedisValue>[values.Length];
@@ -101,14 +104,51 @@ public class RedisCacheProvider : IRedisCacheProvider
         return _redisDb.StringSet(list);
     }
 
+    public bool Set(KeyValuePair<string, object>[] values, CommandFlags flags = CommandFlags.None)
+    {
+        var list = values.Select(x => new 
+            KeyValuePair<RedisKey, RedisValue>(x.Key, x.Value.SerializeToJson()))
+            .ToArray();
+        return _redisDb.StringSet(list);
+    }
+
     public async Task<bool> SetAsync(string key, string value, TimeSpan? expiry = null, bool keepTTL = false)
         => await _redisDb.StringSetAsync(key, value, expiry, keepTTL);
+
+    public async Task<bool> SetAsync(string key, object value, TimeSpan? expiry = null, bool keepTtl = false)
+        => await _redisDb.StringSetAsync(key, value.SerializeToJson(), expiry, keepTtl);
 
     public async Task<bool> SetAsync(KeyValuePair<string, string>[] values)
     {
         var list = new KeyValuePair<RedisKey, RedisValue>[values.Length];
         values.CopyTo(list, 0);
         return await _redisDb.StringSetAsync(list);
+    }
+
+    public async Task<bool> SetAsync(KeyValuePair<string, object>[] values)
+    {
+        var list = values.Select(x => new 
+            KeyValuePair<RedisKey, RedisValue>(x.Key, x.Value.SerializeToJson()))
+            .ToArray();
+        return await _redisDb.StringSetAsync(list);
+    }
+
+    public T Get<T>(string key) where T : class
+    {
+        var value = _redisDb.StringGet(key);
+        if (value.IsNullOrEmpty)
+            return default;
+
+        return value.ToString().DeSerializeJson<T>();
+    }
+
+    public async Task<T> GetAsync<T>(string key)
+    {
+        var value = await _redisDb.StringGetAsync(key);
+        if (value.IsNullOrEmpty)
+            return default;
+
+        return value.ToString().DeSerializeJson<T>();
     }
 
     public string Get(string key)
