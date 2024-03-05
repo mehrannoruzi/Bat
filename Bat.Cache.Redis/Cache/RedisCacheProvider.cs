@@ -2,9 +2,9 @@
 
 public class RedisCacheProvider : IRedisCacheProvider
 {
-    public IDatabase _redisDb;
-    public ConnectionMultiplexer _redisServer;
     private readonly RedisSettings _redisSettings;
+    public IDatabase _redisDb { get; set; }
+    public ConnectionMultiplexer _redisServer { get; set; }
 
     public RedisCacheProvider(IOptions<RedisSettings> redisSettings)
     {
@@ -133,6 +133,7 @@ public class RedisCacheProvider : IRedisCacheProvider
         return await _redisDb.StringSetAsync(list);
     }
 
+
     public T Get<T>(string key) where T : class
     {
         var value = _redisDb.StringGet(key);
@@ -177,6 +178,7 @@ public class RedisCacheProvider : IRedisCacheProvider
 
     public async Task<string> GetSetAsync(string key, string value)
         => await _redisDb.StringGetSetAsync(key, value);
+
 
     public bool Delete(string key)
         => _redisDb.KeyDelete(key);

@@ -2,20 +2,31 @@
 
 public interface IRedisCacheProvider : ISingletonInjection
 {
+    public IDatabase _redisDb { get; set; }
+    public ConnectionMultiplexer _redisServer { get; set; }
+
     IServer GetServer(string host = null, int port = 0);
     IEnumerable<string> GetAllKey(RedisValue[] command, CommandFlags flags = CommandFlags.None);
     IEnumerable<string> GetAllKey(PagingParameter pagingParameter, string pattern = null, CommandFlags flags = CommandFlags.None);
 
     public bool Set(string key, string value, TimeSpan? expiry = null, bool keepTTL = false);
-    bool Set(KeyValuePair<string, string>[] values);
+    public bool Set(string key, object value, TimeSpan? expiry = null, bool keepTTl = false);
+    public bool Set(KeyValuePair<string, string>[] values);
+    public bool Set(KeyValuePair<string, object>[] values, CommandFlags flags = CommandFlags.None);
     public Task<bool> SetAsync(string key, string value, TimeSpan? expiry = null, bool keepTTL = false);
-    Task<bool> SetAsync(KeyValuePair<string, string>[] values);
+    public Task<bool> SetAsync(string key, object value, TimeSpan? expiry = null, bool keepTtl = false);
+    public Task<bool> SetAsync(KeyValuePair<string, string>[] values);
+    public Task<bool> SetAsync(KeyValuePair<string, object>[] values);
+
+    public T Get<T>(string key) where T : class;
     public string Get(string key);
-    string[] Get(string[] keys);
-    public Task<string> GetAsync(string key);
-    Task<string[]> GetAsync(string[] keys);
+    public string[] Get(string[] keys);
     public string GetSet(string key, string value);
+    public Task<T> GetAsync<T>(string key);
+    public Task<string> GetAsync(string key);
+    public Task<string[]> GetAsync(string[] keys);
     public Task<string> GetSetAsync(string key, string value);
+
     public bool Delete(string key);
     public Task<bool> DeleteAsync(string key);
     public void Rename(string oldKey, string newKey);
