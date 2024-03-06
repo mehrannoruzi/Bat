@@ -1,4 +1,6 @@
-﻿namespace Bat.Core;
+﻿using System.Text.Encodings.Web;
+
+namespace Bat.Core;
 
 public static class SerializationExtension
 {
@@ -7,12 +9,12 @@ public static class SerializationExtension
         var options = new JsonSerializerOptions()
         {
             IncludeFields = true,
-            //WriteIndented = true,
             AllowTrailingCommas = true,
             PropertyNameCaseInsensitive = true,
             ReferenceHandler = ReferenceHandler.IgnoreCycles,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            NumberHandling = JsonNumberHandling.AllowReadingFromString
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            NumberHandling = JsonNumberHandling.AllowReadingFromString,
         };
         options.Converters.Add(new BatStringToBoolConverter());
         options.Converters.Add(new BatNumberToStringConverter());
